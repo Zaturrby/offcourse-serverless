@@ -2,6 +2,13 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "The AWS CloudFormation template for this Serverless application's resources outside of Lambdas and Api Gateway",
   "Resources": {
+    "RequestedSaveStream": {
+      "Type" : "AWS::Kinesis::Stream",
+      "Properties" : {
+        "Name" : "requested-save-${stage}",
+        "ShardCount" : 1
+      }
+    },
     "IamRoleLambda": {
       "Type": "AWS::IAM::Role",
       "Properties": {
@@ -34,9 +41,24 @@
             {
               "Effect": "Allow",
               "Action": [
+                "kinesis:GetRecords",
+                "kinesis:PutRecords",
+                "kinesis:GetShardIterator",
+                "kinesis:DescribeStream",
+                "kinesis:ListStreams"
+              ],
+              "Resource": "arn:aws:kinesis:${region}:*:*"
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
                 "logs:CreateLogGroup",
                 "logs:CreateLogStream",
-                "logs:PutLogEvents"
+                "logs:PutLogEvents",
+                "kinesis:GetRecords",
+                "kinesis:GetShardIterator",
+                "kinesis:DescribeStream",
+                "kinesis:ListStreams"
               ],
               "Resource": "arn:aws:logs:${region}:*:*"
             }
@@ -51,6 +73,19 @@
     }
   },
   "Outputs": {
+    "RequestedSaveStreamName": {
+      "Description": "Name of the requested save stream",
+      "Value" : { "Ref" : "RequestedSaveStream" }
+    },
+    "RequestedSaveARNStream": {
+      "Description": "ARN of the requested save stream",
+      "Value": {
+        "Fn::GetAtt": [
+          "RequestedSaveStream",
+          "Arn"
+        ]
+      }
+    },
     "IamRoleArnLambda": {
       "Description": "ARN of the lambda IAM role",
       "Value": {
