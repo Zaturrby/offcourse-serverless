@@ -2,10 +2,17 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "The AWS CloudFormation template for this Serverless application's resources outside of Lambdas and Api Gateway",
   "Resources": {
-    "RequestedSaveStream": {
+    "NewCourseStream": {
       "Type" : "AWS::Kinesis::Stream",
       "Properties" : {
-        "Name" : "requested-save-${stage}",
+        "Name" : "new-course-${stage}",
+        "ShardCount" : 1
+      }
+    },
+    "CourseStream": {
+      "Type" : "AWS::Kinesis::Stream",
+      "Properties" : {
+        "Name" : "course-${stage}",
         "ShardCount" : 1
       }
     },
@@ -43,6 +50,7 @@
               "Action": [
                 "kinesis:GetRecords",
                 "kinesis:PutRecords",
+                "kinesis:PutRecord",
                 "kinesis:GetShardIterator",
                 "kinesis:DescribeStream",
                 "kinesis:ListStreams"
@@ -54,11 +62,7 @@
               "Action": [
                 "logs:CreateLogGroup",
                 "logs:CreateLogStream",
-                "logs:PutLogEvents",
-                "kinesis:GetRecords",
-                "kinesis:GetShardIterator",
-                "kinesis:DescribeStream",
-                "kinesis:ListStreams"
+                "logs:PutLogEvents"
               ],
               "Resource": "arn:aws:logs:${region}:*:*"
             }
@@ -73,15 +77,28 @@
     }
   },
   "Outputs": {
-    "RequestedSaveStreamName": {
+    "CourseStreamName": {
       "Description": "Name of the requested save stream",
-      "Value" : { "Ref" : "RequestedSaveStream" }
+      "Value" : { "Ref" : "CourseStream" }
     },
-    "RequestedSaveARNStream": {
+    "CourseARNStream": {
       "Description": "ARN of the requested save stream",
       "Value": {
         "Fn::GetAtt": [
-          "RequestedSaveStream",
+          "CourseStream",
+          "Arn"
+        ]
+      }
+    },
+    "NewCourseStreamName": {
+      "Description": "Name of the requested save stream",
+      "Value" : { "Ref" : "NewCourseStream" }
+    },
+    "NewCourseARNStream": {
+      "Description": "ARN of the requested save stream",
+      "Value": {
+        "Fn::GetAtt": [
+          "NewCourseStream",
           "Arn"
         ]
       }

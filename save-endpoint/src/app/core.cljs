@@ -1,8 +1,9 @@
 (ns app.core
   (:require [cljs.nodejs :as node]
             [app.specs.index :as specs]
-            [app.message :as message]
             [app.action :as action]
+            [app.db :as db]
+            [app.event :as event]
             [cljs.spec :as spec]
             [cljs.spec.test :as stest]
             [cljs.core.async :refer [<! chan >!]]
@@ -14,13 +15,16 @@
 (node/enable-util-print!)
 
 (defn ^:export handler [event context cb]
-  (go
-    (let [action (action/convert event)]
-      (if (spec/valid? ::specs/action action)
-        (do
-          (<! (message/send (:payload action) :curator))
-          (cb nil (clj->js action)))
-        (cb nil (clj->js (spec/explain-data ::specs/action action)))))))
+  (if-let [payload (event/to-payload event)]
+    (go
+      (let [errors (filter :error (<! (db/save payload)))]
+        (println errors)
+        (if (empty? errors)
+          (cb nil "Save Succeeded")
+          (do
+            (logger/log "ERRORS SAVING:" errors)
+            (cb "Errors Saving" nil)))))
+    (cb "Invalid Event" nil)))
 
 (defn -main [] identity)
 (set! *main-cli-fn* -main)

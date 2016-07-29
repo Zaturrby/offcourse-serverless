@@ -35,3 +35,5 @@
 
 (spec/def ::new-course (spec/keys :req-un [::curator
                                            ::goal]))
+
+(spec/def ::courses (spec/* ::course))

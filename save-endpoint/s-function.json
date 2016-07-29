@@ -4,7 +4,7 @@
   "description": "Serverless Lambda function for project: offcourse",
   "customName": false,
   "customRole": false,
-  "handler": "handler.handler",
+  "handler": "index.handler",
   "timeout": 6,
   "memorySize": 128,
   "authorizer": {},
@@ -14,10 +14,19 @@
   "endpoints": [],
   "events": [
     {
-      "name" : "${requestedSaveStreamName}",
+      "name" : "${newCourseStreamName}",
       "type": "kinesisstream",
       "config": {
-        "streamArn": "${requestedSaveARNStream}",
+        "streamArn": "${newCourseARNStream}",
+        "batchSize": 1,
+        "enabled": true
+      }
+    },
+    {
+      "name" : "${courseStreamName}",
+      "type": "kinesisstream",
+      "config": {
+        "streamArn": "${courseARNStream}",
         "batchSize": 1,
         "enabled": true
       }
