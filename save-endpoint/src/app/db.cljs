@@ -33,10 +33,8 @@
     c))
 
 (defn save [{:keys [type] :as payload}]
-  (println payload)
   (let [items (type payload)
-        table-name type
+        table-name (str (name type) "-" (.. js/process -env -SERVERLESS_STAGE))
         queries (map #(create-query table-name %1) items)
         query-chans (async/merge (map -save queries))]
-    (println queries)
     (async/into [] query-chans)))

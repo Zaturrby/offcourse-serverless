@@ -1,0 +1,26 @@
+{
+  "name": "save-to-elasticsearch",
+  "runtime": "nodejs4.3",
+  "description": "Serverless Lambda function for project: offcourse",
+  "customName": false,
+  "customRole": false,
+  "handler": "index.handler",
+  "timeout": 6,
+  "memorySize": 1024,
+  "authorizer": {},
+  "custom": {
+    "excludePatterns": []
+  },
+  "endpoints": [],
+  "events": [],
+  "environment": {
+    "SERVERLESS_PROJECT": "${project}",
+    "SERVERLESS_STAGE": "${stage}",
+    "SERVERLESS_REGION": "${region}",
+    "ELASTICSEARCH_ENDPOINT": "${elasticsearchEndpoint}"
+  },
+  "vpc": {
+    "securityGroupIds": [],
+    "subnetIds": []
+  }
+}
