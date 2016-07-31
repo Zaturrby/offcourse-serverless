@@ -28,24 +28,9 @@
            :args ::specs/event
            :ret ::specs/action)
 
-(defmulti -convert (fn [event]
-                     (first (spec/conform ::specs/event event))))
-
-(defmethod -convert :api [{:keys [type payload]}]
+(defn -convert [{:keys [type payload]}]
   (let [action {:payload (update payload :type #(keyword %))
                 :type (keyword type)}]
-    (if (spec/valid? ::specs/action action)
-      (do
-        (logger/log "INCOMING: " action)
-        action)
-      (logger/log-error :invalid-incoming-action action))))
-
-(defmethod -convert :kinesis [event]
-  (let [records (:Records event)
-        payload (first (extract-payload records))
-        event-source (extract-event-source (first records))
-        action {:payload payload
-                :type event-source}]
     (if (spec/valid? ::specs/action action)
       (do
         (logger/log "INCOMING: " action)
@@ -58,4 +43,4 @@
       (js->clj :keywordize-keys true)
       -convert))
 
-(spec/instrument #'-convert)
+#_(spec/instrument #'-convert)

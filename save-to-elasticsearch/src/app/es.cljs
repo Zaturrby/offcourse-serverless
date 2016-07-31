@@ -13,18 +13,11 @@
 (def creds (AWS.EnvironmentCredentials. "AWS"))
 (def HTTP (AWS.NodeHttpClient.))
 
-(defn -save [query]
-  (let [c (chan)]
-    (go
-      (>! c "HI")
-      (async/close! c))
-    c))
-
-(defn init-request [item]
+(defn create-request [{:keys [course-id] :as item} index-name]
   (let [req (AWS.HttpRequest. endpoint)
         headers (aget req "headers")]
     (aset req "method" "POST")
-    (aset req "path"  (.join path "/" "offcourse" "courses"))
+    (aset req "path"  (.join path "/" "offcourse" index-name course-id))
     (aset req "region" region)
     (aset headers "presigned-expires" false)
     (aset headers "Host" (aget endpoint "host"))
@@ -48,14 +41,14 @@
     (.handleRequest HTTP req nil #(handle-response %1 c))
     c))
 
+(defn -save [index-name item]
+  (-> item
+      (create-request index-name)
+      sign-request
+      send))
+
 (defn save [{:keys [type] :as payload}]
-  (go
-    (let [req (-> (init-request (first (type payload)))
-                  sign-request)]
-      (println (aget req "path"))
-      (println (<! (send req)))))
-    #_(let [items (type payload)
-            table-name (str (name type) "-" (.. js/process -env -SERVERLESS_STAGE))
-            queries items
-            query-chans (async/merge (map -save queries))]
-        (async/into [] query-chans)))
+  (let [items (type payload)
+        index-name (name type)
+        query-chans (async/merge (map -save index-name items))]
+    (async/into [] query-chans)))

@@ -12,7 +12,4 @@
 (spec/def ::payload (spec/multi-spec payload :type))
 (spec/def ::action (spec/keys :req-un [::payload ::type]))
 
-(spec/def ::kinesis-event (spec/keys :req-un [["Records"]]))
-(spec/def ::api-event map?)
-
 (spec/def ::event (spec/or :kinesis ::kinesis-event :api ::api-event))

@@ -7,9 +7,16 @@
             [cljs.core.async :refer [<! chan >!]]
             [app.logger :as logger]))
 
+(def AWS (node/require "aws-sdk"))
+(def marshaler (node/require "dynamodb-marshaler"))
+(def unmarshal-item (.-unmarshalItem marshaler))
+
 (defn json->clj [data]
   (-> (.parse js/JSON data "ascii")
       (js->clj :keywordize-keys true)))
+
+(defn js->cljs [item]
+  (js->clj item :keywordize-keys true))
 
 (defn buffer->clj [data]
   (-> data
@@ -19,25 +26,17 @@
 
 (defn extract-data [records]
   (->> records
-       (map #(-> %1 :kinesis :data buffer->clj))
-       (map (fn [course] (update-in course [:type] #(keyword %))))))
+       (filter #(= "INSERT" (:eventName %1)))
+       (map #(-> % :dynamodb :NewImage clj->js unmarshal-item js->cljs))))
 
-(defn -convert [event]
-  (let [records     (:Records event)
-        data        (extract-data records)
-        record-type (:type (first data))
-        records     (map record-type data)
-        type        (keyword (str (name record-type) "s"))
-        payload     {:type type
-                     type  records}]
+(defn dynamo-to-payload [event]
+  (let [records (:Records event)
+        data    (extract-data records)
+        [type]  (spec/conform ::specs/data-types data)
+        payload {:type type
+                 type  data}]
     (if (spec/valid? ::specs/payload payload)
       (do
         (logger/log "INCOMING PAYLOAD: " payload)
         payload)
       (logger/log-error :invalid-incoming-action payload))))
-
-(defn to-payload [event]
-  (logger/log "Event: " event)
-  (-> event
-      (js->clj :keywordize-keys true)
-      -convert))

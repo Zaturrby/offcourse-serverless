@@ -58,7 +58,7 @@
           "WriteCapacityUnits" : "1"
         },
         "StreamSpecification": {
-          "StreamViewType": "NEW_AND_OLD_IMAGES"
+          "StreamViewType": "NEW_IMAGE"
         },
         "TableName" : "courses-${stage}"
       }
@@ -130,6 +130,10 @@
             {
               "Effect": "Allow",
               "Action": [
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:DescribeStream",
+                "dynamodb:ListStreams",
                 "dynamodb:PutItem"
               ],
               "Resource": "arn:aws:dynamodb:${region}:*:*"
@@ -196,7 +200,7 @@
         ]
       }
     },
-    "CoursesTableARN": {
+    "CoursesTableStreamARN": {
       "Description": "ARN of the requested save stream",
       "Value": {
         "Fn::GetAtt": [

@@ -5,14 +5,24 @@
   "customName": false,
   "customRole": false,
   "handler": "index.handler",
-  "timeout": 6,
-  "memorySize": 1024,
+  "timeout": 20,
+  "memorySize": 256,
   "authorizer": {},
   "custom": {
     "excludePatterns": []
   },
   "endpoints": [],
-  "events": [],
+  "events": [
+    {
+      "name" : "coursesTableStream",
+      "type": "dynamodbstream",
+      "config": {
+        "streamArn": "${coursesTableStreamARN}",
+        "batchSize": 1,
+        "enabled": "true"
+      }
+    }
+  ],
   "environment": {
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",

@@ -4,6 +4,9 @@
 
 (spec/def ::type (spec/or :raw string? :proper keyword?))
 
+(spec/def ::data-types (spec/or :courses ::course/courses
+                                :course ::course/course))
+
 (spec/def ::payload (spec/or :new-course (spec/keys :req-un [::type ::course/new-course])
                              :course (spec/keys :req-un [::type ::course/course])
                              :courses (spec/keys :req-un [::type ::course/courses])))
