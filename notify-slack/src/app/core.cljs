@@ -20,7 +20,8 @@
         payload (event/dynamo-to-payload event)]
     (if payload
       (go
-        (let [errors (filter :error (<! (notify/notify :slack payload)))]
+        (let [res (<! (notify/notify :slack payload))
+              errors (filter :error res)]
           (if (empty? errors)
             (cb nil "Send Slack Notification")
             (do
