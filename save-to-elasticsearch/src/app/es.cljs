@@ -50,5 +50,5 @@
 (defn save [{:keys [type] :as payload}]
   (let [items (type payload)
         index-name (name type)
-        query-chans (async/merge (map -save index-name items))]
+        query-chans (async/merge (map #(-save index-name %) items))]
     (async/into [] query-chans)))
