@@ -14,7 +14,7 @@
   "endpoints": [],
   "events": [
     {
-      "name" : "coursesTableStream",
+      "name" : "coursesToSlack",
       "type": "dynamodbstream",
       "config": {
         "streamArn": "${coursesTableStreamARN}",

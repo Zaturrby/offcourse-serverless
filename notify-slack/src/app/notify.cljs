@@ -22,13 +22,19 @@
                         #(close! c-resp))))
     c-resp))
 
+(defn create-message [{:keys [curator goal course-slug]}]
+  (str curator " has just posted a course on: \"" goal
+       "\". Check it out here:  <http://staging.offcourse.io/"
+       curator "/courses/" course-slug ">."))
+
 (defn create-request [item]
   (let [url "https://hooks.slack.com/services/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"
-        {:keys [curator goal course-slug]} item
-        message (str curator " has just posted a course on: \"" goal
-                     "\". Check it out here:  <http://staging.offcourse.io/"
-                     curator "/courses/" course-slug ">.")
-        body (.stringify js/JSON (clj->js {:text message}))]
+        message (create-message item)
+        body (.stringify js/JSON (clj->js {:pretext "New Course Hurray!!!"
+                                           :username "yeehaabot"
+                                           :icon_emoji ":offcourse:"
+                                           :text message}))]
+    (println body)
     (request {:url url :body body})))
 
 (defmulti notify (fn [type payload] type))
