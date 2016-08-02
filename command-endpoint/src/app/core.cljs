@@ -1,6 +1,7 @@
 (ns app.core
   (:require [cljs.nodejs :as node]
             [app.specs.index :as specs]
+            [specs.core :as s]
             [app.message :as message]
             [app.action :as action]
             [cljs.spec :as spec]
@@ -14,6 +15,7 @@
 (node/enable-util-print!)
 
 (defn ^:export handler [event context cb]
+  (println (s/foo "HI"))
   (go
     (let [action (action/convert event)]
       (if (spec/valid? ::specs/action action)
