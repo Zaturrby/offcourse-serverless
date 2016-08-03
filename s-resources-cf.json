@@ -3,8 +3,8 @@
   "Description": "The AWS CloudFormation template for this Serverless application's resources outside of Lambdas and Api Gateway",
   "Resources": {
     "Elasticsearch": {
-      "Type" : "AWS::Elasticsearch::Domain",
-      "Properties" : {
+      "Type": "AWS::Elasticsearch::Domain",
+      "Properties": {
         "AccessPolicies": {
           "Version": "2012-10-17",
           "Statement": [
@@ -18,63 +18,63 @@
             }
           ]
         },
-        "DomainName" : "offcourse-${stage}",
-        "ElasticsearchClusterConfig" : {
-          "InstanceCount" : "1",
-          "InstanceType" : "t2.micro.elasticsearch"
+        "DomainName": "offcourse-${stage}",
+        "ElasticsearchClusterConfig": {
+          "InstanceCount": "1",
+          "InstanceType": "t2.micro.elasticsearch"
         },
         "EBSOptions": {
-          "EBSEnabled" : "true",
-          "VolumeSize" : "10",
-          "VolumeType" : "gp2"
+          "EBSEnabled": "true",
+          "VolumeSize": "10",
+          "VolumeType": "gp2"
         }
       }
     },
-    "CoursesTable" : {
-      "Type" : "AWS::DynamoDB::Table",
-      "Properties" : {
-        "AttributeDefinitions" : [
+    "CoursesTable": {
+      "Type": "AWS::DynamoDB::Table",
+      "Properties": {
+        "AttributeDefinitions": [
           {
-            "AttributeName" : "course-id",
-            "AttributeType" : "S"
+            "AttributeName": "course-id",
+            "AttributeType": "S"
           },
           {
-            "AttributeName" : "revision",
-            "AttributeType" : "N"
+            "AttributeName": "revision",
+            "AttributeType": "N"
           }
         ],
-        "KeySchema" : [
+        "KeySchema": [
           {
-            "AttributeName" : "course-id",
-            "KeyType" : "HASH"
+            "AttributeName": "course-id",
+            "KeyType": "HASH"
           },
           {
-            "AttributeName" : "revision",
-            "KeyType" : "RANGE"
+            "AttributeName": "revision",
+            "KeyType": "RANGE"
           }
         ],
-        "ProvisionedThroughput" : {
-          "ReadCapacityUnits" : "1",
-          "WriteCapacityUnits" : "1"
+        "ProvisionedThroughput": {
+          "ReadCapacityUnits": "1",
+          "WriteCapacityUnits": "1"
         },
         "StreamSpecification": {
           "StreamViewType": "NEW_IMAGE"
         },
-        "TableName" : "courses-${stage}"
+        "TableName": "courses-${stage}"
       }
     },
     "NewCourseStream": {
-      "Type" : "AWS::Kinesis::Stream",
-      "Properties" : {
-        "Name" : "new-course-${stage}",
-        "ShardCount" : 1
+      "Type": "AWS::Kinesis::Stream",
+      "Properties": {
+        "Name": "new-course-${stage}",
+        "ShardCount": 1
       }
     },
     "CourseStream": {
-      "Type" : "AWS::Kinesis::Stream",
-      "Properties" : {
-        "Name" : "course-${stage}",
-        "ShardCount" : 1
+      "Type": "AWS::Kinesis::Stream",
+      "Properties": {
+        "Name": "course-${stage}",
+        "ShardCount": 1
       }
     },
     "IamRoleLambda": {
@@ -158,7 +158,9 @@
   "Outputs": {
     "CourseStreamName": {
       "Description": "Name of the requested save stream",
-      "Value" : { "Ref" : "CourseStream" }
+      "Value": {
+        "Ref": "CourseStream"
+      }
     },
     "ElasticsearchARN": {
       "Description": "ARN of the Elastic Search Domain",
@@ -189,7 +191,9 @@
     },
     "NewCourseStreamName": {
       "Description": "Name of the requested save stream",
-      "Value" : { "Ref" : "NewCourseStream" }
+      "Value": {
+        "Ref": "NewCourseStream"
+      }
     },
     "NewCourseARNStream": {
       "Description": "ARN of the requested save stream",

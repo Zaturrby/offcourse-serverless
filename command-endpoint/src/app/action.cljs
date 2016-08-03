@@ -1,6 +1,6 @@
 (ns app.action
   (:require [cljs.spec :as spec]
-            [app.specs.index :as specs]
+            [specs.core :as specs]
             [app.logger :as logger]
             [cljs.spec.test :as stest]
             [clojure.string :as str]))

@@ -1,7 +1,6 @@
 (ns app.event
   (:require [cljs.nodejs :as node]
-            [app.specs.index :as specs]
-            [app.action :as action]
+            [specs.core :as specs]
             [cljs.spec :as spec]
             [cljs.spec.test :as stest]
             [cljs.core.async :refer [<! chan >!]]

@@ -4,7 +4,6 @@
 (set-env!
  :resource-paths #{"src" "html"}
  :source-paths #{"src"}
- :checkouts     '[#_[org.offcourse/specs            "0.0.1"]]
  :dependencies  '[[adzerk/boot-cljs            "1.7.228-1"      :scope "test"]
                  [adzerk/boot-cljs-repl       "0.3.3"          :scope "test"]
                  [adzerk/boot-reload          "0.4.12"          :scope "test"]
@@ -27,19 +26,6 @@
  '[codox.boot :refer [codox]]
  '[pandeiro.boot-http    :refer [serve]])
 
-(deftask build []
-  (task-options! cljs   {:compiler-options {:optimizations :simple
-                                            :target :nodejs}})
-  (comp (cljs)
-        (target)))
-
-(deftask dev []
-  (comp (watch)
-        (checkout)
-        (speak)
-        (cljs-repl)
-        (build)))
-
 (task-options!
  pom {:project     'offcourse/specs
       :version     "0.1.0-SNAPSHOT"
@@ -52,4 +38,11 @@
 (deftask build
   "Build and install the project locally."
   []
-  (comp (pom) (jar) (install)))
+  (comp (pom)
+        (jar)
+        (install)))
+
+(deftask dev []
+  (comp (watch)
+        (cljs-repl)
+        (build)))

@@ -14,7 +14,7 @@
   "endpoints": [],
   "events": [
     {
-      "name" : "${newCourseStreamName}",
+      "name": "${newCourseStreamName}",
       "type": "kinesisstream",
       "config": {
         "streamArn": "${newCourseARNStream}",
@@ -23,7 +23,7 @@
       }
     },
     {
-      "name" : "${courseStreamName}",
+      "name": "${courseStreamName}",
       "type": "kinesisstream",
       "config": {
         "streamArn": "${courseARNStream}",

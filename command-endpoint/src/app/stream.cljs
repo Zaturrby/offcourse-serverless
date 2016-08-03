@@ -1,4 +1,4 @@
-(ns app.message
+(ns app.stream
   (:require [app.logger :as logger]
             [cljs.core.async :refer [>! chan]]
             [cljs.nodejs :as node])

@@ -1,10 +1,6 @@
 (ns app.notify
   (:require [cljs.nodejs :as node]
-            [app.specs.index :as specs]
-            [app.action :as action]
             [app.event :as event]
-            [cljs.spec :as spec]
-            [cljs.spec.test :as stest]
             [cljs.core.async :as async :refer [<! put! close! chan >!]]
             [app.logger :as logger])
   (:require-macros [cljs.core.async.macros :refer [go]]))

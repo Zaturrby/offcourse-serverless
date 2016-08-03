@@ -1,4 +1,4 @@
-(ns app.specs.course
+(ns specs.course
   (:require [cljs.spec :as spec]))
 
 (defn user-name-length [str]
@@ -35,3 +35,5 @@
 
 (spec/def ::new-course (spec/keys :req-un [::curator
                                            ::goal]))
+
+(spec/def ::courses (spec/* ::course))
