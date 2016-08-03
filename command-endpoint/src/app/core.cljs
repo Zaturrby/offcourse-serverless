@@ -1,11 +1,8 @@
 (ns app.core
-  (:require [cljs.nodejs :as node]
-            [specs.core :as specs]
+  (:require [app.action :as action]
             [app.stream :as stream]
-            [app.action :as action]
-            [cljs.spec :as spec]
-            [cljs.core.async :refer [<! chan >!]]
-            [app.logger :as logger])
+            [cljs.core.async :refer [<!]]
+            [cljs.nodejs :as node])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
 (def AWS (node/require "aws-sdk"))

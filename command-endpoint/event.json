@@ -3,70 +3,85 @@
   "payload": {
     "type": "course",
     "course": {
-      "base-id":"yeehaa::5083637189",
-      "version":null,
-      "timestamp":1462716091098,
-      "course-id":"yeehaa::5083637189",
+      "base-id":"yeehaa::3871984348",
       "revision":0,
       "curator":"yeehaa",
-      "goal":"Become Functional",
-      "course-slug":"become-functional",
-      "flags":[
-        "featured"
-      ],
+      "goal":"Cook A Lasagna",
+      "course-slug":"cook-a-lasagna",
       "checkpoints":[
-        {
-          "tags":[
-            "functional programming",
-            "mathematics",
-            "decision"
-          ],
-          "checkpoint-id":3,
-          "task":"Lose Your Fears",
-          "checkpoint-slug":"lose-your-fears",
-          "url":"https://www.smashingmagazine.com/2014/07/dont-be-scared-of-functional-programming/",
-          "completed?":false
-        },
-        {
-          "tags":[
-            "javascript",
-            "object-oriented programming",
-            "functional programming"
-          ],
-          "checkpoint-id":2,
-          "task":"Change Your JavaScript",
-          "checkpoint-slug":"change-your-javascript",
-          "url":"http://www.sitepoint.com/introduction-functional-javascript/",
-          "completed?":false
-        },
-        {
-          "tags":[
-            "immutability",
-            "reference",
-            "value"
-          ],
-          "checkpoint-id":1,
-          "task":"Stop Mutating",
-          "checkpoint-slug":"stop-mutating",
-          "url":"http://jlongster.com/Using-Immutable-Data-Structures-in-JavaScript",
-          "completed?":false
-        },
-        {
-          "tags":[
-            "reactive programming",
-            "rxjs",
-            "react",
-            "events"
-          ],
-          "checkpoint-id":0,
-          "task":"React, Don't Act",
-          "checkpoint-slug":"react-dont-act",
-          "url":"https://gist.github.com/staltz/868e7e9bc2a7b8c1f754",
-          "completed?":false
-        }
+         {
+            "tags":[
+               "baking",
+               "italian",
+               "oven"
+            ],
+            "checkpoint-id":4,
+            "task":"Bake The Lasagna",
+            "checkpoint-slug":"bake-the-lasagna",
+            "url":" http://www.livestrong.com/article/478548-how-to-oven-bake-lasagna/",
+            "completed?":false
+         },
+         {
+            "tags":[
+               "cooking",
+               "italian"
+            ],
+            "checkpoint-id":3,
+            "task":"Make The Layers",
+            "checkpoint-slug":"make-the-layers",
+            "url":"https://www.youtube.com/watch?v=m-ISEuDZcZE",
+            "completed?":false
+         },
+         {
+            "tags":[
+               "italian",
+               "sauce",
+               "meat",
+               "cooking"
+            ],
+            "checkpoint-id":2,
+            "task":"Make A Meat Sauce",
+            "checkpoint-slug":"make-a-meat-sauce",
+            "url":"https://www.donnahay.com.au/recipes/sauces-and-condiments/basic-bolognese-sauce",
+            "completed?":false
+         },
+         {
+            "tags":[
+               "cooking",
+               "sauce",
+               "italian",
+               "white"
+            ],
+            "checkpoint-id":1,
+            "task":"Make A White Sauce",
+            "checkpoint-slug":"make-a-white-sauce",
+            "url":"http://www.bbcgoodfood.com/videos/techniques/how-make-bechamel-white-sauce",
+            "completed?":false
+         },
+         {
+            "tags":[
+               "cooking",
+               "tomatoes",
+               "italian",
+               "sauce"
+            ],
+            "checkpoint-id":0,
+            "task":"Make The Tomato Sauce",
+            "checkpoint-slug":"make-the-tomato-sauce",
+            "url":"http://deliciouslyella.com/the-best-tomato-sauce-vegan/",
+            "completed?":false
+         }
       ],
-      "forked-from":null,
-      "forks":[]
-    }
+      "forks":[
+
+      ],
+      "version":null,
+      "timestamp":1465912133796,
+      "course-id":"yeehaa::3871984348",
+      "flags":[
+         "featured"
+      ],
+      "forked-from":null
+   }
   }
 }

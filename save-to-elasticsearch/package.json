@@ -15,7 +15,8 @@
   "homepage": "https://github.com/offcourse/cljs-lambda",
   "dependencies": {
     "dynamodb-marshaler": "^2.0.0",
-    "node-lambda": "^0.8.6"
+    "node-lambda": "^0.8.6",
+    "request": "^2.74.0"
   },
   "scripts": {
     "setup": "npm install && ./node_modules/node-lambda/bin/node-lambda setup",

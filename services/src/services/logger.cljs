@@ -1,4 +1,4 @@
-(ns app.logger
+(ns services.logger
   (:require [cljs.spec :as spec]
             [specs.core :as specs]))
 

@@ -1,14 +1,14 @@
-(ns app.es
-  (:require [app.logger :as logger]
-            [cljs.core.async :as async :refer [>! chan]]
-            [cljs.nodejs :as node]
-            [clojure.walk :as walk])
+(ns services.indexer
+  (:require [cljs.core.async :as async :refer [>! chan]]
+            [cljs.nodejs :as node])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
 (def AWS (node/require "aws-sdk"))
 (def path (node/require "path"))
 
-(def endpoint (AWS.Endpoint. (.. js/process -env -ELASTICSEARCH_ENDPOINT)))
+(def endpoint-url (.. js/process -env -ELASTICSEARCH_ENDPOINT))
+(def endpoint (when endpoint-url (AWS.Endpoint. endpoint-url)))
+
 (def region (.. js/process -env -SERVERLESS_REGION))
 (def creds (AWS.EnvironmentCredentials. "AWS"))
 (def HTTP (AWS.NodeHttpClient.))
@@ -52,3 +52,4 @@
         index-name (name type)
         query-chans (async/merge (map #(-save index-name %) items))]
     (async/into [] query-chans)))
+

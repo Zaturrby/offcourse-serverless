@@ -3,7 +3,7 @@
             [specs.core :as specs]
             [cljs.spec :as spec]
             [cljs.core.async :refer [<! chan >!]]
-            [app.logger :as logger]))
+            [services.logger :as logger]))
 
 (defn json->clj [data]
   (-> (.parse js/JSON data "ascii")

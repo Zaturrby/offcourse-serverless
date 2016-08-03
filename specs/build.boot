@@ -28,7 +28,7 @@
 
 (task-options!
  pom {:project     'offcourse/specs
-      :version     "0.1.0-SNAPSHOT"
+      :version     version
       :description "HELLO WORLD"
       :url         "http://example/FIXME"
       :scm         {:url "https://github.com/yourname/specs"}

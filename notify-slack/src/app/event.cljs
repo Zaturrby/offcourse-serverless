@@ -2,7 +2,7 @@
   (:require [cljs.nodejs :as node]
             [specs.core :as specs]
             [cljs.spec :as spec]
-            [app.logger :as logger]))
+            [services.logger :as logger]))
 
 (def AWS (node/require "aws-sdk"))
 (def marshaler (node/require "dynamodb-marshaler"))

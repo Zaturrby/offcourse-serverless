@@ -1,5 +1,5 @@
 (ns app.stream
-  (:require [app.logger :as logger]
+  (:require [services.logger :as logger]
             [cljs.core.async :refer [>! chan]]
             [cljs.nodejs :as node])
   (:require-macros [cljs.core.async.macros :refer [go]]))

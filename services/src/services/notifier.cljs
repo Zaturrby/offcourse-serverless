@@ -1,8 +1,7 @@
-(ns app.notify
+(ns services.notifier
   (:require [cljs.nodejs :as node]
-            [app.event :as event]
             [cljs.core.async :as async :refer [<! put! close! chan >!]]
-            [app.logger :as logger])
+            [services.logger :as logger])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
 (def ^:private -request (node/require "request"))
@@ -30,7 +29,6 @@
                                            :username "yeehaabot"
                                            :icon_emoji ":offcourse:"
                                            :text message}))]
-    (println body)
     (request {:url url :body body})))
 
 (defmulti notify (fn [type payload] type))
@@ -38,3 +36,4 @@
 (defmethod notify :slack [_ {:keys [type] :as payload}]
   (let [chans (async/merge (map create-request (type payload)))]
     (async/into [] chans)))
+

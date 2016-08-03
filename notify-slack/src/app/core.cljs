@@ -1,9 +1,9 @@
 (ns app.core
   (:require [cljs.nodejs :as node]
             [app.event :as event]
-            [app.notify :as notify]
+            [services.notifier :as notify]
             [cljs.core.async :refer [<! chan >!]]
-            [app.logger :as logger])
+            [services.logger :as logger])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
 (def AWS (node/require "aws-sdk"))

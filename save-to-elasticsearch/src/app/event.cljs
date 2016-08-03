@@ -4,7 +4,7 @@
             [cljs.spec :as spec]
             [cljs.spec.test :as stest]
             [cljs.core.async :refer [<! chan >!]]
-            [app.logger :as logger]))
+            [services.logger :as logger]))
 
 (def AWS (node/require "aws-sdk"))
 (def marshaler (node/require "dynamodb-marshaler"))

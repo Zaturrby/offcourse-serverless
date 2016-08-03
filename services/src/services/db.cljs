@@ -1,5 +1,5 @@
-(ns app.db
-  (:require [app.logger :as logger]
+(ns services.db
+  (:require [services.logger :as logger]
             [cljs.core.async :as async :refer [>! chan]]
             [cljs.nodejs :as node]
             [clojure.walk :as walk])

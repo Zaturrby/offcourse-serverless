@@ -1,28 +1,10 @@
 (ns app.action
   (:require [cljs.spec :as spec]
             [specs.core :as specs]
-            [app.logger :as logger]
+            [services.logger :as logger]
+            [services.helpers :as helpers]
             [cljs.spec.test :as stest]
             [clojure.string :as str]))
-
-(defn json->clj [data]
-  (-> (.parse js/JSON data "ascii")
-      (js->clj :keywordize-keys true)))
-
-(defn buffer->clj [data]
-  (-> data
-      (js/Buffer "base64")
-      (.toString "ascii")
-      json->clj))
-
-(defn extract-payload [records]
-  (map #(-> %1 :kinesis :data buffer->clj) records))
-
-(defn extract-event-source [record]
-  (-> record
-      :eventSourceARN
-      (str/split "/")
-      last))
 
 (spec/fdef -convert
            :args ::specs/event
