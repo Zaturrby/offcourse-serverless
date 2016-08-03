@@ -3,31 +3,20 @@
             [specs.core :as specs]
             [cljs.spec :as spec]
             [cljs.core.async :refer [<! chan >!]]
+            [services.helpers :as helpers]
             [services.logger :as logger]))
-
-(defn json->clj [data]
-  (-> (.parse js/JSON data "ascii")
-      (js->clj :keywordize-keys true)))
-
-(defn buffer->clj [data]
-  (-> data
-      (js/Buffer "base64")
-      (.toString "ascii")
-      json->clj))
-
-(defn extract-data [records]
-  (->> records
-       (map #(-> %1 :kinesis :data buffer->clj))
-       (map (fn [course] (update-in course [:type] #(keyword %))))))
 
 (defn -convert [event]
   (let [records     (:Records event)
-        data        (extract-data records)
+        data        (helpers/extract-data records)
         record-type (:type (first data))
         records     (map record-type data)
         type        (keyword (str (name record-type) "s"))
         payload     {:type type
-                     type  records}]
+                     :payload-data  records}]
+
+    #_(println (spec/conform ::specs/data-types records))
+
     (if (spec/valid? ::specs/payload payload)
       (do
         (logger/log "INCOMING PAYLOAD: " payload)

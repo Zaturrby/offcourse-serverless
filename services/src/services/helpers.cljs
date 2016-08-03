@@ -19,3 +19,8 @@
       :eventSourceARN
       (str/split "/")
       last))
+
+(defn extract-data [records]
+  (->> records
+       extract-payload
+       (map (fn [course] (update-in course [:type] #(keyword %))))))
