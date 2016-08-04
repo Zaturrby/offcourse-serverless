@@ -1,21 +1,25 @@
 (ns app.core
-  (:require [app.action :as action]
+  (:require [protocols.convertible :as cv]
             [app.stream :as stream]
             [cljs.core.async :refer [<!]]
-            [cljs.nodejs :as node])
+            [services.logger :as logger]
+            [cljs.nodejs :as node]
+            [services.helpers :as helpers])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
 (def AWS (node/require "aws-sdk"))
 
 (node/enable-util-print!)
 
-(defn ^:export handler [event context cb]
-  (go
-    (if-let [action (action/convert event)]
-      (do
-        (<! (stream/send (:payload action) :curator))
-        (cb nil (clj->js action)))
-      (cb "invalid action" nil))))
+(defn ^:export handler [raw-event context cb]
+  (let [event (helpers/to-event raw-event)]
+    (go
+      (if-let [action (cv/to-action event)]
+        (do
+          (<! (stream/send (:payload action) :curator))
+          (cb nil "payload sent"))
+        (do
+          (cb "invalid action" nil))))))
 
 (defn -main [] identity)
 (set! *main-cli-fn* -main)

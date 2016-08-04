@@ -1,5 +1,7 @@
 (ns specs.core
   (:require [cljs.spec :as spec]
+            [specs.event :as event]
+            [specs.payload :as payload]
             [specs.course :as course]))
 
 (spec/def ::type (spec/or :raw string? :proper keyword?))
@@ -9,10 +11,8 @@
 
 (spec/def ::payload-var (spec/cat :type ::type :payload-data ::data-types))
 
-(spec/def ::payload (spec/or :new-course (spec/keys :req-un [::type ::course/new-course])
-                             :course (spec/keys :req-un [::type ::course/course])
-                             :courses (spec/keys :req-un [::type ::course/courses])))
+(spec/def ::payload ::payload/payload)
 
 (spec/def ::action (spec/keys :req-un [::payload ::type]))
 
-(spec/def ::event (spec/or :kinesis ::kinesis-event :api ::api-event))
+(spec/def ::event ::event/event)

@@ -8,8 +8,12 @@
 (defn log [msg payload]
   (println msg (stringify payload) "\n"))
 
+(defn pipe [msg payload]
+  (log msg payload)
+  payload)
+
 (defn log-error [reason action]
   (let [error (clj->js {:type :error
                         :error reason
                         :payload (spec/explain-data ::specs/action action)})]
-    (log "Error "error)))
+    (log "Error " error)))
