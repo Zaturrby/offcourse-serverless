@@ -15,5 +15,5 @@
 (defn log-error [reason action]
   (let [error (clj->js {:type :error
                         :error reason
-                        :payload (spec/explain-data ::specs/action action)})]
+                        :payload (spec/explain-str ::specs/action action)})]
     (log "Error " error)))

@@ -1,7 +1,7 @@
 (ns app.core
   (:require [cljs.nodejs :as node]
             [services.db :as db]
-            [app.event :as event]
+            [protocols.convertible :as cv]
             [cljs.core.async :refer [<! chan >!]]
             [services.logger :as logger])
   (:require-macros [cljs.core.async.macros :refer [go]]))
@@ -10,17 +10,16 @@
 
 (node/enable-util-print!)
 
-(defn ^:export handler [event context cb]
-  (if-let [payload (event/to-payload event)]
+(defn ^:export handler [raw-event context cb]
+  (if-let [payload (-> raw-event cv/to-event cv/to-payload)]
     (go
       (let [errors (filter :error (<! (db/save payload)))]
-        (println errors)
         (if (empty? errors)
           (cb nil "Save Succeeded")
           (do
             (logger/log "ERRORS SAVING:" errors)
             (cb "Errors Saving" nil)))))
-    (cb "Invalid Event" nil)))
+    (cb "Invalid Payload" nil)))
 
 (defn -main [] identity)
 (set! *main-cli-fn* -main)

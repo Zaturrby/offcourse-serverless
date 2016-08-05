@@ -12,14 +12,11 @@
 (node/enable-util-print!)
 
 (defn ^:export handler [raw-event context cb]
-  (let [event (helpers/to-event raw-event)]
+  (if-let [action (-> raw-event cv/to-event cv/to-action)]
     (go
-      (if-let [action (cv/to-action event)]
-        (do
-          (<! (stream/send (:payload action) :curator))
-          (cb nil "payload sent"))
-        (do
-          (cb "invalid action" nil))))))
+      (<! (stream/send (:payload action) :curator))
+      (cb nil "payload sent"))
+    (cb "invalid action" nil)))
 
 (defn -main [] identity)
 (set! *main-cli-fn* -main)

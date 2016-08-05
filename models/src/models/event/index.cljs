@@ -1,8 +1,10 @@
 (ns models.event.index
   (:require [services.logger :as logger]
             [protocols.convertible :refer [Convertible]]
-            [models.event.convertible :as cv-impl]))
+            [models.event.to-payload :refer [to-payload]]
+            [models.event.to-action :refer [to-action]]))
 
 (defrecord Event []
   Convertible
-  (-to-action [this] (cv-impl/to-action this)))
+  (-to-action [this] (to-action this))
+  (-to-payload [this] (to-payload this)))

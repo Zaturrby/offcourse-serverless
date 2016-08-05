@@ -1,18 +1,16 @@
 (ns app.core
   (:require [cljs.nodejs :as node]
-            [app.event :as event]
+            [protocols.convertible :as cv]
             [cljs.core.async :refer [<! chan >!]]
             [services.indexer :as es]
             [services.logger :as logger])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
+(node/enable-util-print!)
 (def AWS (node/require "aws-sdk"))
 
-(node/enable-util-print!)
-
-(defn ^:export handler [event context cb]
-  (logger/log "Event: " event)
-  (if-let [payload (event/dynamo-to-payload (js->clj event :keywordize-keys true))]
+(defn ^:export handler [raw-event context cb]
+  (if-let [payload (-> raw-event cv/to-event cv/to-payload)]
     (go
       (let [errors (filter :error (<! (es/save payload)))]
         (if (empty? errors)

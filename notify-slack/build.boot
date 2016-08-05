@@ -1,6 +1,8 @@
 (set-env!
- :resource-paths #{"src" "../specs/src" "../services/src" "html"}
+ :resource-paths #{"src" "../protocols/src" "../specs/src" "../services/src" "../models/src"}
  :checkouts     '[[offcourse/specs            "0.1.0-SNAPSHOT"]
+                  [offcourse/models            "0.1.0-SNAPSHOT"]
+                  [offcourse/protocols            "0.1.0-SNAPSHOT"]
                   [offcourse/services          "0.1.0-SNAPSHOT"]]
  :dependencies '[[adzerk/boot-cljs            "1.7.228-1"      :scope "test"]
                  [adzerk/boot-cljs-repl       "0.3.3"          :scope "test"]
@@ -14,6 +16,8 @@
                  [com.cemerick/piggieback     "0.2.2-SNAPSHOT"          :scope "test"]
                  [offcourse/specs            "0.1.0-SNAPSHOT"]
                  [offcourse/services          "0.1.0-SNAPSHOT"]
+                 [offcourse/models            "0.1.0-SNAPSHOT"]
+                 [offcourse/protocols            "0.1.0-SNAPSHOT"]
                  [weasel                      "0.7.0"          :scope "test"]
                  [org.clojure/tools.nrepl     "0.2.12"         :scope "test"]])
 

@@ -9,10 +9,9 @@
 (spec/def ::data-types (spec/or :courses ::course/courses
                                 :course ::course/course))
 
-(spec/def ::payload-var (spec/cat :type ::type :payload-data ::data-types))
-
 (spec/def ::payload ::payload/payload)
 
 (spec/def ::action (spec/keys :req-un [::payload ::type]))
 
 (spec/def ::event ::event/event)
+(spec/def ::Records ::event/Records)

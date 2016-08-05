@@ -1,7 +1,13 @@
 (ns services.helpers
   (:require [clojure.string :as str]
-            [models.event.index :as event]
+            [cljs.nodejs :as node]
+            [specs.core :as specs]
+            [cljs.spec :as spec]
             [services.logger :as logger]))
+
+(def AWS (node/require "aws-sdk"))
+(def marshaler (node/require "dynamodb-marshaler"))
+(def unmarshal-item (.-unmarshalItem marshaler))
 
 (defn json->clj [data]
   (-> (.parse js/JSON data "ascii")
@@ -13,6 +19,9 @@
       (.toString "ascii")
       json->clj))
 
+(defn js->cljs [item]
+  (js->clj item :keywordize-keys true))
+
 (defn extract-payload [records]
   (map #(-> %1 :kinesis :data buffer->clj) records))
 
@@ -22,19 +31,19 @@
       (str/split "/")
       last))
 
-(defn extract-data [records]
+(defmulti extract-data (fn [records] (first (spec/conform ::specs/Records records))))
+
+(defmethod extract-data :kinesis [records]
   (->> records
        extract-payload
        (map (fn [course] (update-in course [:type] #(keyword %))))))
+
+(defmethod extract-data :dynamodb [records]
+  (->> records
+       (filter #(= "INSERT" (:eventName %1)))
+       (map #(-> % :dynamodb :NewImage clj->js unmarshal-item js->cljs))))
 
 (defn keywordize-type [event]
   (if (:type event)
     (update-in event [:type] #(keyword %))
     event))
-
-(defn to-event [raw-event]
-  (logger/log "Event: " raw-event)
-  (-> raw-event
-      (js->clj :keywordize-keys true)
-      keywordize-type
-      event/map->Event))
