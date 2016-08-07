@@ -1,0 +1,200 @@
+{
+    "Records": [
+        {
+            "eventID": "458c5c355c2dccdf1f2d812bf3a889bf",
+            "eventName": "INSERT",
+            "eventVersion": "1.1",
+            "eventSource": "aws:dynamodb",
+            "awsRegion": "eu-central-1",
+            "dynamodb": {
+                "ApproximateCreationDateTime": 1469999940,
+                "Keys": {
+                    "course-id": {
+                        "S": "yeehaa::5083637189"
+                    },
+                    "revision": {
+                        "N": "0"
+                    }
+                },
+                "NewImage": {
+                    "forks": {
+                        "L": []
+                    },
+                    "course-slug": {
+                        "S": "become-functional"
+                    },
+                    "curator": {
+                        "S": "yeehaa"
+                    },
+                    "course-id": {
+                        "S": "yeehaa::5083637189"
+                    },
+                    "goal": {
+                        "S": "Become Functional"
+                    },
+                    "forked-from": {
+                        "NULL": true
+                    },
+                    "flags": {
+                        "L": [
+                            {
+                                "S": "featured"
+                            }
+                        ]
+                    },
+                    "checkpoints": {
+                        "L": [
+                            {
+                                "M": {
+                                    "task": {
+                                        "S": "Lose Your Fears"
+                                    },
+                                    "checkpoint-slug": {
+                                        "S": "lose-your-fears"
+                                    },
+                                    "completed?": {
+                                        "BOOL": false
+                                    },
+                                    "checkpoint-id": {
+                                        "N": "3"
+                                    },
+                                    "url": {
+                                        "S": "https://www.smashingmagazine.com/2014/07/dont-be-scared-of-functional-programming/"
+                                    },
+                                    "tags": {
+                                        "L": [
+                                            {
+                                                "S": "functional programming"
+                                            },
+                                            {
+                                                "S": "mathematics"
+                                            },
+                                            {
+                                                "S": "decision"
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            {
+                                "M": {
+                                    "task": {
+                                        "S": "Change Your JavaScript"
+                                    },
+                                    "checkpoint-slug": {
+                                        "S": "change-your-javascript"
+                                    },
+                                    "completed?": {
+                                        "BOOL": false
+                                    },
+                                    "checkpoint-id": {
+                                        "N": "2"
+                                    },
+                                    "url": {
+                                        "S": "http://www.sitepoint.com/introduction-functional-javascript/"
+                                    },
+                                    "tags": {
+                                        "L": [
+                                            {
+                                                "S": "javascript"
+                                            },
+                                            {
+                                                "S": "object-oriented programming"
+                                            },
+                                            {
+                                                "S": "functional programming"
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            {
+                                "M": {
+                                    "task": {
+                                        "S": "Stop Mutating"
+                                    },
+                                    "checkpoint-slug": {
+                                        "S": "stop-mutating"
+                                    },
+                                    "completed?": {
+                                        "BOOL": false
+                                    },
+                                    "checkpoint-id": {
+                                        "N": "1"
+                                    },
+                                    "url": {
+                                        "S": "http://jlongster.com/Using-Immutable-Data-Structures-in-JavaScript"
+                                    },
+                                    "tags": {
+                                        "L": [
+                                            {
+                                                "S": "immutability"
+                                            },
+                                            {
+                                                "S": "reference"
+                                            },
+                                            {
+                                                "S": "value"
+                                            }
+                                        ]
+                                    }
+                                }
+                            },
+                            {
+                                "M": {
+                                    "task": {
+                                        "S": "React, Don't Act"
+                                    },
+                                    "checkpoint-slug": {
+                                        "S": "react-dont-act"
+                                    },
+                                    "completed?": {
+                                        "BOOL": false
+                                    },
+                                    "checkpoint-id": {
+                                        "N": "0"
+                                    },
+                                    "url": {
+                                        "S": "https://gist.github.com/staltz/868e7e9bc2a7b8c1f754"
+                                    },
+                                    "tags": {
+                                        "L": [
+                                            {
+                                                "S": "reactive programming"
+                                            },
+                                            {
+                                                "S": "rxjs"
+                                            },
+                                            {
+                                                "S": "react"
+                                            },
+                                            {
+                                                "S": "events"
+                                            }
+                                        ]
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    "base-id": {
+                        "S": "yeehaa::5083637189"
+                    },
+                    "version": {
+                        "NULL": true
+                    },
+                    "revision": {
+                        "N": "0"
+                    },
+                    "timestamp": {
+                        "N": "1462716091098"
+                    }
+                },
+                "SequenceNumber": "32200000000000112859541",
+                "SizeBytes": 1057,
+                "StreamViewType": "NEW_IMAGE"
+            },
+            "eventSourceARN": "arn:aws:dynamodb:eu-central-1:774182433398:table/courses-dev/stream/2016-07-31T21:16:40.348"
+        }
+    ]
+}

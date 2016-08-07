@@ -1,0 +1,26 @@
+{
+  "Records": [
+    {
+      "eventID": "f9f100511a4f2f71611f125ab642baa1",
+      "eventName": "REMOVE",
+      "eventVersion": "1.1",
+      "eventSource": "aws:dynamodb",
+      "awsRegion": "eu-central-1",
+      "dynamodb": {
+        "ApproximateCreationDateTime": 1470004440,
+        "Keys": {
+          "course-id": {
+            "S": "yeehaa::5083637189"
+          },
+          "revision": {
+            "N": "0"
+          }
+        },
+        "SequenceNumber": "32300000000000112864301",
+        "SizeBytes": 36,
+        "StreamViewType": "NEW_IMAGE"
+      },
+      "eventSourceARN": "arn:aws:dynamodb:eu-central-1:774182433398:table/courses-dev/stream/2016-07-31T21:16:40.348"
+    }
+  ]
+}

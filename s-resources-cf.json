@@ -63,13 +63,6 @@
         "TableName": "courses-${stage}"
       }
     },
-    "NewCourseStream": {
-      "Type": "AWS::Kinesis::Stream",
-      "Properties": {
-        "Name": "new-course-${stage}",
-        "ShardCount": 1
-      }
-    },
     "CourseStream": {
       "Type": "AWS::Kinesis::Stream",
       "Properties": {
@@ -180,26 +173,11 @@
         ]
       }
     },
-    "CourseARNStream": {
+    "CourseStreamARN": {
       "Description": "ARN of the requested save stream",
       "Value": {
         "Fn::GetAtt": [
           "CourseStream",
-          "Arn"
-        ]
-      }
-    },
-    "NewCourseStreamName": {
-      "Description": "Name of the requested save stream",
-      "Value": {
-        "Ref": "NewCourseStream"
-      }
-    },
-    "NewCourseARNStream": {
-      "Description": "ARN of the requested save stream",
-      "Value": {
-        "Fn::GetAtt": [
-          "NewCourseStream",
           "Arn"
         ]
       }

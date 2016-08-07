@@ -1,12 +1,12 @@
 {
-  "name": "save-endpoint",
+  "name": "debug-channel",
   "runtime": "nodejs4.3",
   "description": "Serverless Lambda function for project: offcourse",
   "customName": false,
   "customRole": false,
   "handler": "index.handler",
-  "timeout": 6,
-  "memorySize": 128,
+  "timeout": 10,
+  "memorySize": 256,
   "authorizer": {},
   "custom": {
     "excludePatterns": []
@@ -14,21 +14,12 @@
   "endpoints": [],
   "events": [
     {
-      "name": "${newCourseStreamName}",
+      "name": "streamToDebug",
       "type": "kinesisstream",
       "config": {
-        "streamArn": "${newCourseARNStream}",
+        "streamArn": "${courseStreamARN}",
         "batchSize": 1,
-        "enabled": true
-      }
-    },
-    {
-      "name": "${courseStreamName}",
-      "type": "kinesisstream",
-      "config": {
-        "streamArn": "${courseARNStream}",
-        "batchSize": 1,
-        "enabled": true
+        "enabled": "true"
       }
     }
   ],
