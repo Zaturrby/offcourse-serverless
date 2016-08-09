@@ -1,29 +1,32 @@
 (ns models.event.to-payload
   (:require [cljs.spec :as spec]
             [specs.core :as specs]
+            [cljs.nodejs :as node]
+            [specs.payload :as pl-specs]
             [services.helpers :as helpers]
             [services.logger :as logger]))
 
-(defmulti to-payload (fn [event] (first (spec/conform ::specs/event event))))
+(def marshaler (node/require "dynamodb-marshaler"))
+(def unmarshal-item (.-unmarshalItem marshaler))
 
-(defmethod to-payload :kinesis [event]
+(defn extract-payload [records]
+  (map #(-> %1 :kinesis :data helpers/buffer->clj) records))
+
+(defmulti extract-data (fn [records] (first (spec/conform ::specs/Records records))))
+
+(defmethod extract-data :kinesis [records]
+  (->> records
+       extract-payload
+       (map (fn [course] (update-in course [:type] #(keyword %))))))
+
+(defmethod extract-data :dynamodb [records]
+  (->> records
+       (filter #(= "INSERT" (:eventName %1)))
+       (map #(-> % :dynamodb :NewImage clj->js unmarshal-item helpers/js->cljs))))
+
+(defn to-payload [event]
   (let [records     (:Records event)
-        data        (helpers/extract-data records)
-        record-type (:type (first data))
-        records     (map record-type data)
-        type        (keyword (str (name record-type) "s"))
-        payload     {:type type
-                     type records}]
-    (if (spec/valid? ::specs/payload payload)
+        payload     (extract-data records)]
+    (if (spec/valid? ::pl-specs/valid-payload payload)
       (logger/pipe "INCOMING PAYLOAD: " payload)
       (logger/log-error :invalid-incoming-payload payload))))
-
-(defmethod to-payload :dynamodb [event]
-  (let [records (:Records event)
-        data    (helpers/extract-data records)
-        [type]  (spec/conform ::specs/data-types data)
-        payload {:type type
-                 type  data}]
-    (if (spec/valid? ::specs/payload payload)
-      (logger/pipe "INCOMING PAYLOAD: " payload)
-      (logger/log-error :invalid-incoming-action payload))))

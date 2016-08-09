@@ -1,9 +1,10 @@
 (ns services.db
   (:require [services.logger :as logger]
             [cljs.core.async :as async :refer [>! chan]]
+            [cljs.spec :as spec]
+            [specs.core :as specs]
             [cljs.nodejs :as node]
-            [clojure.walk :as walk])
-  (:require-macros [cljs.core.async.macros :refer [go]]))
+            [clojure.walk :as walk]))
 
 (def AWS (node/require "aws-sdk"))
 (def dynamo (AWS.DynamoDB.DocumentClient.))
@@ -22,19 +23,19 @@
 
 (defn -save [query]
   (let [c (chan)]
-    (.put dynamo (clj->js query) #(go
-                                    (let [response (if %1
-                                                     {:error %1}
-                                                     {:success (:id (:Item query))})]
-                                      (when (= :error response)
-                                        (logger/log "Error Saving Item: " query))
-                                      (>! c response)
-                                      (async/close! c))))
+    (.put dynamo (clj->js query)
+          #(let [response (if %1
+                            {:error %1}
+                            {:success (:id (:Item query))})]
+             (when (= :error response)
+               (logger/log "Error Saving Item: " query))
+             (async/put! c response)
+             (async/close! c)))
     c))
 
-(defn save [{:keys [type] :as payload}]
-  (let [items (type payload)
-        table-name (str (name type) "-" (.. js/process -env -SERVERLESS_STAGE))
-        queries (map #(create-query table-name %1) items)
+(defn save [payload]
+  (let [type (-> (spec/conform ::specs/valid-payload payload) first name)
+        table-name (str type "-" (.. js/process -env -SERVERLESS_STAGE))
+        queries (map #(create-query table-name %1) payload)
         query-chans (async/merge (map -save queries))]
     (async/into [] query-chans)))

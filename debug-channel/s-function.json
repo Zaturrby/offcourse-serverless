@@ -15,9 +15,9 @@
   "events": [
     {
       "name": "streamToDebug",
-      "type": "kinesisstream",
+      "type": "dynamodbstream",
       "config": {
-        "streamArn": "${courseStreamARN}",
+        "streamArn": "${coursesTableStreamARN}",
         "batchSize": 1,
         "enabled": "true"
       }

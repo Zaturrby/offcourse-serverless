@@ -1,6 +1,6 @@
 (ns app.core
   (:require [protocols.convertible :as cv]
-            [app.stream :as stream]
+            [services.stream :as stream]
             [cljs.core.async :refer [<!]]
             [services.logger :as logger]
             [cljs.nodejs :as node]

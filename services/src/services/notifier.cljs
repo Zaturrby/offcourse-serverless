@@ -33,7 +33,7 @@
 
 (defmulti notify (fn [type payload] type))
 
-(defmethod notify :slack [_ {:keys [type] :as payload}]
-  (let [chans (async/merge (map create-request (type payload)))]
+(defmethod notify :slack [_ payload]
+  (let [chans (async/merge (map create-request payload))]
     (async/into [] chans)))
 

@@ -1,0 +1,20 @@
+{
+    "Records": [
+        {
+            "kinesis": {
+                "kinesisSchemaVersion": "1.0",
+                "partitionKey": "curator",
+                "sequenceNumber": "49564616006672912907191413214662684430416874226533269506",
+                "data": "eyJiYXNlLWlkIjoieWVlaGFhOjo1MDgzNjM3MTg5IiwicmV2aXNpb24iOjAsImN1cmF0b3IiOiJ5ZWVoYWEiLCJnb2FsIjoiQmVjb21lIEZ1bmN0aW9uYWwiLCJjb3Vyc2Utc2x1ZyI6ImJlY29tZS1mdW5jdGlvbmFsIiwiY2hlY2twb2ludHMiOlt7InRhZ3MiOlsiZnVuY3Rpb25hbCBwcm9ncmFtbWluZyIsIm1hdGhlbWF0aWNzIiwiZGVjaXNpb24iXSwiY2hlY2twb2ludC1pZCI6MywidGFzayI6Ikxvc2UgWW91ciBGZWFycyIsImNoZWNrcG9pbnQtc2x1ZyI6Imxvc2UteW91ci1mZWFycyIsInVybCI6Imh0dHBzOi8vd3d3LnNtYXNoaW5nbWFnYXppbmUuY29tLzIwMTQvMDcvZG9udC1iZS1zY2FyZWQtb2YtZnVuY3Rpb25hbC1wcm9ncmFtbWluZy8ifSx7InRhZ3MiOlsiamF2YXNjcmlwdCIsIm9iamVjdC1vcmllbnRlZCBwcm9ncmFtbWluZyIsImZ1bmN0aW9uYWwgcHJvZ3JhbW1pbmciXSwiY2hlY2twb2ludC1pZCI6MiwidGFzayI6IkNoYW5nZSBZb3VyIEphdmFTY3JpcHQiLCJjaGVja3BvaW50LXNsdWciOiJjaGFuZ2UteW91ci1qYXZhc2NyaXB0IiwidXJsIjoiaHR0cDovL3d3dy5zaXRlcG9pbnQuY29tL2ludHJvZHVjdGlvbi1mdW5jdGlvbmFsLWphdmFzY3JpcHQvIiwiY29tcGxldGVkPyI6MTQ2MjcxNjA5MTA5OH0seyJ0YWdzIjpbImltbXV0YWJpbGl0eSIsInJlZmVyZW5jZSIsInZhbHVlIl0sImNoZWNrcG9pbnQtaWQiOjEsInRhc2siOiJTdG9wIE11dGF0aW5nIiwiY2hlY2twb2ludC1zbHVnIjoic3RvcC1tdXRhdGluZyIsInVybCI6Imh0dHA6Ly9qbG9uZ3N0ZXIuY29tL1VzaW5nLUltbXV0YWJsZS1EYXRhLVN0cnVjdHVyZXMtaW4tSmF2YVNjcmlwdCIsImNvbXBsZXRlZD8iOmZhbHNlfSx7InRhZ3MiOlsicmVhY3RpdmUgcHJvZ3JhbW1pbmciLCJyeGpzIiwicmVhY3QiLCJldmVudHMiXSwiY2hlY2twb2ludC1pZCI6MCwidGFzayI6IlJlYWN0LCBEb24ndCBBY3QiLCJjaGVja3BvaW50LXNsdWciOiJyZWFjdC1kb250LWFjdCIsInVybCI6Imh0dHBzOi8vZ2lzdC5naXRodWIuY29tL3N0YWx0ei84NjhlN2U5YmMyYTdiOGMxZjc1NCJ9XSwiZm9ya3MiOltdLCJ2ZXJzaW9uIjpbMF0sInRpbWVzdGFtcCI6MTQ2MjcxNjA5MTA5OCwiY291cnNlLWlkIjoieWVlaGFhOjo1MDgzNjM3MTg5IiwiZmxhZ3MiOlsiZmVhdHVyZWQiXSwiZm9ya2VkLWZyb20iOm51bGx9",
+                "approximateArrivalTimestamp": 1470689502.248
+            },
+            "eventSource": "aws:kinesis",
+            "eventVersion": "1.0",
+            "eventID": "shardId-000000000000:49564616006672912907191413214662684430416874226533269506",
+            "eventName": "aws:kinesis:record",
+            "invokeIdentityArn": "arn:aws:iam::774182433398:role/offcourse-yeehaa-r-IamRoleLambda-NM45FM8L4FP8",
+            "awsRegion": "eu-central-1",
+            "eventSourceARN": "arn:aws:kinesis:eu-central-1:774182433398:stream/valid-data-yeehaa"
+        }
+    ]
+}

@@ -1,5 +1,12 @@
 {
   "name": "offcourse",
   "custom": {},
-  "plugins": []
+  "plugins": [
+    "serverless-client-s3"
+  ],
+  "custom" : {
+    "client": {
+      "bucketName": "${frontendBucketName}"
+    }
+  }
 }

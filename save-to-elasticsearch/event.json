@@ -1,13 +1,13 @@
 {
     "Records": [
         {
-            "eventID": "458c5c355c2dccdf1f2d812bf3a889bf",
+            "eventID": "05326f1bc55442f8129e7bb31b719d0e",
             "eventName": "INSERT",
             "eventVersion": "1.1",
             "eventSource": "aws:dynamodb",
             "awsRegion": "eu-central-1",
             "dynamodb": {
-                "ApproximateCreationDateTime": 1469999940,
+                "ApproximateCreationDateTime": 1470693840,
                 "Keys": {
                     "course-id": {
                         "S": "yeehaa::5083637189"
@@ -19,15 +19,6 @@
                 "NewImage": {
                     "forks": {
                         "L": []
-                    },
-                    "course-slug": {
-                        "S": "become-functional"
-                    },
-                    "curator": {
-                        "S": "yeehaa"
-                    },
-                    "course-id": {
-                        "S": "yeehaa::5083637189"
                     },
                     "goal": {
                         "S": "Become Functional"
@@ -51,9 +42,6 @@
                                     },
                                     "checkpoint-slug": {
                                         "S": "lose-your-fears"
-                                    },
-                                    "completed?": {
-                                        "BOOL": false
                                     },
                                     "checkpoint-id": {
                                         "N": "3"
@@ -85,7 +73,7 @@
                                         "S": "change-your-javascript"
                                     },
                                     "completed?": {
-                                        "BOOL": false
+                                        "N": "1462716091098"
                                     },
                                     "checkpoint-id": {
                                         "N": "2"
@@ -117,7 +105,7 @@
                                         "S": "stop-mutating"
                                     },
                                     "completed?": {
-                                        "BOOL": false
+                                        "N": "0"
                                     },
                                     "checkpoint-id": {
                                         "N": "1"
@@ -148,9 +136,6 @@
                                     "checkpoint-slug": {
                                         "S": "react-dont-act"
                                     },
-                                    "completed?": {
-                                        "BOOL": false
-                                    },
                                     "checkpoint-id": {
                                         "N": "0"
                                     },
@@ -177,24 +162,40 @@
                             }
                         ]
                     },
-                    "base-id": {
-                        "S": "yeehaa::5083637189"
+                    "type": {
+                        "NULL": true
                     },
                     "version": {
-                        "NULL": true
+                        "L": [
+                            {
+                                "N": "0"
+                            }
+                        ]
                     },
                     "revision": {
                         "N": "0"
+                    },
+                    "course-slug": {
+                        "S": "become-functional"
+                    },
+                    "curator": {
+                        "S": "yeehaa"
+                    },
+                    "course-id": {
+                        "S": "yeehaa::5083637189"
+                    },
+                    "base-id": {
+                        "S": "yeehaa::5083637189"
                     },
                     "timestamp": {
                         "N": "1462716091098"
                     }
                 },
-                "SequenceNumber": "32200000000000112859541",
-                "SizeBytes": 1057,
+                "SequenceNumber": "4584700000000000155654349",
+                "SizeBytes": 1049,
                 "StreamViewType": "NEW_IMAGE"
             },
-            "eventSourceARN": "arn:aws:dynamodb:eu-central-1:774182433398:table/courses-dev/stream/2016-07-31T21:16:40.348"
+            "eventSourceARN": "arn:aws:dynamodb:eu-central-1:774182433398:table/courses-yeehaa/stream/2016-08-07T20:45:58.880"
         }
     ]
 }

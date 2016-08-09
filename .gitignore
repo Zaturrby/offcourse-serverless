@@ -45,3 +45,7 @@ admin.env
 
 #Ignore _meta folder
 _meta
+
+# CLIENT
+client/dev
+client/dist

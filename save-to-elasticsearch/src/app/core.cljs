@@ -12,7 +12,9 @@
 (defn ^:export handler [raw-event context cb]
   (if-let [payload (-> raw-event cv/to-event cv/to-payload)]
     (go
-      (let [errors (filter :error (<! (es/save payload)))]
+      (let [res (<! (es/save payload))
+            errors (filter :error (<! (es/save payload)))]
+        (println res)
         (if (empty? errors)
           (cb nil "Save Succeeded")
           (do

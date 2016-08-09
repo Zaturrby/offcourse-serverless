@@ -2,6 +2,36 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "The AWS CloudFormation template for this Serverless application's resources outside of Lambdas and Api Gateway",
   "Resources": {
+    "DataBucket": {
+      "Type" : "AWS::S3::Bucket",
+      "Properties" : {
+        "BucketName" : "${project}-data-${region}-${stage}"
+      }
+    },
+    "FrontendBucket": {
+      "Type" : "AWS::S3::Bucket",
+      "Properties" : {
+        "BucketName" : "${project}-frontend-${region}-${stage}",
+        "AccessControl" : "PublicRead",
+        "WebsiteConfiguration" : {
+          "IndexDocument" : "index.html",
+          "ErrorDocument" : "index.html"
+        },
+        "CorsConfiguration" : {
+          "CorsRules" : [
+            {
+              "AllowedOrigins" : ["*"],
+              "AllowedMethods" : ["GET"],
+              "AllowedHeaders" : ["*"],
+              "MaxAge" : 3000
+            }
+          ]
+        },
+        "VersioningConfiguration" : {
+          "Status": "Enabled"
+        }
+      }
+    },
     "Elasticsearch": {
       "Type": "AWS::Elasticsearch::Domain",
       "Properties": {
@@ -13,7 +43,7 @@
               "Principal": {
                 "AWS": "*"
               },
-              "Action": "es:HttpGet",
+              "Action": "es:*",
               "Resource": "arn:aws:es:${region}:*:*"
             }
           ]
@@ -63,10 +93,17 @@
         "TableName": "courses-${stage}"
       }
     },
-    "CourseStream": {
+    "RawDataStream": {
       "Type": "AWS::Kinesis::Stream",
       "Properties": {
-        "Name": "course-${stage}",
+        "Name": "raw-data-${stage}",
+        "ShardCount": 1
+      }
+    },
+    "ValidDataStream": {
+      "Type": "AWS::Kinesis::Stream",
+      "Properties": {
+        "Name": "valid-data-${stage}",
         "ShardCount": 1
       }
     },
@@ -114,6 +151,17 @@
             {
               "Effect": "Allow",
               "Action": [
+                "s3:*"
+              ],
+              "Resource" : {
+                "Fn::Join" : [
+                  "", ["arn:aws:s3:::", {"Ref" : "DataBucket"} , "/*" ]
+                ]
+              }
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
                 "logs:CreateLogGroup",
                 "logs:CreateLogStream",
                 "logs:PutLogEvents"
@@ -149,10 +197,34 @@
     }
   },
   "Outputs": {
-    "CourseStreamName": {
+    "RawDataStreamName": {
       "Description": "Name of the requested save stream",
       "Value": {
-        "Ref": "CourseStream"
+        "Ref": "RawDataStream"
+      }
+    },
+    "RawDataStreamARN": {
+      "Description": "ARN of the requested save stream",
+      "Value": {
+        "Fn::GetAtt": [
+          "RawDataStream",
+          "Arn"
+        ]
+      }
+    },
+    "ValidDataStreamName": {
+      "Description": "Name of the requested save stream",
+      "Value": {
+        "Ref": "ValidDataStream"
+      }
+    },
+    "ValidDataStreamARN": {
+      "Description": "ARN of the requested save stream",
+      "Value": {
+        "Fn::GetAtt": [
+          "ValidDataStream",
+          "Arn"
+        ]
       }
     },
     "ElasticsearchARN": {
@@ -173,15 +245,6 @@
         ]
       }
     },
-    "CourseStreamARN": {
-      "Description": "ARN of the requested save stream",
-      "Value": {
-        "Fn::GetAtt": [
-          "CourseStream",
-          "Arn"
-        ]
-      }
-    },
     "CoursesTableStreamARN": {
       "Description": "ARN of the requested save stream",
       "Value": {
@@ -189,6 +252,18 @@
           "CoursesTable",
           "StreamArn"
         ]
+      }
+    },
+    "FrontendBucketName": {
+      "Description": "Name of the frontend bucket",
+      "Value": {
+        "Ref": "FrontendBucket"
+      }
+    },
+    "DataBucketName": {
+      "Description": "Name of the data bucket",
+      "Value": {
+        "Ref": "DataBucket"
       }
     },
     "IamRoleArnLambda": {

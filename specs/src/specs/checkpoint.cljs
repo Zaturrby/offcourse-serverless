@@ -6,7 +6,7 @@
 (spec/def ::checkpoint-id int?)
 (spec/def ::checkpoint-slug string?)
 
-(spec/def ::completed? (spec/or :true int? :false #(= false %)))
+(spec/def ::completed? (spec/or :true int? :false #(= 0 %)))
 
 (spec/def ::new-checkpoint (spec/and (spec/keys :req-un [::task ::url])
                                      #(not (:checkpoint-id %))))

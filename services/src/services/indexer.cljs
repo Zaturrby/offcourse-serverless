@@ -1,7 +1,8 @@
 (ns services.indexer
   (:require [cljs.core.async :as async :refer [>! chan]]
-            [cljs.nodejs :as node])
-  (:require-macros [cljs.core.async.macros :refer [go]]))
+            [cljs.spec :as spec]
+            [specs.core :as specs]
+            [cljs.nodejs :as node]))
 
 (def AWS (node/require "aws-sdk"))
 (def path (node/require "path"))
@@ -32,10 +33,9 @@
 (defn handle-response [resp c]
   (let [item (atom "")]
     (.on resp "data" #(swap! item str %1))
-    (.on resp "end" #(go
-                       (>! c @item)
+    (.on resp "end" #(do
+                       (async/put! c @item)
                        (async/close! c)))))
-
 (defn send [req]
   (let [c (chan)]
     (.handleRequest HTTP req nil #(handle-response %1 c))
@@ -47,9 +47,7 @@
       sign-request
       send))
 
-(defn save [{:keys [type] :as payload}]
-  (let [items (type payload)
-        index-name (name type)
-        query-chans (async/merge (map #(-save index-name %) items))]
+(defn save [payload]
+  (let [type (-> (spec/conform ::specs/valid-payload payload) first name)
+        query-chans (async/merge (map #(-save type %) payload))]
     (async/into [] query-chans)))
-

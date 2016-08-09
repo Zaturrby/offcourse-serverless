@@ -46,7 +46,7 @@
         "task":"Stop Mutating",
         "checkpoint-slug":"stop-mutating",
         "url":"http://jlongster.com/Using-Immutable-Data-Structures-in-JavaScript",
-        "completed?": false
+        "completed?": 0
       },
       {
         "tags":[

@@ -5,6 +5,6 @@
 
 (spec/def ::checkpoints (spec/* ::checkpoint/new-checkpoint))
 
-(spec/def ::new-course (spec/keys :req-un [::course/curator
-                                           ::course/goal
-                                           ::checkpoints]))
+(spec/def ::course (spec/keys :req-un [::course/curator
+                                       ::course/goal
+                                       ::checkpoints]))
