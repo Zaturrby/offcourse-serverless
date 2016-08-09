@@ -1,5 +1,5 @@
 (set-env!
- :resource-paths #{"src" "../protocols/src" "../specs/src" "../services/src" "../models/src"}
+ :source-paths   #{"src" "../protocols/src" "../specs/src" "../services/src" "../models/src"}
  :checkouts     '[[offcourse/specs            "0.1.0-SNAPSHOT"]
                   [offcourse/models            "0.1.0-SNAPSHOT"]
                   [offcourse/protocols            "0.1.0-SNAPSHOT"]

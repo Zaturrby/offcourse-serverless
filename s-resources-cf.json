@@ -11,7 +11,7 @@
     "FrontendBucket": {
       "Type" : "AWS::S3::Bucket",
       "Properties" : {
-        "BucketName" : "${project}-frontend-${region}-${stage}",
+        "BucketName" : "${project}-frontsite-${region}-${stage}",
         "AccessControl" : "PublicRead",
         "WebsiteConfiguration" : {
           "IndexDocument" : "index.html",

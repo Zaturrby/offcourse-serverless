@@ -11,7 +11,6 @@
         new-type(viewmodel-type proposal)
         user-name (-> proposal :user :user-name)
         auth-token (-> proposal :auth-token)]
-    #_(println old-type new-type)
     (cond
       (and (= old-type :signup) (= new-type :signup)) true
       (and (= old-type :new-course) (= new-type :new-course)) true
