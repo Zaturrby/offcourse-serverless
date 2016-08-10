@@ -30,8 +30,7 @@
   (comp (css)
         (pom)
         (jar)
-        (install)
-        (target)))
+        (install)))
 
 (deftask dev []
   (comp (watch)
