@@ -6,7 +6,7 @@
 (def endpoint-url (.. js/process -env -ELASTICSEARCH_ENDPOINT))
 (def ^:private js-request (node/require "request"))
 
-(defn- -request [url-or-opts]
+(defn request [url-or-opts]
   (let [c-resp (chan 1)]
     (js-request (clj->js url-or-opts)
                 (fn [error response body]
@@ -17,7 +17,7 @@
                               #(async/close! c-resp))))
     c-resp))
 
-(defn request [query]
+(defn fetch [query]
   (go
-    (:body (<! (-request {:url  (str "http://" endpoint-url "/offcourse/courses/_search")
+    (:body (<! (request {:url  (str "http://" endpoint-url "/offcourse/courses/_search")
                           :body (.stringify js/JSON (clj->js query))})))))

@@ -1,7 +1,7 @@
 {
   "type": "requested-data",
   "payload": {
-    "collection-type": "flags",
-    "collection-name": "featured"
+    "course-slug":"become-functional",
+    "curator":"yeehaa"
   }
 }

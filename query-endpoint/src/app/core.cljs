@@ -16,8 +16,8 @@
 (defn ^:export handler [raw-event context cb]
   (if-let [query (-> raw-event cv/to-event cv/to-query)]
     (go
-      (println (<! (es/fetch query)))
-      (cb nil "payload sent"))
+      (let [courses (<! (es/fetch query))]
+        (cb nil (.stringify js/JSON (clj->js courses)))))
     (cb "invalid action" nil)))
 
 (defn -main [] identity)

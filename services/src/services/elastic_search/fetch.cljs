@@ -9,11 +9,16 @@
 
 (defmulti fetch (fn [event] (first (spec/conform ::specs/query event))))
 
+(defmethod fetch :course [query]
+  (go
+    (let [es-query (query/to-es-query query)
+          res      (<! (request/fetch es-query))
+          course  (first (extract/courses res))]
+      course)))
+
 (defmethod fetch :collection [query]
   (go
-    (let [res (-> query
-                  query/to-es-query
-                  request/request
-                  <!
-                  extract/courses)]
-      res)))
+    (let [es-query (query/to-es-query query)
+          res      (<! (request/fetch es-query))
+          courses  (extract/courses res)]
+      courses)))
