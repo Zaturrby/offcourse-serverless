@@ -2,12 +2,13 @@
 
 (set-env!
  :source-paths    #{"src/js" "src/cljs" "src/cljc" "../protocols/src"
-                    "../specs/src" "../services/src" "../models/src"}
+                    "../specs/src" "../services/src" "../models/src" "../styles/src"}
  :resource-paths  #{"resources"}
- :checkouts     '[[offcourse/specs            "0.1.0-SNAPSHOT"]
+ :checkouts     '[[offcourse/specs             "0.1.0-SNAPSHOT"]
                   [offcourse/models            "0.1.0-SNAPSHOT"]
-                  [offcourse/protocols            "0.1.0-SNAPSHOT"]
-                  [offcourse/services          "0.1.0-SNAPSHOT"]]
+                  [offcourse/protocols         "0.1.0-SNAPSHOT"]
+                  [offcourse/services          "0.1.0-SNAPSHOT"]
+                  [offcourse/styles            "0.1.0-SNAPSHOT"]]
  :dependencies '[[adzerk/boot-cljs              "1.7.228-1"      :scope "test"]
                  [adzerk/boot-cljs-repl         "0.3.3"          :scope "test"]
                  [adzerk/boot-reload            "0.4.12"         :scope "test"]
@@ -37,10 +38,11 @@
                  [rum                         "0.10.5"]
                  [sablono                     "0.7.3"]
                  [bidi                        "2.0.9"]
-                 [offcourse/specs            "0.1.0-SNAPSHOT"]
+                 [offcourse/specs             "0.1.0-SNAPSHOT"]
                  [offcourse/services          "0.1.0-SNAPSHOT"]
                  [offcourse/models            "0.1.0-SNAPSHOT"]
-                 [offcourse/protocols            "0.1.0-SNAPSHOT"]
+                 [offcourse/protocols         "0.1.0-SNAPSHOT"]
+                 [offcourse/styles            "0.1.0-SNAPSHOT"]
                  [funcool/cuerdas             "0.7.0"]
                  [kibu/pushy                  "0.3.6"]
                  [cljsjs/auth0                "6.3.0-0"]
@@ -56,7 +58,10 @@
  '[adzerk.boot-reload    :refer [reload]]
  '[org.martinklepsch.boot-garden :refer [garden]]
  '[crisptrutski.boot-cljs-test  :refer [exit! test-cljs]]
+ '[offcourse.styles      :refer [base]]
  '[pandeiro.boot-http    :refer [serve]])
+
+(println base)
 
 (deftask testing []
   (merge-env! :resource-paths #{"test"})
@@ -69,8 +74,7 @@
         (test-cljs)))
 
 (deftask css []
-  (set-env! :source-paths #(conj % "src/clj"))
-  (task-options! garden {:styles-var   'offcourse.styles.index/base
+  (task-options! garden {:styles-var   'base
                          :vendors ["webkit" "moz"]
                          :auto-prefix #{:user-select :column-count :column-gap}
                          :output-to    "css/main.css"
