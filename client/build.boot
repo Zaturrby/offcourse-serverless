@@ -9,7 +9,8 @@
                   [offcourse/protocols         "0.1.0-SNAPSHOT"]
                   [offcourse/services          "0.1.0-SNAPSHOT"]
                   [offcourse/styles            "0.1.0-SNAPSHOT"]]
- :dependencies '[[adzerk/boot-cljs              "1.7.228-1"      :scope "test"]
+ :dependencies '[[garden "1.3.2"]
+                 [adzerk/boot-cljs              "1.7.228-1"      :scope "test"]
                  [adzerk/boot-cljs-repl         "0.3.3"          :scope "test"]
                  [adzerk/boot-reload            "0.4.12"         :scope "test"]
                  [ring/ring-devel               "1.6.0-beta4"          :scope "test"]
@@ -57,7 +58,7 @@
  '[adzerk.boot-cljs-repl :refer [cljs-repl start-repl]]
  '[adzerk.boot-reload    :refer [reload]]
  '[org.martinklepsch.boot-garden :refer [garden]]
- '[styles.index          :as    [styles]]
+ '[offcourse.styles.index        :as    [styles]]
  '[crisptrutski.boot-cljs-test  :refer [exit! test-cljs]]
  '[pandeiro.boot-http    :refer [serve]])
 
@@ -72,13 +73,17 @@
         (speak)
         (test-cljs)))
 
-(deftask css []
-  (task-options! garden {:styles-var   styles.base
-                         :vendors ["webkit" "moz"]
-                         :auto-prefix #{:user-select :column-count :column-gap}
-                         :output-to    "css/main.css"
-                         :pretty-print true})
-  (garden))
+
+(deftask hi []
+  (println "hi"))
+
+; (deftask css []
+;   (task-options! garden {:styles-var   styles.base
+;                          :vendors ["webkit" "moz"]
+;                          :auto-prefix #{:user-select :column-count :column-gap}
+;                          :output-to    "css/main.css"
+;                          :pretty-print true})
+;   (garden))
 
 (deftask dev []
   (set-env! :source-paths #(conj % "src-dev/cljs" "src-dev/clj"))
@@ -89,7 +94,7 @@
         (reload :on-jsload 'offcourse.main/reload)
         (cljs-repl)
         (cljs :source-map true :optimizations :none)
-        (css)
+        ; (css)
         (target)))
 
 (deftask test []
@@ -101,5 +106,5 @@
   (set-env! :source-paths #(conj % "src-prod/cljs"))
   (task-options! target {:dir #{"dist/"}})
   (comp (cljs :optimizations :advanced)
-        (css)
+        ; (css)
         (target)))

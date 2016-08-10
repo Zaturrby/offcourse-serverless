@@ -2,19 +2,11 @@
 (def version "0.1.0-SNAPSHOT")
 
 (set-env!
- :source-paths    #{"src/"}
- :dependencies '[[org.martinklepsch/boot-garden "1.3.2-0"]
-                 [prismatic/plumbing          "0.5.3"]])
+ :source-paths    #{"src/"})
+ ; :dependencies '[[org.martinklepsch/boot-garden "1.3.2-0"]
+ ;                 [prismatic/plumbing          "0.5.3"]])
 
-(require '[org.martinklepsch.boot-garden :refer [garden]])
-
-(deftask css []
-  (task-options! garden {:styles-var   'styles.index/base
-                         :vendors ["webkit" "moz"]
-                         :auto-prefix #{:user-select :column-count :column-gap}
-                         :output-to    "css/main.css"
-                         :pretty-print true})
-  (garden))
+; (require '[org.martinklepsch.boot-garden :refer [garden]])
 
 (deftask build
   "Build and install the project locally."
@@ -27,11 +19,9 @@
         :scm         {:url "https://github.com/yourname/styles"}
         :license     {"Eclipse Public License"
                       "http://www.eclipse.org/legal/epl-v10.html"}})
-  (comp (css)
-        (pom)
+  (comp (pom)
         (jar)
-        (install)
-        (target)))
+        (install)))
 
 (deftask dev []
   (comp (watch)
