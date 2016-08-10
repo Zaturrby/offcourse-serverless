@@ -1,0 +1,25 @@
+{
+  "type": "requested-save",
+  "payload": {
+    "curator":"yeehaa",
+    "goal":"Become Functional",
+    "checkpoints":[
+      {
+        "task":"Lose Your Fears",
+        "url":"https://www.smashingmagazine.com/2014/07/dont-be-scared-of-functional-programming/"
+      },
+      {
+        "task":"Change Your JavaScript",
+        "url":"http://www.sitepoint.com/introduction-functional-javascript/"
+      },
+      {
+        "task":"Stop Mutating",
+        "url":"http://jlongster.com/Using-Immutable-Data-Structures-in-JavaScript"
+      },
+      {
+        "task":"React, Don't Act",
+        "url":"https://gist.github.com/staltz/868e7e9bc2a7b8c1f754"
+      }
+    ]
+  }
+}

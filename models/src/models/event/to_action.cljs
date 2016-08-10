@@ -14,7 +14,3 @@
       (logger/pipe "INCOMING: " action)
       (logger/log-error :invalid-incoming-action action))))
 
-(spec/fdef to-payload
-           :args (spec/cat :event ::specs/event)
-           :ret (spec/nilable ::specs/payload))
-

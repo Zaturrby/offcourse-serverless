@@ -1,7 +1,5 @@
-(ns services.indexer
-  (:require [cljs.core.async :as async :refer [>! chan]]
-            [cljs.spec :as spec]
-            [specs.core :as specs]
+(ns services.elastic-search.save-request
+  (:require [cljs.core.async :as async :refer [chan]]
             [cljs.nodejs :as node]))
 
 (def AWS (node/require "aws-sdk"))
@@ -36,18 +34,13 @@
     (.on resp "end" #(do
                        (async/put! c @item)
                        (async/close! c)))))
-(defn send [req]
+(defn -send [req]
   (let [c (chan)]
     (.handleRequest HTTP req nil #(handle-response %1 c))
     c))
 
-(defn -save [index-name item]
+(defn send [index-name item]
   (-> item
       (create-request index-name)
       sign-request
-      send))
-
-(defn save [payload]
-  (let [type (-> (spec/conform ::specs/valid-payload payload) first name)
-        query-chans (async/merge (map #(-save type %) payload))]
-    (async/into [] query-chans)))
+      -send))

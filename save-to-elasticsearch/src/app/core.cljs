@@ -2,7 +2,7 @@
   (:require [cljs.nodejs :as node]
             [protocols.convertible :as cv]
             [cljs.core.async :refer [<! chan >!]]
-            [services.indexer :as es]
+            [services.elastic-search.index :as es]
             [services.logger :as logger])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
@@ -13,8 +13,7 @@
   (if-let [payload (-> raw-event cv/to-event cv/to-payload)]
     (go
       (let [res (<! (es/save payload))
-            errors (filter :error (<! (es/save payload)))]
-        (println res)
+            errors (filter :error res)]
         (if (empty? errors)
           (cb nil "Save Succeeded")
           (do

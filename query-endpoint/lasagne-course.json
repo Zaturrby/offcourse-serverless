@@ -1,0 +1,87 @@
+{
+  "type": "requested-save",
+  "payload": {
+    "type": "course",
+    "course": {
+      "base-id":"yeehaa::3871984348",
+      "revision":0,
+      "curator":"yeehaa",
+      "goal":"Cook A Lasagna",
+      "course-slug":"cook-a-lasagna",
+      "checkpoints":[
+         {
+            "tags":[
+               "baking",
+               "italian",
+               "oven"
+            ],
+            "checkpoint-id":4,
+            "task":"Bake The Lasagna",
+            "checkpoint-slug":"bake-the-lasagna",
+            "url":" http://www.livestrong.com/article/478548-how-to-oven-bake-lasagna/",
+            "completed?":false
+         },
+         {
+            "tags":[
+               "cooking",
+               "italian"
+            ],
+            "checkpoint-id":3,
+            "task":"Make The Layers",
+            "checkpoint-slug":"make-the-layers",
+            "url":"https://www.youtube.com/watch?v=m-ISEuDZcZE",
+            "completed?":false
+         },
+         {
+            "tags":[
+               "italian",
+               "sauce",
+               "meat",
+               "cooking"
+            ],
+            "checkpoint-id":2,
+            "task":"Make A Meat Sauce",
+            "checkpoint-slug":"make-a-meat-sauce",
+            "url":"https://www.donnahay.com.au/recipes/sauces-and-condiments/basic-bolognese-sauce",
+            "completed?":false
+         },
+         {
+            "tags":[
+               "cooking",
+               "sauce",
+               "italian",
+               "white"
+            ],
+            "checkpoint-id":1,
+            "task":"Make A White Sauce",
+            "checkpoint-slug":"make-a-white-sauce",
+            "url":"http://www.bbcgoodfood.com/videos/techniques/how-make-bechamel-white-sauce",
+            "completed?":false
+         },
+         {
+            "tags":[
+               "cooking",
+               "tomatoes",
+               "italian",
+               "sauce"
+            ],
+            "checkpoint-id":0,
+            "task":"Make The Tomato Sauce",
+            "checkpoint-slug":"make-the-tomato-sauce",
+            "url":"http://deliciouslyella.com/the-best-tomato-sauce-vegan/",
+            "completed?":false
+         }
+      ],
+      "forks":[
+
+      ],
+      "version":null,
+      "timestamp":1465912133796,
+      "course-id":"yeehaa::3871984348",
+      "flags":[
+         "featured"
+      ],
+      "forked-from":null
+   }
+  }
+}

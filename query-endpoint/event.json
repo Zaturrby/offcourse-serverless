@@ -1,0 +1,7 @@
+{
+  "type": "requested-data",
+  "payload": {
+    "collection-type": "flags",
+    "collection-name": "featured"
+  }
+}

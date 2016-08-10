@@ -4,6 +4,7 @@
 (defprotocol Convertible
   (-to-event [this])
   (-to-action [this])
+  (-to-query [this])
   (-to-payload [this]))
 
 (defn to-event [this]
@@ -15,4 +16,5 @@
 (defn to-payload [this]
   (-to-payload this))
 
-
+(defn to-query [this]
+  (-to-query this))

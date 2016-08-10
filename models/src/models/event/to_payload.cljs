@@ -2,7 +2,6 @@
   (:require [cljs.spec :as spec]
             [specs.core :as specs]
             [cljs.nodejs :as node]
-            [specs.payload :as pl-specs]
             [services.helpers :as helpers]
             [services.logger :as logger]))
 
@@ -24,9 +23,13 @@
        (filter #(= "INSERT" (:eventName %1)))
        (map #(-> % :dynamodb :NewImage clj->js unmarshal-item helpers/js->cljs))))
 
+(spec/fdef to-payload
+           :args (spec/cat :event ::specs/event)
+           :ret (spec/nilable ::specs/payload))
+
 (defn to-payload [event]
   (let [records     (:Records event)
         payload     (extract-data records)]
-    (if (spec/valid? ::pl-specs/valid-payload payload)
+    (if (spec/valid? ::specs/valid-payload payload)
       (logger/pipe "INCOMING PAYLOAD: " payload)
       (logger/log-error :invalid-incoming-payload payload))))

@@ -1,0 +1,72 @@
+{
+  "type": "requested-save",
+  "payload": {
+    "type": "course",
+    "course": {
+      "base-id":"yeehaa::5083637189",
+      "version":null,
+      "timestamp":1462716091098,
+      "course-id":"yeehaa::5083637189",
+      "revision":0,
+      "curator":"yeehaa",
+      "goal":"Become Functional",
+      "course-slug":"become-functional",
+      "flags":[
+        "featured"
+      ],
+      "checkpoints":[
+        {
+          "tags":[
+            "functional programming",
+            "mathematics",
+            "decision"
+          ],
+          "checkpoint-id":3,
+          "task":"Lose Your Fears",
+          "checkpoint-slug":"lose-your-fears",
+          "url":"https://www.smashingmagazine.com/2014/07/dont-be-scared-of-functional-programming/",
+          "completed?":false
+        },
+        {
+          "tags":[
+            "javascript",
+            "object-oriented programming",
+            "functional programming"
+          ],
+          "checkpoint-id":2,
+          "task":"Change Your JavaScript",
+          "checkpoint-slug":"change-your-javascript",
+          "url":"http://www.sitepoint.com/introduction-functional-javascript/",
+          "completed?":false
+        },
+        {
+          "tags":[
+            "immutability",
+            "reference",
+            "value"
+          ],
+          "checkpoint-id":1,
+          "task":"Stop Mutating",
+          "checkpoint-slug":"stop-mutating",
+          "url":"http://jlongster.com/Using-Immutable-Data-Structures-in-JavaScript",
+          "completed?":false
+        },
+        {
+          "tags":[
+            "reactive programming",
+            "rxjs",
+            "react",
+            "events"
+          ],
+          "checkpoint-id":0,
+          "task":"React, Don't Act",
+          "checkpoint-slug":"react-dont-act",
+          "url":"https://gist.github.com/staltz/868e7e9bc2a7b8c1f754",
+          "completed?":false
+        }
+      ],
+      "forked-from":null,
+      "forks":[]
+    }
+  }
+}
