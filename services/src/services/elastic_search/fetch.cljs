@@ -13,7 +13,7 @@
   (go
     (let [es-query (query/to-es-query query)
           res      (<! (request/fetch es-query))
-          course  (first (extract/courses res))]
+          course  (extract/course res)]
       course)))
 
 (defmethod fetch :collection [query]

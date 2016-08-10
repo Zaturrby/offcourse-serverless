@@ -5,7 +5,9 @@
             [specs.query :as query]
             [specs.course :as course]))
 
-(spec/def ::type #{:requested-save :requested-data})
+(spec/def ::type #{:requested-save
+                   :requested-data
+                   :found-data})
 
 (spec/def ::valid-payload ::payload/valid-payload)
 (spec/def ::payload ::payload/payload)

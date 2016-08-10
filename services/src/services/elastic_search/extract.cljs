@@ -10,6 +10,8 @@
                  :hits)]
     (map :_source hits)))
 
+(defn course [response]
+  (first (courses response)))
 
 (defn user-id [token]
   (-> token
