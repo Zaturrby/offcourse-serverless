@@ -57,11 +57,10 @@
  '[adzerk.boot-cljs-repl :refer [cljs-repl start-repl]]
  '[adzerk.boot-reload    :refer [reload]]
  '[org.martinklepsch.boot-garden :refer [garden]]
+ '[styles.index          :as    [styles]]
  '[crisptrutski.boot-cljs-test  :refer [exit! test-cljs]]
- '[offcourse.styles      :refer [base]]
  '[pandeiro.boot-http    :refer [serve]])
 
-(println base)
 
 (deftask testing []
   (merge-env! :resource-paths #{"test"})
@@ -74,7 +73,7 @@
         (test-cljs)))
 
 (deftask css []
-  (task-options! garden {:styles-var   'base
+  (task-options! garden {:styles-var   styles.base
                          :vendors ["webkit" "moz"]
                          :auto-prefix #{:user-select :column-count :column-gap}
                          :output-to    "css/main.css"
