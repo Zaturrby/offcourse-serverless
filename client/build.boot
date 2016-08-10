@@ -58,7 +58,7 @@
  '[adzerk.boot-cljs-repl :refer [cljs-repl start-repl]]
  '[adzerk.boot-reload    :refer [reload]]
  '[org.martinklepsch.boot-garden :refer [garden]]
- '[styles.index        :refer [base]]
+ '[styles.index]
  '[crisptrutski.boot-cljs-test  :refer [exit! test-cljs]]
  '[pandeiro.boot-http    :refer [serve]])
 
@@ -75,10 +75,11 @@
 
 
 (deftask printJar []
-  (println "   base follows:    " base))
+  (println "   base follows:    " styles.index/base)
+  (println (type styles.index/base)))
 
 (deftask css []
-  (task-options! garden {:styles-var   base
+  (task-options! garden {:styles-var   styles.index/base
                          :vendors ["webkit" "moz"]
                          :auto-prefix #{:user-select :column-count :column-gap}
                          :output-to    "css/main.css"
