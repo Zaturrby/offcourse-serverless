@@ -22,7 +22,8 @@
 (defn refresh
   ([this] (-refresh this))
   ([this query] (-refresh this query))
-  ([this type data] (-refresh this (payload/new type data))))
+  ([this type data] (-refresh this {:type type
+                                    :payload data})))
 
 (defn add
   ([this query] (-add this query))
@@ -35,4 +36,5 @@
 (defn check
   ([this] (-check this))
   ([this query] (-check this query))
-  ([this type data] (-check this (payload/new type data))))
+  ([this type data] (-check this {:type type
+                                  :payload data})))

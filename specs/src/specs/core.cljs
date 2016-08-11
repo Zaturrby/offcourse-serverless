@@ -14,6 +14,7 @@
 (spec/def ::action (spec/keys :req-un [::payload ::type]))
 
 (spec/def ::query ::query/query)
+(spec/def ::viewmodel ::query/viewmodel)
 
 (spec/def ::event ::event/event)
 (spec/def ::Records ::event/Records)

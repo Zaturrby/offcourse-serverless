@@ -6,11 +6,7 @@
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
 (defn handle-response [res]
-    (match res
-           {"errorMessage" _} {:error :fetch-error}
-           {"type" "found-data" "payload" payload} (response/new payload)
-           {"type" "not-found-data" "payload" payload} {:error :not-found-data
-                                                        :payload payload}))
+  (js->clj (.parse js/JSON res) :keywordize-keys true))
 
 (defn fetch [{:keys [endpoint]} {:keys [auth-token] :as query}]
   (let [c (chan)]

@@ -21,7 +21,7 @@
           "CorsRules" : [
             {
               "AllowedOrigins" : ["*"],
-              "AllowedMethods" : ["GET"],
+              "AllowedMethods" : ["GET", "POST"],
               "AllowedHeaders" : ["*"],
               "MaxAge" : 3000
             }

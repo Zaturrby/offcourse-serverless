@@ -1,12 +1,6 @@
-(ns offcourse.models.action
-  (:require [offcourse.protocols.loggable :refer [Loggable]]))
+(ns offcourse.models.action)
 
-(defn- log [{:keys [type source payload]}]
-  [(.getTime (js/Date.)) type source (when payload payload)])
-
-(defrecord Action [type source payload]
-  Loggable
-  (log [this] (log this)))
+(defrecord Action [type source payload])
 
 (defn new [{:keys [component-name] :as source} type payload]
   (->Action type component-name payload))

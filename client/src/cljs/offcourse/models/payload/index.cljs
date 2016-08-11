@@ -1,45 +1,40 @@
 (ns offcourse.models.payload.index
   (:require [offcourse.protocols.convertible :refer [Convertible]]
-            [offcourse.models.payload.to-url :refer [to-url]]))
+            [offcourse.models.payload.to-url :refer [to-url]]
+            [offcourse.protocols.validatable :as va :refer [Validatable]]))
 
-(defrecord Payload [type]
+(defrecord Payload []
+  Validatable
+  (-valid? [this] true)
   Convertible
   (to-url [this routes] (to-url this routes)))
 
 (defmulti new (fn [type result] type))
 
 (defmethod new :permissions [type result]
-  (map->Payload {:type :permissions
-                 :proposal result}))
+  (map->Payload {:proposal result}))
 
-(defmethod new :checkpoint-view [type result]
-   (map->Payload {:type :checkpoint
-                  :course     (select-keys result [:curator :course-slug])
+(defmethod new :checkpoint-view [result]
+   (map->Payload {:course     (select-keys result [:curator :course-slug])
                   :checkpoint (select-keys result [:checkpoint-slug :checkpoint-id])}))
 
-(defmethod new :home-view [type]
-  (map->Payload {:type :collection
-                 :collection {:collection-type :flags
-                              :collection-name :featured}}))
+(defmethod new :home-view []
+  (map->Payload {:collection {:collection-type "flags"
+                              :collection-name "featured"}}))
 
-(defmethod new :collection-view [type collection]
-  (map->Payload {:type :collection
-                 :collection collection}))
+(defmethod new :collection-view [collection]
+  (map->Payload {:collection collection}))
 
-(defmethod new :course-view [type data]
-  (map->Payload {:type :course
-                 :course     (select-keys data [:curator :course-slug])}))
+(defmethod new :course-view [course]
+  (map->Payload {:course (select-keys course [:curator :course-slug])}))
 
-(defmethod new :signup-view [type user]
-  (map->Payload {:type :signup
-                 :new-user user}))
+(defmethod new :signup-view [user]
+  (map->Payload {:new-user user}))
 
-(defmethod new :new-course-view [type {:keys [new-course new-checkpoint]}]
-  (map->Payload {:type :new-course
-                 :new-course     new-course
+(defmethod new :new-course-view [{:keys [new-course new-checkpoint]}]
+  (map->Payload {:new-course     new-course
                  :new-checkpoint new-checkpoint}))
 
 (defmethod new :default [type result]
-  (map->Payload {:type type
-                 type result}))
+  (map->Payload {type result}))
 

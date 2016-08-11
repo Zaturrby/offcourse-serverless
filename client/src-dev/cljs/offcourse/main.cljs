@@ -21,7 +21,7 @@
    {:adapter           aws/new-db
     :name              "courses-repo"
     :resources         #{:user-profile :course :collection}
-    :endpoint          "https://6fp04c7v5e.execute-api.eu-west-1.amazonaws.com/v1/query"}])
+    :endpoint          "https://70zxd74j8l.execute-api.eu-central-1.amazonaws.com/yeehaa/query-endpoint"}])
 
 (defn init []
   (do

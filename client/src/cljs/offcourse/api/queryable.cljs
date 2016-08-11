@@ -5,15 +5,16 @@
             [cljs.core.match :refer-macros [match]]
             [offcourse.protocols.responsive :as ri]
             [cljs.spec :as spec]
-            [offcourse.specs.response :as response]
+            [specs.core :as specs]
             [offcourse.models.payload.index :as payload])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
-(defn fetch [{:keys [repositories] :as api} {:keys [type] :as query}]
+(defn fetch [{:keys [repositories] :as api} query]
   (doseq [{:keys [resources] :as repository} repositories]
-    (when (contains? resources type)
+    (when (contains? resources (first (spec/conform ::specs/query query)))
       (go
-        (let [response (<! (qa/fetch repository query))]
+        (let [response (<! (qa/fetch repository {:type :requested-data
+                                                 :payload query}))]
           (match response
-                 {:error _} (ri/respond api :not-found-data query)
-                 {:type _}  (ri/respond api :found-data (ci/to-payload response))))))))
+                 {:type _}  (ri/respond api (update-in response [:type] #(keyword %)))
+                 _ (println "not found data")))))))

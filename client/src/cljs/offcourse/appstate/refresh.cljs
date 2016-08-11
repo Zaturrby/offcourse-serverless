@@ -43,7 +43,7 @@
       (rd/redirect as :home))))
 
 (defmethod refresh :requested-view [{:keys [state] :as as} {:keys [payload] :as query}]
-  (let [proposal (qa/refresh @state :viewmodel payload)]
+  (let [proposal (qa/refresh @state :update-viewmodel payload)]
     (if (qa/check as :permissions proposal)
       (do
         (reset! state proposal)
@@ -51,7 +51,7 @@
           (ri/respond as :not-found-data missing-data))
         (if (va/valid? @state)
           (ri/respond as :refreshed-state :appstate @state)
-          (rd/redirect as :home)))
+          (println "OHH SHIITTT")))
       (when (= (-> @state :viewmodel :type) :loading)
         (rd/redirect as :home)))))
 
@@ -61,6 +61,7 @@
 
 (defmethod refresh :found-data [{:keys [state] :as as} {:keys [payload] :as query}]
   (let [proposal (qa/add @state payload)]
+    (println "P:" proposal)
     (when (va/valid? proposal)
       (reset! state proposal)
       (when-let [missing-data (va/missing-data @state payload)]

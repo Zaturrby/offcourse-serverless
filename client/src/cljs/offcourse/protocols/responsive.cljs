@@ -16,12 +16,17 @@
     (println "STATUS" status)
     (println "PAYLOAD" payload)))
 
+(def counter (atom 0))
+
 (defn respond
-  ([this status] (respond this status nil))
+  ([this {:keys [type payload]}] (respond this type payload))
   ([{:keys [output-channel channels component-name] :as this} status payload]
    (let [output-channel (or output-channel (:output channels))
          response       (action/new this status payload)]
+     (when (< @counter 10))
      (go
+       (swap! counter inc)
+       (println @counter)
        (>! output-channel response))))
   ([this status type result]
    (-respond this status (payload/new type result))))
@@ -31,6 +36,7 @@
   (go-loop []
     (let [{:keys [type source payload] :as action} (<! (:input channels))
           reaction (type reactions)]
+      (println component-name source type)
       (when reaction
         (reaction this action))
       (recur))))

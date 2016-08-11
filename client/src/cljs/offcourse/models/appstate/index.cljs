@@ -28,7 +28,7 @@
   (-get [as query] (get-impl/get as query)))
 
 (def defaults {:site-title "BLABLA"
-               :viewmodel {:type :loading}
+               :viewmodel {:loading {}}
                :user {:user-name nil}
                :courses []
                :resources []

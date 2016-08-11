@@ -1,16 +1,17 @@
-(ns offcourse.appstate.check)
+(ns offcourse.appstate.check
+  (:require [cljs.spec :as spec]
+            [specs.core :as specs]))
 
-(defn viewmodel-type [state]
-  (-> state :viewmodel :type))
+(defn viewmodel-type [{:keys [viewmodel] :as state}]
+  (when viewmodel (first (spec/conform ::specs/viewmodel viewmodel))))
 
-(defmulti check
-  (fn [_ {:keys [type]}]type))
+(defmulti check (fn [_ {:keys [type]}] type))
 
-(defmethod check :permissions [{:keys [state] :as as} {:keys [proposal]}]
+(defmethod check :permissions [{:keys [state] :as as} {:keys [payload] :as q}]
   (let [old-type (viewmodel-type @state)
-        new-type(viewmodel-type proposal)
-        user-name (-> proposal :user :user-name)
-        auth-token (-> proposal :auth-token)]
+        new-type(viewmodel-type payload)
+        user-name (-> payload :user :user-name)
+        auth-token (-> payload :auth-token)]
     (cond
       (and (= old-type :signup) (= new-type :signup)) true
       (and (= old-type :new-course) (= new-type :new-course)) true
