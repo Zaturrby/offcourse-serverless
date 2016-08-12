@@ -27,7 +27,8 @@
 
 (defn add
   ([this query] (-add this query))
-  ([this type data] (-add this (payload/new type data))))
+  ([this type data] (-add this {:type type
+                                :payload data})))
 
 (defn remove
   ([this query] (-remove this query))

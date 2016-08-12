@@ -4,11 +4,12 @@
             [offcourse.protocols.validatable :as va]
             [cljs.spec :as spec]
             [clojure.set :as set]
-            [cljs.spec :as spec]
+            [models.query.index :as query]
+            [services.helpers :as helpers]
             [specs.core :as specs]))
 
-
-(defmulti missing-data (fn [state viewmodel] (first (spec/conform ::specs/viewmodel viewmodel))))
+(defmulti missing-data (fn [state {:keys [viewmodel]}]
+                         (helpers/resolve-data-type ::specs/viewmodel viewmodel)))
 
 (defmethod missing-data :resources [state {:keys [resources] :as viewmodel}]
   (let [state-urls  (into #{} (map :url (:resources state)))
@@ -18,7 +19,8 @@
     (when-not (empty? missing-resources)
       (payload/new :resources missing-resources))))
 
-(defmethod missing-data :collection [state {:keys [collection]}] collection)
+(defmethod missing-data :collection [state {:keys [viewmodel]}]
+  (query/new (:collection viewmodel)))
 
 (defmethod missing-data :course [state {:keys [course] :as viewmodel}]
   (if (:checkpoints course)

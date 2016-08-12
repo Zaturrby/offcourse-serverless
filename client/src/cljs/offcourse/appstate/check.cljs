@@ -10,8 +10,8 @@
 (defmethod check :permissions [{:keys [state] :as as} {:keys [payload] :as q}]
   (let [old-type (viewmodel-type @state)
         new-type(viewmodel-type payload)
-        user-name (-> payload :user :user-name)
-        auth-token (-> payload :auth-token)]
+        user-name (some-> payload :user :user-name)
+        auth-token (some-> payload :auth-token)]
     (cond
       (and (= old-type :signup) (= new-type :signup)) true
       (and (= old-type :new-course) (= new-type :new-course)) true

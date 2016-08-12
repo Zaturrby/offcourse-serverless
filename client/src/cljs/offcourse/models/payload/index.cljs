@@ -1,11 +1,8 @@
 (ns offcourse.models.payload.index
   (:require [offcourse.protocols.convertible :refer [Convertible]]
-            [offcourse.models.payload.to-url :refer [to-url]]
-            [offcourse.protocols.validatable :as va :refer [Validatable]]))
+            [offcourse.models.payload.to-url :refer [to-url]]))
 
 (defrecord Payload []
-  Validatable
-  (-valid? [this] true)
   Convertible
   (to-url [this routes] (to-url this routes)))
 

@@ -2,9 +2,14 @@
   (:refer-clojure :exclude [get])
   (:require [com.rpl.specter :refer [ALL select-first]]
             [medley.core :as medley]
-            [offcourse.models.appstate.paths :as paths]))
+            [offcourse.models.appstate.paths :as paths]
+            [cljs.spec :as spec]
+            [specs.core :as specs]
+            [protocols.validatable :as va]))
 
-(defmulti get (fn [_ {:keys [type]}] type))
+(defmulti get (fn [_ query]
+                (println "RT" (va/resolve-type query))
+                (first (spec/conform ::specs/query query))))
 
 (defmethod get :collection [{:keys [collections] :as ds} {:keys [collection]}]
   (when collections

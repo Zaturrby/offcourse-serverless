@@ -22,7 +22,7 @@
           (ca/compose views)
           (rr/render)
           (ma/mount "#container"))
-    (ri/respond rd :rendered-view)))
+    (ri/respond rd {:type :rendered-view})))
 
   Responsive
   (-listen [rd] (ri/listen rd))

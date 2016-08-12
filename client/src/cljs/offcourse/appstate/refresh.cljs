@@ -47,7 +47,7 @@
     (if (qa/check as :permissions proposal)
       (do
         (reset! state proposal)
-        (when-let [missing-data (va/missing-data @state payload)]
+        (when-let [missing-data (va/missing-data @state proposal)]
           (ri/respond as :not-found-data missing-data))
         (if (va/valid? @state)
           (ri/respond as :refreshed-state :appstate @state)
@@ -61,9 +61,6 @@
 
 (defmethod refresh :found-data [{:keys [state] :as as} {:keys [payload] :as query}]
   (let [proposal (qa/add @state payload)]
-    (println "P:" proposal)
     (when (va/valid? proposal)
       (reset! state proposal)
-      (when-let [missing-data (va/missing-data @state payload)]
-        (ri/respond as :not-found-data missing-data))
       (ri/respond as :refreshed-state :appstate @state))))

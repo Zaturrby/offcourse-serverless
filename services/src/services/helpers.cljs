@@ -1,13 +1,8 @@
 (ns services.helpers
   (:require [clojure.string :as str]
-            [cljs.nodejs :as node]
             [specs.core :as specs]
             [cljs.spec :as spec]
             [services.logger :as logger]))
-
-(def AWS (node/require "aws-sdk"))
-(def marshaler (node/require "dynamodb-marshaler"))
-(def unmarshal-item (.-unmarshalItem marshaler))
 
 (defn json->clj [data]
   (-> (.parse js/JSON data "ascii")
@@ -26,3 +21,5 @@
   (if (:type event)
     (update-in event [:type] #(keyword %))
     event))
+
+(defn resolve-data-type [spec data] (first (spec/conform spec data)))

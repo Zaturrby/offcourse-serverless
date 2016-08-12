@@ -16,6 +16,8 @@
 (spec/def ::query ::query/query)
 (spec/def ::viewmodel ::query/viewmodel)
 
+(spec/def ::courses (spec/* ::course/course))
+
 (spec/def ::event ::event/event)
 (spec/def ::Records ::event/Records)
 

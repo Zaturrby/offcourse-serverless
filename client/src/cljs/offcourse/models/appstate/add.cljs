@@ -5,10 +5,12 @@
             [offcourse.models.course.index :as co]
             [offcourse.models.collection :as cl]
             [offcourse.protocols.validatable :as va]
-            [offcourse.models.checkpoint.index :as cp]))
+            [offcourse.models.checkpoint.index :as cp]
+            [cljs.spec :as spec]
+            [specs.core :as specs]))
 
 (defn- add-course [store course]
-  (if-not (qa/get store :course course)
+  (if-not (qa/get store course)
     (update-in store [:courses] #(conj % course))
     store))
 
@@ -17,9 +19,9 @@
     (update-in store [:resources] #(conj % resource))
     store))
 
-(defmulti add (fn [_ {:keys [type]}] type))
+(defmulti add (fn [_ query] (first (spec/conform ::specs/query query))))
 
-(defmethod add :courses [store {:keys [courses]}]
+(defmethod add :courses [store courses]
   (reduce add-course store courses))
 
 (defmethod add :course [{:keys [user] :as store} {:keys [course] :as query}]

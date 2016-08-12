@@ -1,6 +1,6 @@
 (ns offcourse.system.routes
   (:require [bidi.bidi :refer [path-for]]
-            [offcourse.models.payload.index :as payload]
+            [offcourse.models.viewmodel.index :as viewmodel]
             [offcourse.models.course.index :as co]
             [offcourse.models.checkpoint.index :as cp]))
 
@@ -9,7 +9,7 @@
 (def new-user-route    "signup")
 (def new-course-routes (conj curator-routes "/new"))
 (def course-routes     (conj curator-routes "/courses/" :course-slug))
-(def collection-routes [[keyword :collection-type] "/" [keyword :collection-name]])
+(def collection-routes [:collection-type "/" :collection-name])
 (def checkpoint-routes (conj course-routes "/checkpoints/" :checkpoint-slug))
 
 (def table ["/" {home-route        :home-view
@@ -21,13 +21,13 @@
                  true              :home-view}])
 
 (def responses
-  {:home-view       (fn []     (payload/new :home-view))
-   :new-course-view (fn [data] (payload/new :new-course-view
+  {:home-view       (fn []     (viewmodel/new :home-view))
+   :new-course-view (fn [data] (viewmodel/new :new-course-view
                                             {:new-course (co/new {:curator (:curator data)})
                                              :new-checkpoint (cp/new {})}))
-   :collection-view (fn [data] (payload/new :collection-view data))
-   :course-view     (fn [data] (payload/new :course-view data))
-   :checkpoint-view (fn [data] (payload/new :checkpoint-view data))})
+   :collection-view (fn [data] (viewmodel/new :collection-view data))
+   :course-view     (fn [data] (viewmodel/new :course-view data))
+   :checkpoint-view (fn [data] (viewmodel/new :checkpoint-view data))})
 
 (def url-helpers
   (let [create-url     (partial path-for table)

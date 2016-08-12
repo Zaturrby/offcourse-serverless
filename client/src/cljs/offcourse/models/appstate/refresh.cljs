@@ -7,7 +7,7 @@
 (defmulti refresh (fn [_ {:keys [type]}] type))
 
 (defmethod refresh :update-viewmodel [state {:keys [payload] :as query}]
-  (-> state (assoc :viewmodel (into {} payload))))
+  (-> state (assoc :viewmodel payload)))
 
 (defmethod refresh :auth-token [state {:keys [auth-token] :as q}]
   (-> state

@@ -10,11 +10,12 @@
 (spec/def ::collection (spec/keys :req-un [::collection-type ::collection-name]))
 (spec/def ::course (spec/keys :req-un [::course-slug ::curator]))
 
-(spec/def ::collection-vm (spec/keys :req-un [::collection]))
-(spec/def ::loading-vm (spec/keys :req-un [::loading]))
+(spec/def ::collection-view (spec/keys :req-un [::collection]))
+(spec/def ::loading-view (spec/keys :req-un [::loading]))
 
-(spec/def ::viewmodel (spec/or :collection ::collection-vm
-                               :loading ::loading-vm))
+(spec/def ::viewmodel (spec/or :collection ::collection-view
+                               :loading ::loading-view))
 
 (spec/def ::query (spec/or :collection ::collection
+                           :courses (spec/* ::course)
                            :course ::course))

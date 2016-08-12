@@ -1,6 +1,6 @@
 (ns offcourse.specs.appstate
   (:require [cljs.spec :as spec]
-            [offcourse.specs.courses :as courses]
+            [specs.core :as specs]
             [offcourse.specs.base :as base]))
 
 (spec/def ::site-title string?)
@@ -12,5 +12,5 @@
                                          ::viewmodel
                                          ::user
                                          ::auth-token
-                                         ::courses/courses
+                                         ::specs/courses
                                          ::resources]))
