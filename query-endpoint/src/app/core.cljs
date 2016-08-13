@@ -1,8 +1,10 @@
 (ns app.core
-  (:require [protocols.convertible :as cv]
+  (:require [protocols.convertible.index :as cv]
+            [protocols.extractable :refer [Extractable]]
             [cljs.core.async :refer [<!]]
             [cljs.spec :as spec]
             [specs.core :as specs]
+            [models.event.index :refer [Event]]
             [services.logger :as logger]
             [services.elastic-search.index :as es]
             [cljs.nodejs :as node]
@@ -18,6 +20,7 @@
    :payload data})
 
 (defn ^:export handler [raw-event context cb]
+  (logger/log "Event" raw-event)
   (if-let [query (-> raw-event cv/to-event cv/to-query)]
     (go
       (let [data (<! (es/fetch query))

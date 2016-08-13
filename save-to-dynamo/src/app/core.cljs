@@ -1,8 +1,9 @@
 (ns app.core
   (:require [cljs.nodejs :as node]
             [services.db :as db]
-            [protocols.convertible :as cv]
+            [protocols.convertible.index :as cv]
             [cljs.core.async :refer [<! chan >!]]
+            [services.helpers :as helpers]
             [services.logger :as logger])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 

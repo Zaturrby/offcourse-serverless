@@ -13,6 +13,7 @@
 (spec/def ::payload ::payload/payload)
 (spec/def ::action (spec/keys :req-un [::payload ::type]))
 
+(spec/def ::data-payload ::payload/data-payload)
 (spec/def ::query ::query/query)
 (spec/def ::viewmodel ::query/viewmodel)
 

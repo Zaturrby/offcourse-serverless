@@ -1,5 +1,6 @@
 (ns offcourse.system.index
   (:require [com.stuartsierra.component :as component]
+            [models.index]
             [offcourse.api.index :as api]
             [offcourse.appstate.index :as appstate]
             [offcourse.auth.index :as auth]

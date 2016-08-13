@@ -7,9 +7,7 @@
             [specs.core :as specs]
             [protocols.validatable :as va]))
 
-(defmulti get (fn [_ query]
-                (println "RT" (va/resolve-type query))
-                (first (spec/conform ::specs/query query))))
+(defmulti get (fn [_ query] (va/resolve-type query)))
 
 (defmethod get :collection [{:keys [collections] :as ds} {:keys [collection]}]
   (when collections

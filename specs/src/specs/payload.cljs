@@ -10,6 +10,9 @@
 (spec/def ::valid-payload (spec/or :course ::course/course
                                    :courses (spec/* ::course/course)))
 
+(spec/def ::data-payload (spec/or :course ::course/course
+                                  :courses (spec/* ::course/course)))
+
 (spec/def ::query-payload ::query/query)
 
 (spec/def ::payload (spec/or :query ::query-payload

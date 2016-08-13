@@ -4,4 +4,5 @@
 
 (defrecord Query [])
 
-(defn new [query] (with-meta (map->Query query) {:spec ::specs/query}))
+(defn new [query]
+  (with-meta (map->Query query) {:spec ::specs/query}))

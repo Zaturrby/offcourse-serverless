@@ -10,6 +10,7 @@
 (def AWS (node/require "aws-sdk"))
 
 (defn ^:export handler [raw-event context cb]
+  (logger/log "Event" raw-event)
   (if-let [payload (-> raw-event cv/to-event cv/to-payload)]
     (go
       (let [errors (filter :error (<! (notify/notify :slack payload)))]

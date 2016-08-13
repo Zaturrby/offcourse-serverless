@@ -1,6 +1,6 @@
 (ns app.core
   (:require [cljs.nodejs :as node]
-            [protocols.convertible :as cv]
+            [protocols.convertible.index :as cv]
             [cljs.core.async :refer [<! chan >!]]
             [services.elastic-search.index :as es]
             [services.logger :as logger])
@@ -10,6 +10,7 @@
 (def AWS (node/require "aws-sdk"))
 
 (defn ^:export handler [raw-event context cb]
+  (logger/log "Event" raw-event)
   (if-let [payload (-> raw-event cv/to-event cv/to-payload)]
     (go
       (let [res (<! (es/save payload))

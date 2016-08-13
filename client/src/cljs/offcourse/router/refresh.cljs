@@ -1,5 +1,5 @@
 (ns offcourse.router.refresh
-  (:require [protocols.convertible :as cv]
+  (:require [protocols.convertible.index :as cv]
             [pushy.core :as pushy]))
 
 (defn refresh [{:keys [history routes url-helpers responses]} {:keys [payload] :as query}]

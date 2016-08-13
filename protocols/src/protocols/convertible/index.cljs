@@ -1,4 +1,4 @@
-(ns protocols.convertible
+(ns protocols.convertible.index
   (:require [services.helpers :as helpers]))
 
 (defprotocol Convertible

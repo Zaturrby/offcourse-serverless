@@ -1,5 +1,5 @@
 (ns offcourse.models.viewmodel.index
-  (:require [protocols.convertible :refer [Convertible]]
+  (:require [protocols.convertible.index :refer [Convertible]]
             [offcourse.models.viewmodel.to-url :refer [to-url]]
             [specs.core :as specs]))
 

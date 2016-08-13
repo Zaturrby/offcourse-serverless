@@ -7,7 +7,6 @@
 (defmulti valid? (fn [{:keys [viewmodel]}] (first (spec/conform ::vm-specs/viewmodel viewmodel))))
 
 (defmethod valid? :collection [as as-schema]
-  (println (spec/explain ::specs/appstate as))
   (spec/valid? ::specs/appstate as))
 
 (defmethod valid? :course [as as-schema]

@@ -3,7 +3,8 @@
             [offcourse.protocols.queryable :as qa]
             [offcourse.protocols.redirectable :as rd]
             [offcourse.protocols.responsive :as ri]
-            [offcourse.protocols.validatable :as va]))
+            [offcourse.protocols.validatable :as va]
+            [models.query.index :as query]))
 
 (defmulti refresh (fn [_ {:keys [type]}] type))
 
@@ -59,8 +60,8 @@
   (when-not (-> @state :user :user-name)
     (rd/redirect as :signup)))
 
-(defmethod refresh :found-data [{:keys [state] :as as} {:keys [payload] :as query}]
-  (let [proposal (qa/add @state payload)]
+(defmethod refresh :found-data [{:keys [state] :as as} {:keys [payload] :as event}]
+  (let [proposal (qa/add @state (query/new payload))]
     (when (va/valid? proposal)
       (reset! state proposal)
       (ri/respond as :refreshed-state :appstate @state))))
