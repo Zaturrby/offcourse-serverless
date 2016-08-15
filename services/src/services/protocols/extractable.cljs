@@ -1,9 +1,6 @@
 (ns services.protocols.extractable
   (:require [cljs.nodejs :as node]
-            [protocols.extractable :refer [Extractable]]
-            [models.event.index :refer [Event]]
-            [cljs.spec :as spec]
-            [specs.core :as specs]
+            [models.event.index :refer [extract-data]]
             [services.helpers :as helpers]))
 
 (def marshaler (node/require "dynamodb-marshaler"))
@@ -11,8 +8,6 @@
 
 (defn extract-payload [records]
   (map #(-> %1 :kinesis :data helpers/buffer->clj) records))
-
-(defmulti extract-data (fn [records] (first (spec/conform ::specs/Records records))))
 
 (defmethod extract-data :kinesis [records]
   (->> records
@@ -23,7 +18,3 @@
   (->> records
        (filter #(= "INSERT" (:eventName %1)))
        (map #(-> % :dynamodb :NewImage clj->js unmarshal-item helpers/js->cljs))))
-
-(extend-type Event
-  Extractable
-  (-extract [data] (extract-data (:Records data))))

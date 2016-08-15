@@ -11,7 +11,7 @@
             [models.query.index :as query]))
 
 (defn- add-course [store course]
-  (if-not (qa/get store (query/new course))
+  (if-not (qa/get store (query/create course))
     (update-in store [:courses] #(conj % course))
     store))
 

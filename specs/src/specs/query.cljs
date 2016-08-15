@@ -16,6 +16,10 @@
 (spec/def ::viewmodel (spec/or :collection ::collection-view
                                :loading ::loading-view))
 
+(spec/def ::tags #{:all})
+(spec/def ::tags-query (spec/keys :req-un [::tags]))
+
 (spec/def ::query (spec/or :collection ::collection
+                           :tags ::tags-query
                            :courses (spec/* ::course)
                            :course ::course))

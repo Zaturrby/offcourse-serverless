@@ -4,8 +4,8 @@
             [offcourse.models.course.index :as co]
             [offcourse.models.checkpoint.index :as cp]))
 
-(def home-route        [[keyword :collection-name]])
-(def curator-routes    [[keyword :curator]])
+(def home-route        [:collection-name])
+(def curator-routes    [:curator])
 (def new-user-route    "signup")
 (def new-course-routes (conj curator-routes "/new"))
 (def course-routes     (conj curator-routes "/courses/" :course-slug))

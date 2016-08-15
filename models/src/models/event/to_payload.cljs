@@ -9,7 +9,7 @@
            :args (spec/cat :event ::specs/event)
            :ret (spec/nilable ::specs/payload))
 
-(defn to-payload [event]
+(defn to-payload [{:keys [payload] :as event}]
   (let [payload     (ex/extract event)]
     (if (spec/valid? ::specs/valid-payload payload)
       (logger/pipe "INCOMING PAYLOAD: " payload)

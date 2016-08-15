@@ -1,5 +1,8 @@
 (ns protocols.validatable
-  (:require [cljs.spec :as spec]))
+  (:require [cljs.spec.test :as stest]
+            [cljs.spec :as spec]))
+
+(stest/instrument)
 
 (defprotocol Validatable
   (-missing-data [this] [this query])
@@ -22,6 +25,7 @@
     (when-let [{:keys [spec]} (meta this)]
       (first (spec/conform spec this)))))
 
+
 (defn missing-data
   "If given one argument, this function explains what data needs to be provided
   in order for it to comply with its specification. With two arguments, it
@@ -30,6 +34,8 @@
    (-missing-data this))
   ([this query]
    (-missing-data this query)))
+
+(spec/fdef missing-data :ret boolean?)
 
 (defn valid?
   "Resolves the type of this given object based on its specification"

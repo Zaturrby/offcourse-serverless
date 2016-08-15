@@ -9,14 +9,14 @@
                   [adzerk/boot-reload          "0.4.12"         :scope "test"]
                   [pandeiro/boot-http          "0.7.3"          :scope "test"]
                   [crisptrutski/boot-cljs-test "0.3.0-SNAPSHOT" :scope "test"]
-                  [boot-codox                  "0.9.5"          :scope "test"]
+                  [boot-codox                  "0.9.6"          :scope "test"]
                   [com.cemerick/piggieback     "0.2.2-SNAPSHOT" :scope "test"]
                   [weasel                      "0.7.0"          :scope "test"]
                   [org.clojure/tools.nrepl     "0.2.12"         :scope "test"]
                   [org.clojure/clojure         "1.9.0-alpha10"]
                   [org.clojure/core.async      "0.2.385"]
                   [org.clojure/test.check      "0.9.0"]
-                  [org.clojure/clojurescript   "1.9.89"]
+                  [org.clojure/clojurescript   "1.9.216"]
                   [offcourse/protocols         "0.1.0-SNAPSHOT"]])
 
 (require

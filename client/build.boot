@@ -18,12 +18,15 @@
                  [weasel                        "0.7.0"          :scope "test"]
                  [hashobject/boot-s3            "0.1.2-SNAPSHOT" :scope "test"]
                  [crisptrutski/boot-cljs-test   "0.3.0-SNAPSHOT" :scope "test"]
+                 [binaryage/devtools      "0.8.0" :scope "test"]
+                 [binaryage/dirac         "0.6.3" :scope "test"]
+                 [powerlaces/boot-cljs-devtools "0.1.1" :scope "test"]
                  [boot-codox "0.9.6" :scope "test"]
                  [prismatic/schema            "1.0.4"]
                  [org.martinklepsch/boot-garden "1.3.2-0"]
                  [metosin/ring-http-response  "0.8.0"]
                  [com.stuartsierra/component  "0.3.1"]
-                 [org.clojure/clojurescript   "1.9.89"]
+                 [org.clojure/clojurescript   "1.9.216"]
                  [org.clojure/core.async      "0.2.385"]
                  [org.clojure/core.match      "0.3.0-alpha4"]
                  [prismatic/plumbing          "0.5.3"]
@@ -54,6 +57,7 @@
  '[adzerk.boot-cljs      :refer [cljs]]
  '[adzerk.boot-cljs-repl :refer [cljs-repl start-repl]]
  '[adzerk.boot-reload    :refer [reload]]
+ '[powerlaces.boot-cljs-devtools :refer [cljs-devtools]]
  '[org.martinklepsch.boot-garden :refer [garden]]
  '[crisptrutski.boot-cljs-test  :refer [exit! test-cljs]]
  '[pandeiro.boot-http    :refer [serve]])
@@ -84,6 +88,7 @@
         (watch)
         (speak)
         (reload :on-jsload 'offcourse.main/reload)
+        (cljs-devtools)
         (cljs-repl)
         (cljs :source-map true :optimizations :none)
         (css)

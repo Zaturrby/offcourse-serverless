@@ -20,7 +20,7 @@
       (payload/new :resources missing-resources))))
 
 (defmethod missing-data :collection [state {:keys [viewmodel]}]
-  (query/new (:collection viewmodel)))
+  (query/create (:collection viewmodel)))
 
 (defmethod missing-data :course [state {:keys [course] :as viewmodel}]
   (if (:checkpoints course)

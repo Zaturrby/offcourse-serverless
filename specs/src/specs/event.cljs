@@ -23,4 +23,4 @@
 
 (spec/def ::event (spec/or :kinesis ::kinesis-event
                            :dynamodb ::dynamo-event
-                           :api ::api-event))
+                           :offcourse ::api-event))

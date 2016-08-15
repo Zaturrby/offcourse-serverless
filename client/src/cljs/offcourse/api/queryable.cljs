@@ -3,7 +3,10 @@
             [cljs.core.match :refer-macros [match]]
             [offcourse.protocols.queryable :as qa]
             [offcourse.protocols.responsive :as ri]
+            [offcourse.protocols.loggable :as la]
             [protocols.convertible.index :as cv]
+            [services.logger :as logger]
+            [models.data-payload.index :as data-payload]
             [protocols.validatable :as va])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
@@ -15,8 +18,8 @@
       (when (contains? resources query-type)
         (go
           (let [response (<! (qa/fetch repository outgoing-event))
-                incoming-event (cv/to-event response)]
-            (match incoming-event
-                   {:type _ :payload pl} (ri/respond api {:type :found-data
-                                                          :payload pl})
+                data-payload (-> response cv/to-event cv/to-models)]
+            (match response
+                   {:type _ :payload _} (ri/respond api {:type :found-data
+                                                         :payload (data-payload/create data-payload)})
                    _ (println "not found data"))))))))

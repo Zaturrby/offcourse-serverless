@@ -15,6 +15,6 @@
 
 (spec/def ::query-payload ::query/query)
 
-(spec/def ::payload (spec/or :query ::query-payload
+(spec/def ::payload (spec/or :raw ::raw-payload
                              :valid ::valid-payload
-                             :raw ::raw-data))
+                             :query ::query-payload))

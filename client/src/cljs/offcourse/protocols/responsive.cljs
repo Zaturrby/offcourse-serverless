@@ -1,7 +1,8 @@
 (ns offcourse.protocols.responsive
   (:require [cljs.core.async :refer [<! >! close!]]
             [offcourse.models.action :as action]
-            [offcourse.models.payload.index :as payload :refer [Payload]])
+            [offcourse.models.payload.index :as payload :refer [Payload]]
+            [services.logger :as logger])
   (:require-macros [cljs.core.async.macros :refer [go go-loop]]))
 
 (defprotocol Responsive
@@ -37,7 +38,7 @@
   (go-loop []
     (let [{:keys [type source payload] :as action} (<! (:input channels))
           reaction (type reactions)]
-      (println component-name source type #_payload)
+      (logger/log component-name source type #_payload)
       (when reaction
         (reaction this action))
       (recur))))

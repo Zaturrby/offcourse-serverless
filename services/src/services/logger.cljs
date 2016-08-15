@@ -5,8 +5,11 @@
 (defn stringify [obj]
   (.stringify js/JSON (clj->js obj)))
 
-(defn log [msg payload]
+#_(defn log [msg payload]
   (println msg (stringify payload) "\n"))
+
+(defn log [& args]
+  (.apply js/console.log js/console (to-array args)))
 
 (defn pipe [msg payload]
   (log msg payload)

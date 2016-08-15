@@ -26,5 +26,3 @@
 
 (defmethod to-payload :resources [{:keys [type resources]}]
   (payload/new type (keep cv/to-resource resources)))
-
-(spec/instrument #'to-payload)
