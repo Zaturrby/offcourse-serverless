@@ -30,5 +30,9 @@
 (spec/def ::single-or-multiple? (spec/or :single map?
                                          :multiple (spec/* map?)))
 
+(spec/def ::action (spec/tuple keyword? (spec/or :data ::data-payload
+                                                 :query ::query
+                                                 :viewmodel ::viewmodel)))
+
 (spec/def ::map-type (spec/or :keywordized (spec/map-of keyword? any?)
                               :raw (spec/map-of string? any?)))

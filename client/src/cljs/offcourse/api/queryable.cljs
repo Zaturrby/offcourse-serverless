@@ -17,7 +17,6 @@
            :args (spec/cat :component any? :query ::specs/query))
 
 (defn fetch [{:keys [repositories] :as api} query]
-  (logger/log  query)
   (let [query-type (va/resolve-type query)
         outgoing-event {:type :requested-data
                         :payload query}]

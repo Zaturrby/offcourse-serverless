@@ -7,9 +7,11 @@
             [offcourse.models.collection :refer [Collection]]
             [offcourse.models.course.index :as co :refer [Course]]
             [offcourse.models.resource.index :refer [Resource]]
-            [shared.protocols.queryable :as qa :refer [Queryable]]
+            [offcourse.protocols.queryable :as qa :refer [Queryable]]
+            [shared.protocols.actionable :as ab :refer [Actionable]]
             [offcourse.protocols.validatable :as va :refer [Validatable]]
-            [schema.core :as schema]))
+            [schema.core :as schema]
+            [services.logger :as logger]))
 
 (schema/defrecord Appstate
     [site-title     :- schema/Str
@@ -22,6 +24,10 @@
   Validatable
   (-valid? [as] (valid-impl/valid? as))
   (-missing-data [as query] (md-impl/missing-data as query))
+  Actionable
+  (-act [as action] (do
+                      (logger/log :action action)
+                      as))
   Queryable
   (-refresh [as query] (refresh-impl/refresh as query))
   (-add [as query] (add-impl/add as query))

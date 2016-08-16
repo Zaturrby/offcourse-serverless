@@ -6,7 +6,8 @@
             [offcourse.protocols.validatable :as va]
             [shared.models.data-payload.index :as data-payload]
             [shared.models.query.index :as query]
-            [services.logger :as logger]))
+            [services.logger :as logger]
+            [shared.protocols.actionable :as ab]))
 
 (defmulti refresh (fn [_ {:keys [type]}] type))
 
@@ -46,7 +47,7 @@
       (rd/redirect as :home))))
 
 (defmethod refresh :requested-view [{:keys [state] :as as} {:keys [payload] :as query}]
-  (let [proposal (qa/refresh @state :update-viewmodel payload)]
+  (let [proposal (ab/act @state  [:update-viewmodel payload])]
     (if (qa/check as :permissions proposal)
       (do
         (reset! state proposal)
