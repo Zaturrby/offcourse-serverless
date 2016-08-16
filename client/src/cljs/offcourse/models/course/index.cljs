@@ -8,7 +8,7 @@
             [cuerdas.core :as str]
             [offcourse.models.course.refresh :as refresh-impl]
             [cljs.spec :as spec]
-            [specs.core :as specs]))
+            [shared.specs.core :as specs]))
 
 (defrecord Course []
   Queryable

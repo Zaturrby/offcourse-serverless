@@ -4,10 +4,13 @@
             [medley.core :as medley]
             [offcourse.models.appstate.paths :as paths]
             [cljs.spec :as spec]
-            [specs.core :as specs]
-            [protocols.validatable :as va]))
+            [shared.specs.core :as specs]
+            [shared.protocols.validatable :as va]
+            [services.logger :as logger]))
 
-(defmulti get (fn [_ query] (va/resolve-type query)))
+(defmulti get (fn [_ query]
+                (logger/log :get query)
+                (va/resolve-type query)))
 
 (defmethod get :collection [{:keys [collections] :as ds} {:keys [collection]}]
   (when collections
@@ -20,7 +23,7 @@
       (when-let [courses (keep #(select-first (paths/course %) ds) course-ids)]
         (if (empty? courses) nil courses)))))
 
-(defmethod get :course [{:keys [courses] :as ds} {:keys [course]}]
+(defmethod get :course [{:keys [courses] :as ds} course]
   (when courses
     (select-first (paths/course course) ds)))
 

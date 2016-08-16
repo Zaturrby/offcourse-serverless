@@ -1,7 +1,7 @@
 (ns offcourse.models.appstate.valid
   (:require [offcourse.protocols.queryable :as qa]
             [cljs.spec :as spec]
-            [specs.core :as vm-specs]
+            [shared.specs.core :as vm-specs]
             [offcourse.specs.appstate :as specs]))
 
 (defmulti valid? (fn [{:keys [viewmodel]}] (first (spec/conform ::vm-specs/viewmodel viewmodel))))

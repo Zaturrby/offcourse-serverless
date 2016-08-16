@@ -5,7 +5,8 @@
             [offcourse.appstate.refresh :as refresh-impl]
             [offcourse.protocols.queryable :as qa :refer [Queryable]]
             [offcourse.protocols.redirectable :as rd :refer [Redirectable]]
-            [offcourse.protocols.responsive :as ri :refer [Responsive]]))
+            [offcourse.protocols.responsive :as ri :refer [Responsive]]
+            [services.logger :as logger]))
 
 (defrecord Appstate []
   Redirectable

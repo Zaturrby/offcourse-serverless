@@ -1,14 +1,14 @@
 (ns offcourse.models.appstate.add
-  (:require [offcourse.protocols.queryable :as qa]
+  (:require [shared.protocols.queryable :as qa]
             [offcourse.models.appstate.paths :as paths]
             [com.rpl.specter :refer [ALL select-first setval transform select-first]]
             [offcourse.models.course.index :as co]
             [offcourse.models.collection :as cl]
-            [protocols.validatable :as va]
+            [shared.protocols.validatable :as va]
             [offcourse.models.checkpoint.index :as cp]
             [cljs.spec :as spec]
-            [specs.core :as specs]
-            [models.query.index :as query]))
+            [shared.specs.core :as specs]
+            [shared.models.query.index :as query]))
 
 (defn- add-course [store course]
   (if-not (qa/get store (query/create course))
@@ -16,7 +16,7 @@
     store))
 
 (defn- add-resource [store resource]
-  (if-not (qa/get store :resource resource)
+  (if-not (qa/get store resource)
     (update-in store [:resources] #(conj % resource))
     store))
 

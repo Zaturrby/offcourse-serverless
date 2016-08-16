@@ -1,6 +1,7 @@
 (ns offcourse.appstate.check
   (:require [cljs.spec :as spec]
-            [specs.core :as specs]))
+            [shared.specs.core :as specs]
+            [services.logger :as logger]))
 
 (defn viewmodel-type [{:keys [viewmodel] :as state}]
   (when viewmodel (first (spec/conform ::specs/viewmodel viewmodel))))

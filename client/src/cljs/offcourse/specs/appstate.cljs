@@ -1,6 +1,6 @@
 (ns offcourse.specs.appstate
   (:require [cljs.spec :as spec]
-            [specs.core :as specs]
+            [shared.specs.core :as specs]
             [offcourse.specs.base :as base]))
 
 (spec/def ::site-title string?)

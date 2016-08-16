@@ -4,16 +4,23 @@
             [offcourse.protocols.queryable :as qa]
             [offcourse.protocols.responsive :as ri]
             [offcourse.protocols.loggable :as la]
-            [protocols.convertible.index :as cv]
+            [shared.protocols.convertible :as cv]
             [services.logger :as logger]
-            [models.data-payload.index :as data-payload]
-            [protocols.validatable :as va])
+            [shared.models.data-payload.index :as data-payload]
+            [shared.protocols.validatable :as va]
+            [cljs.spec :as spec]
+            [shared.specs.core :as specs]
+            [cljs.spec.test :as stest])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
-(defn fetch [{:keys [repositories] :as api} payload]
-  (let [query-type (va/resolve-type payload)
+(spec/fdef fetch
+           :args (spec/cat :component any? :query ::specs/query))
+
+(defn fetch [{:keys [repositories] :as api} query]
+  (logger/log  query)
+  (let [query-type (va/resolve-type query)
         outgoing-event {:type :requested-data
-                        :payload payload}]
+                        :payload query}]
     (doseq [{:keys [resources] :as repository} repositories]
       (when (contains? resources query-type)
         (go
@@ -23,3 +30,5 @@
                    {:type _ :payload _} (ri/respond api {:type :found-data
                                                          :payload (data-payload/create data-payload)})
                    _ (println "not found data"))))))))
+
+(stest/instrument `fetch)

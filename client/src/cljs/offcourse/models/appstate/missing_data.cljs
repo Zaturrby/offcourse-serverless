@@ -4,9 +4,10 @@
             [offcourse.protocols.validatable :as va]
             [cljs.spec :as spec]
             [clojure.set :as set]
-            [models.query.index :as query]
+            [shared.models.query.index :as query]
             [services.helpers :as helpers]
-            [specs.core :as specs]))
+            [shared.specs.core :as specs]
+            [services.logger :as logger]))
 
 (defmulti missing-data (fn [state {:keys [viewmodel]}]
                          (helpers/resolve-data-type ::specs/viewmodel viewmodel)))
@@ -22,10 +23,11 @@
 (defmethod missing-data :collection [state {:keys [viewmodel]}]
   (query/create (:collection viewmodel)))
 
-(defmethod missing-data :course [state {:keys [course] :as viewmodel}]
-  (if (:checkpoints course)
-    (va/missing-data state (payload/new :resources (map (fn [url] {:url url}) (qa/get course :urls {}))))
-    (payload/new :course course)))
+(defmethod missing-data :course [state proposal]
+  (let [course (-> proposal :viewmodel :course)]
+    (if (:checkpoints course)
+      (va/missing-data state (payload/new :resources (map (fn [url] {:url url}) (qa/get course :urls {}))))
+      (query/create course))))
 
 (defmethod missing-data :checkpoint [state {:keys [course] :as viewmodel}]
   (payload/new :course course))

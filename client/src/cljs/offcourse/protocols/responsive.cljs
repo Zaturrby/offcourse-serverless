@@ -2,7 +2,9 @@
   (:require [cljs.core.async :refer [<! >! close!]]
             [offcourse.models.action :as action]
             [offcourse.models.payload.index :as payload :refer [Payload]]
-            [services.logger :as logger])
+            [services.logger :as logger]
+            [shared.models.event.index :as event]
+            [shared.protocols.convertible :as cv])
   (:require-macros [cljs.core.async.macros :refer [go go-loop]]))
 
 (defprotocol Responsive
@@ -23,12 +25,13 @@
   ([this {:keys [type payload]}] (respond this type payload))
   ([{:keys [output-channel channels component-name] :as this} status payload]
    (let [output-channel (or output-channel (:output channels))
-         response       (action/new this status payload)]
-     #_(println component-name status payload)
+         response             (cv/to-event {:type status
+                                            :source component-name
+                                            :payload payload})]
      (when (< @counter 10)
        (go
          (swap! counter inc)
-         #_(println @counter)
+         (logger/log response)
          (>! output-channel response)))))
   ([this status type result]
    (-respond this status (payload/new type result))))
@@ -38,7 +41,7 @@
   (go-loop []
     (let [{:keys [type source payload] :as action} (<! (:input channels))
           reaction (type reactions)]
-      (logger/log component-name source type #_payload)
+      #_(logger/log component-name source type payload)
       (when reaction
         (reaction this action))
       (recur))))

@@ -1,7 +1,8 @@
 (ns offcourse.models.viewmodel.index
-  (:require [protocols.convertible.index :refer [Convertible]]
+  (:require [shared.protocols.convertible :refer [Convertible]]
             [offcourse.models.viewmodel.to-url :refer [to-url]]
-            [specs.core :as specs]))
+            [shared.specs.core :as specs]
+            [services.logger :as logger]))
 
 (defrecord Viewmodel []
   Convertible
@@ -11,20 +12,20 @@
 
 (defmulti new (fn [type result] type))
 
-(defmethod new :checkpoint-view [result]
+(defmethod new :checkpoint-view [type result]
   (-new {:course     (select-keys result [:curator :course-slug])
          :checkpoint (select-keys result [:checkpoint-slug :checkpoint-id])}))
 
 (defmethod new :collection-view [type collection]
   (-new {:collection collection}))
 
-(defmethod new :course-view [course]
+(defmethod new :course-view [type course]
   (-new {:course (select-keys course [:curator :course-slug])}))
 
-(defmethod new :signup-view [user]
+(defmethod new :signup-view [type user]
   (-new {:new-user user}))
 
-(defmethod new :new-course-view [{:keys [new-course new-checkpoint]}]
+(defmethod new :new-course-view [type {:keys [new-course new-checkpoint]}]
   (-new {:new-course     new-course
          :new-checkpoint new-checkpoint}))
 

@@ -4,8 +4,8 @@
             [offcourse.protocols.redirectable :as rd]
             [offcourse.protocols.responsive :as ri]
             [offcourse.protocols.validatable :as va]
-            [models.data-payload.index :as data-payload]
-            [models.query.index :as query]
+            [shared.models.data-payload.index :as data-payload]
+            [shared.models.query.index :as query]
             [services.logger :as logger]))
 
 (defmulti refresh (fn [_ {:keys [type]}] type))

@@ -7,7 +7,7 @@
             [offcourse.models.collection :refer [Collection]]
             [offcourse.models.course.index :as co :refer [Course]]
             [offcourse.models.resource.index :refer [Resource]]
-            [offcourse.protocols.queryable :as qa :refer [Queryable]]
+            [shared.protocols.queryable :as qa :refer [Queryable]]
             [offcourse.protocols.validatable :as va :refer [Validatable]]
             [schema.core :as schema]))
 

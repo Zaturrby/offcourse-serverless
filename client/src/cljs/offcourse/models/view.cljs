@@ -2,12 +2,12 @@
   (:require [offcourse.protocols.composable :as ca :refer [Composable]]
             [offcourse.protocols.mountable :as ma :refer [Mountable]]
             [offcourse.protocols.renderable :as rr :refer [Renderable]]
-            [protocols.validatable :as va :refer [Validatable]]
+            [shared.protocols.validatable :as va :refer [Validatable]]
             [plumbing.graph :as graph]
             [rum.core :as rum]
             [offcourse.protocols.queryable :as qa]
             [cljs.spec :as spec]
-            [specs.core :as specs]))
+            [shared.specs.core :as specs]))
 
 (defrecord View []
   Composable

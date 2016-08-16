@@ -1,10 +1,10 @@
 (ns offcourse.protocols.decoratable
-  (:require [models.course.index :as co :refer [Course]]
+  (:require [shared.models.course.index :as co :refer [Course]]
             [offcourse.models.checkpoint.index :refer [Checkpoint]]
             [offcourse.models.profile.index :refer [Profile]]
             [offcourse.models.label :as lb]
-            [protocols.queryable :as qa]
-            [protocols.validatable :as va]))
+            [shared.protocols.queryable :as qa]
+            [shared.protocols.validatable :as va]))
 
 (defprotocol Decoratable
   (-decorate [this] [this appstate] [this user-name slug]))
