@@ -1,10 +1,11 @@
 (ns offcourse.protocols.decoratable
   (:require [shared.models.course.index :as co :refer [Course]]
-            [offcourse.models.checkpoint.index :refer [Checkpoint]]
+            [shared.models.checkpoint.index :refer [Checkpoint]]
             [offcourse.models.profile.index :refer [Profile]]
             [offcourse.models.label :as lb]
             [shared.protocols.queryable :as qa]
-            [shared.protocols.validatable :as va]))
+            [shared.protocols.validatable :as va]
+            [services.logger :as logger]))
 
 (defprotocol Decoratable
   (-decorate [this] [this appstate] [this user-name slug]))
@@ -27,14 +28,14 @@
       (-> profile (with-meta {:valid? valid?}))))
   Checkpoint
   (-decorate [{:keys [url] :as checkpoint} appstate]
-    (let [resource (qa/get appstate {:url url})]
+    (let [resource (qa/search appstate {:url url})]
       (-> checkpoint
           (assoc :resource resource)
           (with-meta {:selected true}))))
   Course
   (-decorate
     ([{:keys [checkpoints] :as course}]
-     (let [tags (-> (qa/get course {:tags :all})
+     (let [tags (-> (qa/search course {:tags :all})
                     (lb/collection->labels 0))
            valid? (va/valid? (co/complete course))
            saved? (:saved? (meta course))]
@@ -42,7 +43,7 @@
                               :valid? valid?
                               :saved? saved?}))))
     ([{:keys [checkpoints curator] :as course} user-name selected]
-     (let [tags (-> (qa/get course {:tags :all})
+     (let [tags (-> (qa/search course {:tags :all})
                     (lb/collection->labels selected))]
        (some-> course
                (assoc :checkpoints (select-checkpoint checkpoints selected))

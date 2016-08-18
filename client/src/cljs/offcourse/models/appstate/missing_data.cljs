@@ -31,3 +31,5 @@
 
 (defmethod missing-data :checkpoint [state {:keys [course] :as viewmodel}]
   (payload/new :course course))
+
+(defmethod missing-data :default [state proposal] nil)

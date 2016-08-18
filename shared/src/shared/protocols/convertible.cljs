@@ -36,7 +36,7 @@
   (-to-query this))
 
 (defn to-models
-  "Converts an object to offcourse models, if the object meets the corresponding model specification"
+  "Converts an object to one or moreoffcourse models, if the object meets the corresponding model specification"
   [this]
   (-to-models this))
 

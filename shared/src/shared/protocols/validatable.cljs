@@ -7,6 +7,7 @@
 (defprotocol Validatable
   (-missing-data [this] [this query])
   (-resolve-type [this])
+  (-resolve-payload [this])
   (-errors [this])
   (-valid? [this]))
 
@@ -15,9 +16,6 @@
   (-valid? [this]
     (when-let [{:keys [spec]} (meta this)]
       (spec/valid? spec this)))
-  (-missing-data
-    ([this] (-missing-data this))
-    ([this query] (-missing-data this query)))
   (-errors [this]
     (when-let [{:keys [spec]} (meta this)]
       (spec/explain spec this)))
@@ -38,16 +36,21 @@
 (spec/fdef missing-data :ret boolean?)
 
 (defn valid?
-  "Resolves the type of this given object based on its specification"
+  "Checks if a given object complies with its specification"
   [this]
   (-valid? this))
 
 (defn resolve-type
-  "Tells why a given object does not comply with its specification"
+  "Resolves the type of this given object based on its specification"
   [this]
   (-resolve-type this))
 
+(defn resolve-payload
+  "Resolves the type of the payload of a given object based on its specification"
+  [this]
+  (-resolve-payload this))
+
 (defn errors
-  "Checks if a given object complies with its specification"
+  "Tells why a given object does not comply with its specification"
   [this]
   (-errors this))

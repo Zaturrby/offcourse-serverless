@@ -2,7 +2,8 @@
   (:require [ajax.core :refer [POST]]
             [cljs.core.async :refer [chan]]
             [cljs.core.match :refer-macros [match]]
-            [offcourse.models.response.index :as response])
+            [offcourse.models.response.index :as response]
+            [services.logger :as logger])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
 (defn handle-response [res]

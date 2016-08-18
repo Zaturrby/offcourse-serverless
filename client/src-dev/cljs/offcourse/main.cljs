@@ -3,11 +3,12 @@
             [offcourse.adapters.aws.index :as aws]
             [offcourse.adapters.embedly.index :as embedly]
             [offcourse.adapters.fakedb.index :as fakedb]
-            [offcourse.models.appstate.index :as model]
+            [shared.models.appstate.index :as model]
             [offcourse.core :as core]))
 
 (defonce app (atom nil))
-(defonce appstate (atom (model/new {:site-title "Offcourse_"})))
+(defonce appstate (atom (model/create {:site-title "Offcourse_"
+                                       :user nil})))
 (defonce auth-config {:domain "yeehaa.eu.auth0.com"
                   :clientID "Z1J0CyMzZfIbOfBSVaMWJakoIrxm4Tfs"})
 (def adapters

@@ -1,6 +1,6 @@
 (ns shared.models.query.index
   (:require [shared.protocols.validatable :refer [Validatable]]
-            [specs.core :as specs]
+            [shared.specs.core :as specs]
             [cljs.spec :as spec]
             [cljs.spec.test :as stest]))
 

@@ -8,10 +8,12 @@
             [offcourse.models.course.index :as co :refer [Course]]
             [offcourse.models.resource.index :refer [Resource]]
             [offcourse.protocols.queryable :as qa :refer [Queryable]]
-            [shared.protocols.actionable :as ab :refer [Actionable]]
+            [shared.protocols.commandable :as cd :refer [Commandable]]
             [offcourse.protocols.validatable :as va :refer [Validatable]]
             [schema.core :as schema]
-            [services.logger :as logger]))
+            [services.logger :as logger]
+            [cljs.spec :as spec]
+            [shared.specs.core :as specs]))
 
 (schema/defrecord Appstate
     [site-title     :- schema/Str
@@ -24,12 +26,9 @@
   Validatable
   (-valid? [as] (valid-impl/valid? as))
   (-missing-data [as query] (md-impl/missing-data as query))
-  Actionable
-  (-act [as action] (do
-                      (logger/log :action action)
-                      as))
+  Commandable
+  (-exec [as command] (exec as command))
   Queryable
-  (-refresh [as query] (refresh-impl/refresh as query))
   (-add [as query] (add-impl/add as query))
   (-get [as query] (get-impl/get as query)))
 
@@ -42,5 +41,4 @@
 
 (defn new
   ([] (map->Appstate defaults))
-  ([data]
-   (map->Appstate (merge defaults data))))
+  ([data] (map->Appstate (merge defaults data))))

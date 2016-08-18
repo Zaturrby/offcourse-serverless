@@ -6,13 +6,11 @@
 (defn viewmodel-type [{:keys [viewmodel] :as state}]
   (when viewmodel (first (spec/conform ::specs/viewmodel viewmodel))))
 
-(defmulti check (fn [_ {:keys [type]}] type))
-
-(defmethod check :permissions [{:keys [state] :as as} {:keys [payload] :as q}]
+(defn check [{:keys [state]} proposal]
   (let [old-type (viewmodel-type @state)
-        new-type(viewmodel-type payload)
-        user-name (some-> payload :user :user-name)
-        auth-token (some-> payload :auth-token)]
+        new-type(viewmodel-type proposal)
+        user-name (some-> proposal :user :user-name)
+        auth-token (some-> proposal :auth-token)]
     (cond
       (and (= old-type :signup) (= new-type :signup)) true
       (and (= old-type :new-course) (= new-type :new-course)) true

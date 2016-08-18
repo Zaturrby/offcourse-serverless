@@ -8,7 +8,8 @@
             [offcourse.models.checkpoint.index :as cp]
             [cljs.spec :as spec]
             [shared.specs.core :as specs]
-            [shared.models.query.index :as query]))
+            [shared.models.query.index :as query]
+            [services.logger :as logger]))
 
 (defn- add-course [store course]
   (if-not (qa/get store (query/create course))
@@ -25,7 +26,7 @@
 (defmethod add :courses [store courses]
   (reduce add-course store courses))
 
-(defmethod add :course [{:keys [user] :as store} {:keys [course] :as query}]
+(defmethod add :course [store course]
   (add-course store course))
 
 (defmethod add :resources [store {:keys [resources]}]

@@ -2,6 +2,7 @@
   (:require [shared.models.event.to-action :refer [to-action]]
             [shared.models.event.to-payload :refer [to-payload]]
             [shared.models.event.to-query :refer [to-query]]
+            [shared.models.event.to-models :refer [to-models]]
             [shared.models.course.index :as co]
             [shared.protocols.convertible :as cv :refer [Convertible]]
             [shared.protocols.extractable :refer [Extractable]]
@@ -21,7 +22,7 @@
   (-to-action [this] (to-action this))
   (-to-payload [this] (to-payload this))
   (-to-query [this] (to-query this))
-  (-to-models [this] (map co/create (cv/to-payload this)))
+  (-to-models [this] (to-models this))
   Extractable
   (-extract [this] (extract-data this)))
 
@@ -37,6 +38,7 @@
 
 (defmethod create :default [event]
   (-> event
+      helpers/keywordize-type
       map->Event
       (with-meta {:spec ::specs/event})))
 
