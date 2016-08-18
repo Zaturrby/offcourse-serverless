@@ -58,10 +58,10 @@
  '[adzerk.boot-cljs-repl :refer [cljs-repl start-repl]]
  '[adzerk.boot-reload    :refer [reload]]
  '[org.martinklepsch.boot-garden :refer [garden]]
- '[styles.index]
  '[crisptrutski.boot-cljs-test  :refer [exit! test-cljs]]
- '[pandeiro.boot-http    :refer [serve]])
-
+ '[pandeiro.boot-http    :refer [serve]]
+ '[garden.def :refer [defstyles]]
+ '[styles.index :refer [base]])
 
 (deftask testing []
   (merge-env! :resource-paths #{"test"})
@@ -73,18 +73,22 @@
         (speak)
         (test-cljs)))
 
-
 (deftask printJar []
-  (println "   base follows:    " styles.index/base)
-  (println (type styles.index/base)))
+  (println "   Stylelist type follows:    "     base)
+)
+
+(deftask printTask []
+  (comp #(println %) identity))
 
 (deftask css []
-  (task-options! garden {:styles-var   styles.index/base
-                         :vendors ["webkit" "moz"]
-                         :auto-prefix #{:user-select :column-count :column-gap}
-                         :output-to    "css/main.css"
-                         :pretty-print true})
-  (garden))
+  (task-options! garden {:styles-var    '(defstyles (base))
+                         :vendors       ["webkit" "moz"]
+                         :auto-prefix   #{:user-select :column-count :column-gap}
+                         :output-to     "css/main.css"
+                         :pretty-print  true})
+  (garden)
+  (printTask)
+  (target))
 
 (deftask dev []
   (set-env! :source-paths #(conj % "src-dev/cljs" "src-dev/clj"))
@@ -95,7 +99,7 @@
         (reload :on-jsload 'offcourse.main/reload)
         (cljs-repl)
         (cljs :source-map true :optimizations :none)
-        ; (css)
+        (css)
         (target)))
 
 (deftask test []

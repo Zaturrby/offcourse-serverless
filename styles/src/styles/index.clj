@@ -7,6 +7,6 @@
              [typography :refer [typography]]]
             [styles.components.index :refer [components]]))
 
-(defstyles base
+(defn base []
   (let [modules [global typography layout components]]
     (for [module modules] (module config))))

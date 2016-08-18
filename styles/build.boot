@@ -1,4 +1,4 @@
-(def project 'ofcourse/styles)
+(def project 'offcourse/styles)
 (def version "0.1.0-SNAPSHOT")
 
 (set-env!
