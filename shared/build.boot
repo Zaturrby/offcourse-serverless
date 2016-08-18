@@ -26,16 +26,13 @@
  '[codox.boot :refer [codox]]
  '[pandeiro.boot-http    :refer [serve]])
 
-(task-options!
- pom {:project     'offcourse/shared
-      :version     version
-      :description "HELLO WORLD"
-      :url         "http://example/FIXME"
-      :scm         {:url "https://github.com/yourname/specs"}
-      :license     {"Eclipse Public License"
-                    "http://www.eclipse.org/legal/epl-v10.html"}})
-
-
+(task-options! pom {:project     'offcourse/shared
+                    :version     version
+                    :description "HELLO WORLD"
+                    :url         "http://example/FIXME"
+                    :scm         {:url "https://github.com/yourname/specs"}
+                    :license     {"Eclipse Public License"
+                                  "http://www.eclipse.org/legal/epl-v10.html"}})
 
 (deftask build
   "Build and install the project locally."

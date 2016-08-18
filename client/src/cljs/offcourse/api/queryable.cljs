@@ -14,9 +14,9 @@
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
 (spec/fdef fetch
-           :args (spec/cat :component any? :query ::specs/query))
+           :args (spec/cat :component any? :event ::specs/event))
 
-(defn fetch [{:keys [repositories] :as api} query]
+(defn fetch [{:keys [repositories] :as api} [type query]]
   (let [query-type (va/resolve-type query)
         outgoing-event {:type :requested-data
                         :payload query}]
@@ -24,10 +24,9 @@
       (when (contains? resources query-type)
         (go
           (let [response (<! (qa/fetch repository outgoing-event))
-                data-payload (-> response cv/to-event cv/to-models)]
+               data-payload (-> response cv/to-models)]
             (match response
-                   {:type _ :payload _} (ri/respond api {:type :found-data
-                                                         :payload (data-payload/create data-payload)})
+                   [:found-data _] (ri/respond api :found-data (data-payload/create data-payload))
                    _ (println "not found data"))))))))
 
 (stest/instrument `fetch)

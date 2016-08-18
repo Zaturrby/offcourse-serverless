@@ -27,7 +27,9 @@
 (spec/def ::courses (spec/* ::course/course))
 (spec/def ::checkpoint (spec/* ::checkpoint/checkpoint))
 
-(spec/def ::event ::event/event)
+#_(spec/def ::event ::event/event)
+(spec/def ::event (spec/tuple keyword? any?))
+
 (spec/def ::Records ::event/Records)
 (spec/def ::meta (spec/keys :req-un [::spec]))
 

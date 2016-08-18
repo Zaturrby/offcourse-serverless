@@ -1,6 +1,5 @@
 (ns shared.models.event.index
   (:require [shared.models.event.to-action :refer [to-action]]
-            [shared.models.event.to-payload :refer [to-payload]]
             [shared.models.event.to-query :refer [to-query]]
             [shared.models.event.to-models :refer [to-models]]
             [shared.models.course.index :as co]
@@ -20,30 +19,41 @@
 (defrecord Event []
   Convertible
   (-to-action [this] (to-action this))
-  (-to-payload [this] (to-payload this))
   (-to-query [this] (to-query this))
   (-to-models [this] (to-models this))
   Extractable
   (-extract [this] (extract-data this)))
 
-(defmulti create (fn [event] (first (spec/conform ::specs/map-type event))))
+#_(defmulti create (fn [event] (first (spec/conform ::specs/map-type event))))
 
-(defmethod create :raw [raw-event]
+#_(defmethod create :raw [raw-event]
   (-> raw-event
       (js->clj :keywordize-keys true)
       helpers/keywordize-type
       map->Event
       (with-meta {:spec ::specs/event})))
 
+(defn override [command]
+  (specify command
+    Convertible
+    (-to-action [this] (to-action this))
+    (-to-query [this] (to-query this))
+    (-to-models [this] (to-models this))
+    Extractable
+    (-extract [this] (extract-data this))))
 
-(defmethod create :default [event]
-  (-> event
-      helpers/keywordize-type
-      map->Event
-      (with-meta {:spec ::specs/event})))
+(defn create [[type payload]]
+  (-> [(keyword type) payload]
+      (with-meta {:spec ::specs/event})
+      override))
 
 (extend-protocol Convertible
   object
-  (-to-event [raw] (create raw))
+  (-to-event [raw]
+    (logger/log "RAW" raw)
+    (-> raw
+        (js->clj :keywordize-keys true)
+        helpers/keywordize-type
+        create))
   PersistentArrayMap
   (-to-event [raw] (create raw)))

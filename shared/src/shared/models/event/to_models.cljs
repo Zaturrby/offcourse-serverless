@@ -1,13 +1,14 @@
 (ns shared.models.event.to-models
   (:require [shared.models.course.index :as co]
             [cljs.spec :as spec]
-            [shared.specs.core :as specs]))
+            [shared.specs.core :as specs]
+            [services.logger :as logger]))
 
-(defmulti to-models (fn [event]
-                      (first (spec/conform ::specs/data-payload (:payload event)))))
+(defmulti to-models (fn [[_ payload]]
+                      (first (spec/conform ::specs/data-payload payload))))
 
-(defmethod to-models :courses [event]
-  (map co/create (:payload event)))
+(defmethod to-models :courses [[_ payload]]
+  (map co/create payload))
 
-(defmethod to-models :course [event]
-  (co/create (:payload event)))
+(defmethod to-models :course [[_ payload]]
+  (co/create payload))

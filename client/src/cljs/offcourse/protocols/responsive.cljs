@@ -25,9 +25,7 @@
   ([this {:keys [type payload]}] (respond this type payload))
   ([{:keys [output-channel channels component-name] :as this} status payload]
    (let [output-channel (or output-channel (:output channels))
-         response             (cv/to-event {:type status
-                                            :source component-name
-                                            :payload payload})]
+         response             (event/create [status payload])]
      (when (< @counter 10)
        (go
          (swap! counter inc)
@@ -39,11 +37,10 @@
 
 (defn -listener [{:keys [channels component-name reactions] :as this}]
   (go-loop []
-    (let [{:keys [type source payload] :as action} (<! (:input channels))
+    (let [[type payload :as event] (<! (:input channels))
           reaction (type reactions)]
-      #_(logger/log component-name source type payload)
       (when reaction
-        (reaction this action))
+        (reaction this event))
       (recur))))
 
 (defn listen [{:keys [channels component-name reactions] :as this}]

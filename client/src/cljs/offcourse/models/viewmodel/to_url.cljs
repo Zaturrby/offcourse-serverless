@@ -1,7 +1,8 @@
 (ns offcourse.models.viewmodel.to-url
   (:require [bidi.bidi :as bidi]
             [cljs.spec :as spec]
-            [shared.specs.core :as specs]))
+            [shared.specs.core :as specs]
+            [services.logger :as logger]))
 
 (defmulti to-url (fn [vm] (first (spec/conform ::specs/viewmodel vm))))
 

@@ -14,7 +14,7 @@
   (stop [rd] (ri/mute rd))
   Renderable
   (-render [{:keys [views url-helpers components handlers] :as rd}
-            {:keys [payload] :as query}]
+            [_ payload]]
     (let [responder (partial ri/respond rd)
           handlers (medley/map-vals #(% responder) handlers)
           view     (view/new (:appstate payload) components url-helpers handlers)]
@@ -23,7 +23,6 @@
           (rr/render)
           (ma/mount "#container"))
     (ri/respond rd {:type :rendered-view})))
-
   Responsive
   (-listen [rd] (ri/listen rd))
   (-mute [rd] (dissoc rd :listener))

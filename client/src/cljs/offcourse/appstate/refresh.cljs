@@ -10,9 +10,9 @@
             [services.logger :as logger]
             [shared.protocols.commandable :as cd]))
 
-(defmulti refresh (fn [_ {:keys [type]}] type))
+(defmulti refresh (fn [_ [type payload]] type))
 
-(defmethod refresh :requested-update [{:keys [state] :as as} {:keys [payload] :as query}]
+(defmethod refresh :requested-update [{:keys [state] :as as} [_ payload]]
   (let [proposal (cd/exec @state payload)]
     (when (qa/check as :proposal proposal)
       (reset! state proposal)
@@ -33,7 +33,7 @@
       (reset! state proposal)
       (rd/redirect as :home))))
 
-(defmethod refresh :fetched-auth-token [{:keys [state] :as as} {:keys [payload] :as query}]
+(defmethod refresh :fetched-auth-token [{:keys [state] :as as} [_ payload]]
   (let [auth-token (:auth-token payload)
         proposal (cd/exec @state auth-token)]
     (when (and (qa/check as :proposal proposal) )
@@ -47,13 +47,12 @@
       (reset! state proposal)
       (rd/redirect as :home))))
 
-(defmethod refresh :requested-view [{:keys [state] :as as} {:keys [payload] :as query}]
+(defmethod refresh :requested-view [{:keys [state] :as as} [_ payload]]
   (let [proposal (cd/exec @state [:update payload])]
     (if (qa/check as :proposal proposal)
       (do
         (reset! state proposal)
         (when-let [missing-data (qa2/missing-data @state proposal)]
-          (logger/log missing-data)
           (ri/respond as :not-found-data missing-data))
         (if (va/valid? @state)
           (ri/respond as :refreshed-state :appstate @state)
@@ -61,11 +60,11 @@
       (when (= (-> @state :viewmodel :type) :loading)
         (rd/redirect as :home)))))
 
-(defmethod refresh :not-found-data [{:keys [state] :as as} {:keys [payload] :as query}]
+(defmethod refresh :not-found-data [{:keys [state] :as as} [_ payload]]
   (when-not (-> @state :user :user-name)
     (rd/redirect as :signup)))
 
-(defmethod refresh :found-data [{:keys [state] :as as} {:keys [payload] :as event}]
+(defmethod refresh :found-data [{:keys [state] :as as} [_ payload]]
   (let [proposal (cd/exec @state [:add payload])]
     (when (va/valid? proposal)
       (reset! state proposal)
