@@ -1,16 +1,15 @@
 (comment "check cuerdas and specter for api updates")
 
 (set-env!
- :source-paths    #{"src/js" "src/cljs" "src/cljc" "../protocols/src"
+ :source-paths    #{"src/js" "src/clj" "src/cljs" "src/cljc" "../protocols/src"
                     "../specs/src" "../services/src" "../models/src" "../styles/src"}
  :resource-paths  #{"resources"}
  :checkouts     '[[offcourse/specs             "0.1.0-SNAPSHOT"]
                   [offcourse/models            "0.1.0-SNAPSHOT"]
+                  [offcourse/styles            "0.1.0-SNAPSHOT"]
                   [offcourse/protocols         "0.1.0-SNAPSHOT"]
-                  [offcourse/services          "0.1.0-SNAPSHOT"]
-                  [offcourse/styles            "0.1.0-SNAPSHOT"]]
- :dependencies '[[garden "1.3.2"]
-                 [adzerk/boot-cljs              "1.7.228-1"      :scope "test"]
+                  [offcourse/services          "0.1.0-SNAPSHOT"]]
+ :dependencies '[[adzerk/boot-cljs              "1.7.228-1"      :scope "test"]
                  [adzerk/boot-cljs-repl         "0.3.3"          :scope "test"]
                  [adzerk/boot-reload            "0.4.12"         :scope "test"]
                  [ring/ring-devel               "1.6.0-beta4"          :scope "test"]
@@ -59,9 +58,7 @@
  '[adzerk.boot-reload    :refer [reload]]
  '[org.martinklepsch.boot-garden :refer [garden]]
  '[crisptrutski.boot-cljs-test  :refer [exit! test-cljs]]
- '[pandeiro.boot-http    :refer [serve]]
- '[garden.def :refer [defstyles]]
- '[styles.index :refer [base]])
+ '[pandeiro.boot-http    :refer [serve]])
 
 (deftask testing []
   (merge-env! :resource-paths #{"test"})
@@ -73,22 +70,14 @@
         (speak)
         (test-cljs)))
 
-(deftask printJar []
-  (println "   Stylelist type follows:    "     base)
-)
-
-(deftask printTask []
-  (comp #(println %) identity))
-
 (deftask css []
-  (task-options! garden {:styles-var    '(defstyles (base))
+  (task-options! garden {:styles-var    'localstyles.index/base
                          :vendors       ["webkit" "moz"]
                          :auto-prefix   #{:user-select :column-count :column-gap}
                          :output-to     "css/main.css"
                          :pretty-print  true})
-  (garden)
-  (printTask)
-  (target))
+  (comp (garden)
+        (target)))
 
 (deftask dev []
   (set-env! :source-paths #(conj % "src-dev/cljs" "src-dev/clj"))
@@ -111,5 +100,5 @@
   (set-env! :source-paths #(conj % "src-prod/cljs"))
   (task-options! target {:dir #{"dist/"}})
   (comp (cljs :optimizations :advanced)
-        ; (css)
+        (css)
         (target)))
