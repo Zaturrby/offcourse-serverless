@@ -7,7 +7,8 @@
             [rum.core :as rum]
             [offcourse.protocols.queryable :as qa]
             [cljs.spec :as spec]
-            [shared.specs.core :as specs]))
+            [shared.specs.core :as specs]
+            [services.logger :as logger]))
 
 (defrecord View []
   Composable
@@ -25,10 +26,7 @@
     (rum/mount rendered (. js/document (querySelector element)))))
 
 (defn new [appstate components url-helpers handlers]
-  (let [view-type (get-in appstate [:viewmodel :type])
-        blacklist [:collection-data :tags :resource-id :course-ids :view-data]]
-    (map->View {:appstate    appstate
-                :type        view-type
-                :components  components
-                :handlers    handlers
-                :url-helpers url-helpers})))
+  (map->View {:appstate    appstate
+              :components  components
+              :handlers    handlers
+              :url-helpers url-helpers}))

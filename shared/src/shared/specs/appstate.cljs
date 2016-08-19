@@ -7,4 +7,7 @@
 (spec/def ::user-name string?)
 (spec/def ::user (spec/nilable (spec/keys :req-un [::user-name])))
 
-(spec/def ::appstate (spec/keys :req-un [::site-title ::user ::viewmodel/viewmodel]))
+(spec/def ::auth-token string?)
+
+(spec/def ::appstate (spec/keys :req-un [::site-title ::user ::viewmodel/viewmodel]
+                                :opt-un [::auth-token]))

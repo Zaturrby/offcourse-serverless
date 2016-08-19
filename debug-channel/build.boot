@@ -17,6 +17,7 @@
                  [offcourse/specs            "0.1.0-SNAPSHOT"]
                  [offcourse/services          "0.1.0-SNAPSHOT"]
                  [offcourse/models            "0.1.0-SNAPSHOT"]
+                 [offcourse/styles            "0.1.0-SNAPSHOT"]
                  [offcourse/protocols            "0.1.0-SNAPSHOT"]
                  [weasel                      "0.7.0"          :scope "test"]
                  [org.clojure/tools.nrepl     "0.2.12"         :scope "test"]])

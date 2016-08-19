@@ -6,7 +6,8 @@
             [offcourse.protocols.mountable :as ma]
             [offcourse.protocols.renderable :as rr :refer [Renderable]]
             [offcourse.protocols.responsive :as ri :refer [Responsive]]
-            [schema.core :as schema]))
+            [schema.core :as schema]
+            [services.logger :as logger]))
 
 (defrecord UI []
   Lifecycle

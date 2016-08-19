@@ -3,6 +3,8 @@
 (set-env!
  :source-paths    #{"src/js" "src/cljs" "src/cljc" "../services/src" "../shared/src"}
  :resource-paths  #{"resources"}
+ :checkouts     '[[offcourse/shared            "0.1.0-SNAPSHOT"]
+                  [offcourse/services          "0.1.0-SNAPSHOT"]]
  :dependencies '[[adzerk/boot-cljs              "1.7.228-1"      :scope "test"]
                  [adzerk/boot-cljs-repl         "0.3.3"          :scope "test"]
                  [adzerk/boot-reload            "0.4.12"         :scope "test"]
@@ -36,6 +38,7 @@
                  [sablono                     "0.7.3"]
                  [bidi                        "2.0.9"]
                  [offcourse/services          "0.1.0-SNAPSHOT"]
+                 [offcourse/shared          "0.1.0-SNAPSHOT"]
                  [funcool/cuerdas             "0.7.0"]
                  [kibu/pushy                  "0.3.6"]
                  [cljsjs/auth0                "6.3.0-0"]

@@ -2,7 +2,8 @@
   (:require [bidi.bidi :refer [path-for]]
             [offcourse.models.viewmodel.index :as viewmodel]
             [offcourse.models.course.index :as co]
-            [offcourse.models.checkpoint.index :as cp]))
+            [offcourse.models.checkpoint.index :as cp]
+            [services.logger :as logger]))
 
 (def home-route        [:collection-name])
 (def curator-routes    [:curator])

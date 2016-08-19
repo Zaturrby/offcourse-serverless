@@ -19,6 +19,11 @@
 (defmethod exec [:update :viewmodel] [state [_ viewmodel]]
   (-> state (assoc :viewmodel viewmodel)))
 
+(defmethod exec [:update :auth-token] [state [_ auth-token]]
+  (-> state
+      (assoc :auth-token auth-token)
+      (assoc :user nil)))
+
 (defmethod exec [:add :courses] [store [_ courses]]
   (reduce add-course store courses))
 

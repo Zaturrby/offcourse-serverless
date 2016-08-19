@@ -35,7 +35,7 @@
 
 (defmethod refresh :fetched-auth-token [{:keys [state] :as as} [_ payload]]
   (let [auth-token (:auth-token payload)
-        proposal (cd/exec @state auth-token)]
+        proposal (cd/exec @state [:update auth-token])]
     (when (and (qa/check as :proposal proposal) )
       (reset! state proposal)
       (ri/respond as :not-found-data {:type :user-profile

@@ -26,7 +26,7 @@
   ([{:keys [output-channel channels component-name] :as this} status payload]
    (let [output-channel (or output-channel (:output channels))
          response             (event/create [status payload])]
-     (when (< @counter 10)
+     (when (< @counter 100)
        (go
          (swap! counter inc)
          (logger/log response)
