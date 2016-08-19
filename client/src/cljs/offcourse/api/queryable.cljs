@@ -26,8 +26,8 @@
           (let [response (<! (qa/fetch repository outgoing-event))
                 data-payload (-> response cv/to-models)]
             (match response
-                   [:found-data _] (ri/respond api :found-data data-payload)
-                   [:error _] (logger/log "not found data")
-                   _ (logger/log "request failed"))))))))
+                   [:found-data _] (ri/respond api :found data-payload)
+                   [:error _] (logger/log :not-found "not found data")
+                   _ (logger/log :failed "request failed"))))))))
 
 (stest/instrument `fetch)

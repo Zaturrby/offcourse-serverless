@@ -24,5 +24,5 @@
 
 (defn new []
   (map->API {:component-name :api
-             :reactions {:not-found-data qa/fetch
+             :reactions {:not-found qa/fetch
                          :refreshed-auth-token qa/fetch}}))

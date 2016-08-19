@@ -18,12 +18,12 @@
             [_ payload]]
     (let [responder (partial ri/respond rd)
           handlers (medley/map-vals #(% responder) handlers)
-          view     (view/new (:appstate payload) components url-helpers handlers)]
+          view     (view/new payload components url-helpers handlers)]
       (-> view
           (ca/compose views)
           (rr/render)
           (ma/mount "#container"))
-    (ri/respond rd {:type :rendered-view})))
+    (ri/respond rd {:type :rendered})))
   Responsive
   (-listen [rd] (ri/listen rd))
   (-mute [rd] (dissoc rd :listener))
@@ -32,4 +32,4 @@
 
 (defn new []
   (map->UI {:component-name :ui
-            :reactions {:refreshed-state rr/render}}))
+            :reactions {:refreshed rr/render}}))

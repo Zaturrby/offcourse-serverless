@@ -19,7 +19,7 @@
 (defmethod exec [:update :viewmodel] [state [_ viewmodel]]
   (-> state (assoc :viewmodel viewmodel)))
 
-(defmethod exec [:update :auth-token] [state [_ auth-token]]
+(defmethod exec [:update :credentials] [state [_ {:keys [auth-token]}]]
   (-> state
       (assoc :auth-token auth-token)
       (assoc :user nil)))

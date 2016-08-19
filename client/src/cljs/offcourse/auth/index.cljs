@@ -18,7 +18,7 @@
   (start [auth]
     (let [auth-token (qa/get auth {:type :auth-token})]
       (when auth-token
-        (ri/respond auth :fetched-auth-token :auth-token auth-token))
+        (ri/respond auth :found :auth-token auth-token))
       (-> auth
           init
           ri/listen)))

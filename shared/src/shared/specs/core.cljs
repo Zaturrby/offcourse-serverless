@@ -18,7 +18,6 @@
 (spec/def ::action (spec/keys :req-un [::payload ::type]))
 (spec/def ::spec spec/spec?)
 
-
 (spec/def ::query ::query/query)
 (spec/def ::data-payload ::data-payload/data-payload)
 (spec/def ::viewmodel ::viewmodel/viewmodel)
@@ -27,8 +26,15 @@
 (spec/def ::courses (spec/* ::course/course))
 (spec/def ::checkpoint (spec/* ::checkpoint/checkpoint))
 
-#_(spec/def ::event ::event/event)
-(spec/def ::event (spec/tuple keyword? any?))
+(spec/def ::auth-token string?)
+(spec/def ::credentials (spec/keys :req-un [::auth-token]))
+
+(spec/def ::payload (spec/or :viewmodel ::viewmodel/viewmodel
+                             :credentials ::credentials
+                             :data ::data-payload/data-payload
+                             :query ::query/query))
+
+(spec/def ::event (spec/tuple keyword? ::payload))
 
 (spec/def ::Records ::event/Records)
 (spec/def ::meta (spec/keys :req-un [::spec]))
@@ -36,7 +42,12 @@
 (spec/def ::single-or-multiple? (spec/or :single map?
                                          :multiple (spec/* map?)))
 
-(spec/def ::command (spec/tuple keyword? ::data-payload/data-payload))
+(spec/def ::command-payload (spec/or :viewmodel ::viewmodel/viewmodel
+                                     :credentials ::credentials
+                                     :courses (spec/* ::course/course)
+                                     :course ::course/course))
+
+(spec/def ::command (spec/tuple keyword? ::command-payload))
 
 (spec/def ::map-type (spec/or :keywordized (spec/map-of keyword? any?)
                               :raw (spec/map-of string? any?)))

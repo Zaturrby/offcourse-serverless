@@ -4,7 +4,7 @@
             [services.logger :as logger]))
 
 (defn refresh [{:keys [history routes url-helpers responses]} [_ payload]]
-  (let [{:keys [type] :as viewmodel} (-> payload :appstate :viewmodel)
+  (let [{:keys [type] :as viewmodel} (-> payload :viewmodel)
         old-url (pushy/get-token history)
         new-url (cv/to-url viewmodel routes)]
     (when-not (= old-url new-url)

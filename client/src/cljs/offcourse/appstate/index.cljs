@@ -24,10 +24,9 @@
   (-listen [as] (ri/listen as)))
 
 (defn new [] (map->Appstate {:component-name :appstate
-                             :reactions      {:requested-view        qa/refresh
-                                              :found-data            qa/refresh
-                                              :not-found-data        qa/refresh
-                                              :fetched-auth-token    qa/refresh
+                             :reactions      {:requested             qa/refresh
+                                              :found                 qa/refresh
+                                              :not-found             qa/refresh
                                               :removed-auth-token    qa/refresh
                                               :requested-update      qa/refresh
                                               :requested-save-user   qa/refresh

@@ -9,7 +9,7 @@
 
 (defn handle-response [res]
   (let [{:keys [type payload]} (js->clj (.parse js/JSON res) :keywordize-keys true)]
-    (event/create [(keyword type) payload])))
+    (event/create [:aws (keyword type) payload])))
 
 (defn fetch [{:keys [endpoint]} {:keys [auth-token] :as query}]
   (let [c (chan)]

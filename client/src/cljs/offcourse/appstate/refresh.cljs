@@ -1,71 +1,40 @@
 (ns offcourse.appstate.refresh
-  (:require [offcourse.models.course.index :as co]
-            [offcourse.protocols.queryable :as qa]
-            [shared.protocols.queryable :as qa2]
+  (:require [offcourse.protocols.queryable :as qa]
             [offcourse.protocols.redirectable :as rd]
             [offcourse.protocols.responsive :as ri]
-            [shared.protocols.validatable :as va]
-            [shared.models.data-payload.index :as data-payload]
-            [shared.models.query.index :as query]
-            [services.logger :as logger]
-            [shared.protocols.commandable :as cd]))
+            [shared.protocols.commandable :as cd]
+            [shared.protocols.queryable :as qa2]
+            [shared.protocols.validatable :as va]))
 
-(defmulti refresh (fn [_ [type payload]] type))
+(defmulti refresh (fn [_ event] (va/resolve-type event)))
 
-(defmethod refresh :requested-update [{:keys [state] :as as} [_ payload]]
-  (let [proposal (cd/exec @state payload)]
-    (when (qa/check as :proposal proposal)
-      (reset! state proposal)
-      (ri/respond as :refreshed-state :appstate @state))))
-
-(defmethod refresh :requested-save-course [{:keys [state] :as as} _]
-  (let [course (-> @state :viewmodel :new-course co/complete)
-        proposal (qa/add @state :course course)]
-    (when (qa/check as :proposal proposal)
-      (reset! state proposal)
-      (rd/redirect as :course course))))
-
-(defmethod refresh :requested-save-user [{:keys [state] :as as} _]
-  (let [user (-> @state :viewmodel :new-user)
-        proposal (qa/add @state {:type :user-profile
-                                 :user-profile user})]
-    (when (qa/check as :proposal proposal)
-      (reset! state proposal)
-      (rd/redirect as :home))))
-
-(defmethod refresh :fetched-auth-token [{:keys [state] :as as} [_ payload]]
+(defmethod refresh [:found :credentials] [{:keys [state] :as as} [_ payload]]
   (let [auth-token (:auth-token payload)
-        proposal (cd/exec @state [:update auth-token])]
+        proposal (cd/exec @state [:update payload])]
     (when (and (qa/check as :proposal proposal) )
       (reset! state proposal)
-      (ri/respond as :not-found-data {:type :user-profile
-                                      :auth-token auth-token}))))
+      (ri/respond as :not-found {:type :user-profile
+                                 :auth-token auth-token}))))
 
-(defmethod refresh :removed-auth-token [{:keys [state] :as as} _]
-  (let [proposal (cd/exec @state (:auth-token nil))]
-    (when (qa/check as :proposal proposal)
-      (reset! state proposal)
-      (rd/redirect as :home))))
-
-(defmethod refresh :requested-view [{:keys [state] :as as} [_ payload]]
+(defmethod refresh [:requested-update :viewmodel] [{:keys [state] :as as} [_ payload]]
   (let [proposal (cd/exec @state [:update payload])]
     (if (qa/check as :proposal proposal)
       (do
         (reset! state proposal)
         (when-let [missing-data (qa2/missing-data @state proposal)]
-          (ri/respond as :not-found-data missing-data))
+          (ri/respond as :not-found missing-data))
         (if (va/valid? @state)
-          (ri/respond as :refreshed-state :appstate @state)
+          (ri/respond as :refreshed @state)
           (println "OHH SHIITTT")))
-      (when (= (-> @state :viewmodel :type) :loading)
+      (when (= (-> @state :viewmodel va/resolve-type) :loading)
         (rd/redirect as :home)))))
 
-(defmethod refresh :not-found-data [{:keys [state] :as as} [_ payload]]
-  (when-not (-> @state :user :user-name)
-    (rd/redirect as :signup)))
-
-(defmethod refresh :found-data [{:keys [state] :as as} [_ payload]]
+(defmethod refresh [:found :data] [{:keys [state] :as as} [_ payload]]
   (let [proposal (cd/exec @state [:add payload])]
     (when (va/valid? proposal)
       (reset! state proposal)
-      (ri/respond as :refreshed-state :appstate @state))))
+      (ri/respond as :refreshed @state))))
+
+(defmethod refresh [:not-found :data] [{:keys [state] :as as} [_ payload]]
+  (when-not (-> @state :user :user-name)
+    (rd/redirect as :signup)))
