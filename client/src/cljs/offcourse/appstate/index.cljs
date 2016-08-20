@@ -1,7 +1,7 @@
 (ns offcourse.appstate.index
   (:require [com.stuartsierra.component :refer [Lifecycle]]
             [offcourse.appstate.react :as react-impl]
-            [shared.protocols.responsive :as ri :refer [Responsive]]))
+            [offcourse.protocols.responsive :as ri :refer [Responsive]]))
 
 (defrecord Appstate [component-name reactions]
   Lifecycle

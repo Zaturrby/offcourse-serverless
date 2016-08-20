@@ -5,7 +5,7 @@
             [offcourse.protocols.composable :as ca]
             [offcourse.protocols.mountable :as ma]
             [offcourse.protocols.renderable :as rr :refer [Renderable]]
-            [shared.protocols.responsive :as ri :refer [Responsive]]
+            [offcourse.protocols.responsive :as ri :refer [Responsive]]
             [schema.core :as schema]
             [services.logger :as logger]))
 

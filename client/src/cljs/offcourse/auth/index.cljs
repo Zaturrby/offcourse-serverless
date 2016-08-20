@@ -4,7 +4,7 @@
             [offcourse.auth.authenticate :as ac]
             [offcourse.auth.get :as get-impl]
             [offcourse.protocols.queryable :as qa :refer [Queryable]]
-            [shared.protocols.responsive :as ri :refer [Responsive]]))
+            [offcourse.protocols.responsive :as ri :refer [Responsive]]))
 
 (defn init [{:keys [config] :as auth}]
   (assoc auth :provider (js/Auth0Lock. (:clientID config) (:domain config))))
