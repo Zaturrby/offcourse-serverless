@@ -1,4 +1,4 @@
-(ns offcourse.auth.authenticable
+(ns offcourse.auth.authenticate
   (:require [cljs.core.async :refer [<! >! chan]]
             [offcourse.protocols.responsive :as ri])
   (:require-macros [cljs.core.async.macros :refer [go]]))
@@ -17,7 +17,7 @@
   (go
     (let [{:keys [token]} (<! (-sign-in provider))]
       (.setItem js/localStorage "auth-token" token)
-      (ri/respond auth [:found {:auth-token token}]))))
+      (ri/respond auth [:granted {:auth-token token}]))))
 
 (defn sign-out [auth]
   (go

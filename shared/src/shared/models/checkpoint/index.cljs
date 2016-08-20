@@ -5,6 +5,7 @@
 (defrecord Checkpoint [])
 
 (defn create [raw-checkpoint]
+  "creates a checkpoint"
   (-> raw-checkpoint
       map->Checkpoint
       (with-meta {:spec ::specs/checkpoint})))

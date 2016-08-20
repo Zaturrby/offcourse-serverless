@@ -17,37 +17,46 @@
     (component/system-map
      :repositories           repositories
      :api-channels           (:api channels)
-     :api                    (component/using (api/new)
-                                              {:channels     :api-channels
-                                               :repositories :repositories})
+     :api                    (component/using
+                              (api/create :api [:not-found])
+                              {:channels     :api-channels
+                               :repositories :repositories})
      :auth-channels           (:auth channels)
      :auth-config             auth-config
-     :auth                    (component/using (auth/new)
-                                              {:channels     :auth-channels
-                                               :config  :auth-config})
+     :auth                    (component/using
+                               (auth/create :auth
+                                            [:requested])
+                               {:channels :auth-channels
+                                :config   :auth-config})
 
      :routes                 routes/table
      :route-responses        routes/responses
      :router-channels        (:router channels)
-     :router                 (component/using (router/new)
-                                              {:channels  :router-channels
-                                               :routes    :routes
-                                               :responses :route-responses})
+     :router                 (component/using
+                              (router/create :router
+                                             [:refreshed])
+                              {:channels  :router-channels
+                               :routes    :routes
+                               :responses :route-responses})
      :appstate-atom          appstate
      :appstate-channels      (:appstate channels)
-     :appstate               (component/using (appstate/new)
-                                              {:channels  :appstate-channels
-                                               :state     :appstate-atom})
+     :appstate               (component/using
+                              (appstate/create :appstate
+                                               [:granted :found :requested :not-found])
+                              {:channels :appstate-channels
+                               :state    :appstate-atom})
 
      :views                  views
      :view-components        ui-components
      :view-handlers          handlers
      :url-helpers            routes/url-helpers
      :ui-channels            (:ui channels)
-     :ui                     (component/using (ui/new)
-                                              {:channels    :ui-channels
-                                               :url-helpers :url-helpers
-                                               :handlers    :view-handlers
-                                               :routes      :routes
-                                               :components  :view-components
-                                               :views       :views}))))
+     :ui                     (component/using
+                              (ui/create :ui
+                                         [:refreshed])
+                              {:channels    :ui-channels
+                               :url-helpers :url-helpers
+                               :handlers    :view-handlers
+                               :routes      :routes
+                               :components  :view-components
+                               :views       :views}))))

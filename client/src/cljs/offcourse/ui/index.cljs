@@ -5,11 +5,11 @@
             [offcourse.protocols.composable :as ca]
             [offcourse.protocols.mountable :as ma]
             [offcourse.protocols.renderable :as rr :refer [Renderable]]
-            [offcourse.protocols.responsive :as ri :refer [Responsive]]
+            [shared.protocols.responsive :as ri :refer [Responsive]]
             [schema.core :as schema]
             [services.logger :as logger]))
 
-(defrecord UI []
+(defrecord UI [component-name reactions]
   Lifecycle
   (start [rd] (ri/listen rd))
   (stop [rd] (ri/mute rd))
@@ -23,12 +23,12 @@
           (ca/compose views)
           (rr/render)
           (ma/mount "#container"))
-    (ri/respond rd [:rendered nil])))
+      (ri/respond rd [:rendered nil])))
   Responsive
   (-listen [rd] (ri/listen rd))
+  (-react [rd event] (rr/render rd event))
   (-mute [rd] (dissoc rd :listener))
   (-respond [rd event] (ri/respond rd event)))
 
-(defn new []
-  (map->UI {:component-name :ui
-            :reactions {:refreshed rr/render}}))
+(defn create [component-name reactions]
+  (->UI component-name reactions))

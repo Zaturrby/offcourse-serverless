@@ -1,31 +1,16 @@
 (ns offcourse.appstate.index
   (:require [com.stuartsierra.component :refer [Lifecycle]]
-            [offcourse.appstate.check :as check-impl]
-            [offcourse.appstate.redirect :as redirect-impl]
-            [offcourse.appstate.refresh :as refresh-impl]
-            [offcourse.protocols.queryable :as qa :refer [Queryable]]
-            [offcourse.protocols.redirectable :as rd :refer [Redirectable]]
-            [offcourse.protocols.responsive :as ri :refer [Responsive]]
-            [services.logger :as logger]))
+            [offcourse.appstate.react :as react-impl]
+            [shared.protocols.responsive :as ri :refer [Responsive]]))
 
-(defrecord Appstate []
-  Redirectable
-  (-redirect [as destination] (redirect-impl/redirect as destination))
-  (-redirect [as destination payload] (redirect-impl/redirect as destination payload))
+(defrecord Appstate [component-name reactions]
   Lifecycle
   (start   [as] (ri/listen as))
   (stop    [as] (ri/mute as))
-  Queryable
-  (-check   [as query] (check-impl/check as query))
-  (-refresh [as query] (refresh-impl/refresh as query))
   Responsive
   (-respond [as event] (ri/respond as event))
   (-mute [as] (ri/mute as))
+  (-react [as event] (react-impl/react as event))
   (-listen [as] (ri/listen as)))
 
-(defn new [] (map->Appstate {:component-name :appstate
-                             :reactions      {:requested             qa/refresh
-                                              :found                 qa/refresh
-                                              :not-found             qa/refresh
-                                              :revoked               qa/refresh}}))
-
+(defn create [component-name reactions] (->Appstate component-name reactions))

@@ -1,4 +1,4 @@
-(ns offcourse.router.refresh
+(ns offcourse.router.react
   (:require [shared.protocols.convertible :as cv]
             [pushy.core :as pushy]
             [services.logger :as logger]))

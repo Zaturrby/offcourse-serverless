@@ -1,4 +1,4 @@
-(ns offcourse.api.queryable
+(ns offcourse.api.react
   (:require [cljs.core.async :refer [<!]]
             [cljs.core.match :refer-macros [match]]
             [offcourse.protocols.queryable :as qa]
@@ -13,10 +13,10 @@
             [cljs.spec.test :as stest])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
-(spec/fdef fetch
+(spec/fdef react
            :args (spec/cat :component any? :event ::specs/event))
 
-(defn fetch [{:keys [repositories] :as api} [type query]]
+(defn react [{:keys [repositories] :as api} [type query]]
   (let [query-type (va/resolve-type query)
         outgoing-event {:type :requested-data
                         :payload query}]
@@ -30,4 +30,4 @@
                    [:error _] (ri/respond api [:not-found query])
                    _ (ri/respond api [:failed query]))))))))
 
-(stest/instrument `fetch)
+(stest/instrument `react)

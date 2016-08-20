@@ -1,21 +1,17 @@
 (ns offcourse.router.index
   (:require [com.stuartsierra.component :refer [Lifecycle]]
-            [offcourse.protocols.queryable :as qa :refer [Queryable]]
-            [offcourse.protocols.responsive :as ri :refer [Responsive]]
-            [offcourse.router.refresh :as refresh-impl]
+            [shared.protocols.responsive :as ri :refer [Responsive]]
+            [offcourse.router.react :as react-impl]
             [offcourse.router.responsive :as ri-impl]))
 
-(defrecord Router []
+(defrecord Router [component-name reactions]
   Lifecycle
   (start [rt] (ri/-listen rt))
   (stop [rt] (ri/mute rt))
-  Queryable
-  (-refresh [rt query] (refresh-impl/refresh rt query))
   Responsive
   (-listen [rt] (ri-impl/listen rt))
+  (-react [rt event] (react-impl/refresh rt event))
   (-mute [rt] (ri-impl/mute rt))
   (-respond [rt event] nil))
 
-(defn new []
-  (map->Router {:component-name :router
-                :reactions {:refreshed-state qa/refresh}}))
+(defn create [component-name reactions] (->Router component-name reactions))

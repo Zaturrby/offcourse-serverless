@@ -10,14 +10,16 @@
            :ret ::specs/command
            :fn #(spec/valid? ::specs/meta (-> %1 :ret :meta)))
 
-(defn override [command]
+(defn- override [command]
   (specify command
     Validatable
     (-resolve-type [[data-type :as this]]
       (let [payload-type (-> (spec/conform (:spec (meta this)) this) second first)]
         [data-type payload-type]))))
 
-(defn create [command]
+(defn create
+  "creates a new command"
+  [command]
   (-> command
       (with-meta {:spec ::specs/command})
       override))

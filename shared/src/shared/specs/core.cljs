@@ -38,8 +38,8 @@
 (defn create-tuple-spec [valid-types payload]
   (spec/tuple (into #{} valid-types) payload))
 
-(spec/def ::event (create-tuple-spec [:found :not-found :requested
-                                :rendered :refreshed] ::event-payload))
+(spec/def ::event (create-tuple-spec [:found :not-found :granted :revoked :requested
+                                      :rendered :refreshed] ::event-payload))
 
 (spec/def ::Records ::event/Records)
 (spec/def ::meta (spec/keys :req-un [::spec]))
