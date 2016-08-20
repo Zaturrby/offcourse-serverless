@@ -14,7 +14,7 @@
   Responsive
   (-listen [rt] (ri-impl/listen rt))
   (-mute [rt] (ri-impl/mute rt))
-  (-respond [rt status payload] (ri-impl/respond rt status payload)))
+  (-respond [rt event] nil))
 
 (defn new []
   (map->Router {:component-name :router

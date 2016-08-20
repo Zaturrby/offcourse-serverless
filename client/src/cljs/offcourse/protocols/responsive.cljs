@@ -1,45 +1,21 @@
 (ns offcourse.protocols.responsive
-  (:require [cljs.core.async :refer [<! >! close!]]
-            [offcourse.models.action :as action]
-            [offcourse.models.payload.index :as payload :refer [Payload]]
+  (:require [cljs.core.async :as async :refer [<! put! close!]]
             [services.logger :as logger]
-            [shared.protocols.validatable :as va :refer [Validatable]]
             [shared.models.event.index :as event]
-            [shared.protocols.convertible :as cv]
-            [cljs.spec :as spec]
-            [shared.specs.core :as specs])
+            [shared.protocols.validatable :as va])
   (:require-macros [cljs.core.async.macros :refer [go go-loop]]))
 
 (defprotocol Responsive
   (-listen [this])
   (-mute [this])
-  (-respond [this status] [this status payload] [this status type result]))
-
-(defn debug-helper [component-name status payload]
-  (when true #_(= component-name :appstate)
-    (println "--RESPONSE-----")
-    (println "SENDER" component-name)
-    (println "STATUS" status)
-    (println "PAYLOAD" payload)))
-
-(def counter (atom 0))
+  (-respond [this event]))
 
 (defn respond
-  ([this {:keys [type payload]}] (respond this type payload))
-  ([{:keys [output-channel channels component-name] :as this} status payload]
-   (let [output-channel (or output-channel (:output channels))
-         response             (event/create [component-name status payload])]
-     (when (< @counter 100)
-       (go
-         (swap! counter inc)
-         (if (va/valid? response)
-           (do
-             (logger/log response)
-             (>! output-channel response))
-           (logger/log (spec/explain-data ::specs/event response)))))))
-  ([this status type result]
-   (-respond this status (payload/new type result))))
-
+  ([{:keys [channels component-name] :as this} [status payload]]
+   (let [response (event/create [component-name status payload])]
+     (if (va/valid? response)
+       (async/put! (:output channels) response)
+       (logger/log (va/errors response))))))
 
 (defn -listener [{:keys [channels component-name reactions] :as this}]
   (go-loop []

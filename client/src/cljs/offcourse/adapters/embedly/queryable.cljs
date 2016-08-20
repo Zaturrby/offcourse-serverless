@@ -1,9 +1,8 @@
 (ns offcourse.adapters.embedly.queryable
-  (:require [ajax.core :refer [GET POST]]
+  (:require [ajax.core :refer [GET]]
             [cljs.core.async :refer [chan]]
-            [clojure.walk :as walk]
             [clojure.string :as str]
-            [offcourse.models.response.index :as response])
+            [clojure.walk :as walk])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
 (defn add-defaults [{:keys [url content description title]}]
@@ -38,5 +37,5 @@
       (when-not (empty? resources)
         (let [urls (str/join "," (map :url resources))
               resources (parse-response (<! (get-resources endpoint urls)))]
-          (response/new {:type :resources
-                         :resources resources})))))
+          {:type :resources
+           :resources resources}))))

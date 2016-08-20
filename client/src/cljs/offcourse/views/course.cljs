@@ -1,10 +1,7 @@
 (ns offcourse.views.course
-  (:require [offcourse.models.course.index :as co]
-            [offcourse.models.label :as lb]
-            [shared.protocols.queryable :as qa]
+  (:require [offcourse.protocols.decoratable :as dc]
             [plumbing.core :refer-macros [fnk]]
-            [offcourse.protocols.decoratable :as dc]
-            [services.logger :as logger]))
+            [shared.protocols.queryable :as qa]))
 
 (def graph
   {:course-data   (fnk [appstate] (-> appstate :viewmodel :course))
@@ -13,16 +10,15 @@
                                            (qa/search course-data))]
                          (dc/decorate course user-name nil)
                          nil))
-   :actions       (fnk [user-name [:url-helpers home-url new-course-url]]
-                       {:add-course (when user-name (new-course-url user-name))})
    :checkpoints   (fnk [appstate course]
                        (map #(dc/decorate % appstate) (:checkpoints course)))
    :main          (fnk [course checkpoints [:components sheets]
-                        [:url-helpers collection-url checkpoint-url] [:handlers toggle-checkpoint]]
-                       (let [url-helpers {:checkpoint-url (partial checkpoint-url (:curator course) (:course-slug course))
-                                          :collection-url collection-url}
-                             handlers {:toggle-checkpoint (partial toggle-checkpoint (:course-id course))}]
-
+                        [:url-helpers collection-url checkpoint-url]
+                        handlers]
+                       (let [url-helpers {:checkpoint-url (partial checkpoint-url
+                                                                   (:curator course)
+                                                                   (:course-slug course))
+                                          :collection-url collection-url}]
                          (sheets checkpoints url-helpers handlers (:trackable? (meta course)))))
    :dashboard     (fnk [url-helpers course handlers [:components card dashboard]]
                        (dashboard {:main (when course (card course url-helpers handlers))}))})

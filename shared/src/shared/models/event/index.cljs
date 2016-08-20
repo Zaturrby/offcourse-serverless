@@ -2,6 +2,7 @@
   (:require [shared.models.event.to-action :refer [to-action]]
             [shared.models.event.to-query :refer [to-query]]
             [shared.models.event.to-models :refer [to-models]]
+
             [shared.models.course.index :as co]
             [shared.protocols.convertible :as cv :refer [Convertible]]
             [shared.protocols.validatable :as va :refer [Validatable]]
@@ -53,11 +54,12 @@
         [data-type payload-type]))))
 
 (defn create [[source type payload]]
-  (-> [(keyword type) payload]
-      (with-meta {:spec ::specs/event
-                  :source source
-                  :timestamp (.now js/Date)})
-      override))
+  (let [event (-> [(keyword type) payload]
+                  (with-meta {:spec ::specs/event
+                              :source source
+                              :timestamp (.now js/Date)})
+                  override)]
+    (logger/pipe "Event" event)))
 
 #_(stest/instrument `create)
 

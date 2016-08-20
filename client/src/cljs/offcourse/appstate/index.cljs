@@ -19,7 +19,7 @@
   (-check   [as query] (check-impl/check as query))
   (-refresh [as query] (refresh-impl/refresh as query))
   Responsive
-  (-respond [as status payload] (ri/respond as status payload))
+  (-respond [as event] (ri/respond as event))
   (-mute [as] (ri/mute as))
   (-listen [as] (ri/listen as)))
 
@@ -27,9 +27,5 @@
                              :reactions      {:requested             qa/refresh
                                               :found                 qa/refresh
                                               :not-found             qa/refresh
-                                              :removed-auth-token    qa/refresh
-                                              :requested-update      qa/refresh
-                                              :requested-save-user   qa/refresh
-                                              :requested-save-course qa/refresh
-                                              :found-profile         qa/refresh}}))
+                                              :revoked               qa/refresh}}))
 

@@ -4,7 +4,7 @@
             [pushy.core :as pushy]))
 
 (defn handle-request [{:keys [responses history] :as rt} {:keys [handler route-params]}]
-  (ri/respond rt :requested-update ((handler responses) route-params)))
+  (ri/respond rt [:requested ((handler responses) route-params)]))
 
 (defn restart [{:keys [history] :as rt}]
   (pushy/replace-token! history "/"))
@@ -19,5 +19,3 @@
 (defn mute [{:keys [history listeners] :as rt}]
   (pushy/stop! history)
   (dissoc rt :listeners))
-
-(defn respond [rt status payload] (ri/-respond rt status payload))

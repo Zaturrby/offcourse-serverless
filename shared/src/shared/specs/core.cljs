@@ -29,12 +29,17 @@
 (spec/def ::auth-token string?)
 (spec/def ::credentials (spec/keys :req-un [::auth-token]))
 
-(spec/def ::payload (spec/or :viewmodel ::viewmodel/viewmodel
-                             :credentials ::credentials
-                             :data ::data-payload/data-payload
-                             :query ::query/query))
+(spec/def ::event-payload (spec/or :viewmodel ::viewmodel/viewmodel
+                                   :credentials ::credentials
+                                   :data ::data-payload/data-payload
+                                   :query ::query/query))
 
-(spec/def ::event (spec/tuple keyword? ::payload))
+
+(defn create-tuple-spec [valid-types payload]
+  (spec/tuple (into #{} valid-types) payload))
+
+(spec/def ::event (create-tuple-spec [:found :not-found :requested
+                                :rendered :refreshed] ::event-payload))
 
 (spec/def ::Records ::event/Records)
 (spec/def ::meta (spec/keys :req-un [::spec]))
@@ -47,7 +52,7 @@
                                      :courses (spec/* ::course/course)
                                      :course ::course/course))
 
-(spec/def ::command (spec/tuple keyword? ::command-payload))
+(spec/def ::command (create-tuple-spec [:update :add] ::command-payload))
 
 (spec/def ::map-type (spec/or :keywordized (spec/map-of keyword? any?)
                               :raw (spec/map-of string? any?)))

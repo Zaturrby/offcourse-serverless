@@ -1,4 +1,4 @@
-(ns offcourse.models.viewmodel.to-url
+(ns shared.models.viewmodel.to-url
   (:require [bidi.bidi :as bidi]
             [cljs.spec :as spec]
             [shared.specs.core :as specs]
@@ -27,3 +27,4 @@
 
 (defmethod to-url :loading [{:keys [type dependencies] :as vm} routes]
   (bidi/path-for routes type))
+

@@ -18,7 +18,7 @@
       (spec/valid? spec this)))
   (-errors [this]
     (when-let [{:keys [spec]} (meta this)]
-      (spec/explain spec this)))
+      (spec/explain-data spec this)))
   (-resolve-type [this]
     (when-let [{:keys [spec]} (meta this)]
       (first (spec/conform spec this)))))

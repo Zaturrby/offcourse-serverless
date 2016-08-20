@@ -1,12 +1,11 @@
 (ns offcourse.auth.index
-  (:require [com.stuartsierra.component :refer [Lifecycle]]
-            [offcourse.auth.authenticatable :as ac-impl]
+  (:require cljsjs.auth0-lock
+            [com.stuartsierra.component :refer [Lifecycle]]
+            [offcourse.auth.authenticable :as ac-impl]
             [offcourse.auth.get :as get-impl]
-            [cljsjs.auth0-lock]
             [offcourse.protocols.authenticable :as ac :refer [Authenticable]]
             [offcourse.protocols.queryable :as qa :refer [Queryable]]
-            [offcourse.protocols.responsive :as ri :refer [Responsive]])
-  (:require-macros [cljs.core.async.macros :refer [go go-loop]]))
+            [offcourse.protocols.responsive :as ri :refer [Responsive]]))
 
 (defn init [{:keys [config] :as auth}]
   (assoc auth :provider (js/Auth0Lock. (:clientID config) (:domain config))))
@@ -18,7 +17,7 @@
   (start [auth]
     (let [auth-token (qa/get auth {:type :auth-token})]
       (when auth-token
-        (ri/respond auth :found :auth-token auth-token))
+        (ri/respond auth [:found {:auth-token auth-token}]))
       (-> auth
           init
           ri/listen)))
@@ -27,8 +26,7 @@
   (-sign-in [auth] (ac-impl/sign-in auth))
   (-sign-out [auth] (ac-impl/sign-out auth))
   Responsive
-  (-respond [auth status payload] (ri/respond auth status payload))
-  (-respond [auth status type result] (ri/respond auth status type result))
+  (-respond [auth event] (ri/respond auth event))
   (-mute [auth] (ri/mute auth))
   (-listen [auth] (ri/listen auth)))
 

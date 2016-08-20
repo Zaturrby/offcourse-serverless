@@ -24,7 +24,5 @@
                          (->> (:courses appstate)
                               (map #(dc/decorate %1 user-name nil))
                               (filter-courses collection)))
-   :actions   (fnk [user-name [:url-helpers home-url new-course-url]]
-                   {:add-course (when user-name (new-course-url user-name))})
    :main            (fnk [courses url-helpers handlers [:components cards]]
                          (cards courses url-helpers handlers))})

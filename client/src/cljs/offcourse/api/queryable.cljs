@@ -21,13 +21,13 @@
         outgoing-event {:type :requested-data
                         :payload query}]
     (doseq [{:keys [resources] :as repository} repositories]
-      (when (contains? resources query-type)
+       (when (contains? resources query-type)
         (go
           (let [response (<! (qa/fetch repository outgoing-event))
                 data-payload (-> response cv/to-models)]
             (match response
-                   [:found-data _] (ri/respond api :found data-payload)
-                   [:error _] (logger/log :not-found "not found data")
-                   _ (logger/log :failed "request failed"))))))))
+                   [:found-data _] (ri/respond api [:found data-payload])
+                   [:error _] (ri/respond api [:not-found query])
+                   _ (ri/respond api [:failed query]))))))))
 
 (stest/instrument `fetch)

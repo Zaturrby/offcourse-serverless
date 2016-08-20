@@ -15,10 +15,10 @@
                  [weasel                        "0.7.0"          :scope "test"]
                  [hashobject/boot-s3            "0.1.2-SNAPSHOT" :scope "test"]
                  [crisptrutski/boot-cljs-test   "0.3.0-SNAPSHOT" :scope "test"]
-                 [binaryage/devtools      "0.8.0" :scope "test"]
-                 [binaryage/dirac         "0.6.3" :scope "test"]
+                 [binaryage/devtools            "0.8.0" :scope "test"]
+                 [binaryage/dirac               "0.6.3" :scope "test"]
                  [powerlaces/boot-cljs-devtools "0.1.1" :scope "test"]
-                 [boot-codox "0.9.6" :scope "test"]
+                 [boot-codox                     "0.9.6" :scope "test"]
                  [prismatic/schema            "1.0.4"]
                  [org.martinklepsch/boot-garden "1.3.2-0"]
                  [metosin/ring-http-response  "0.8.0"]
@@ -83,8 +83,8 @@
         (watch)
         (speak)
         (reload :on-jsload 'offcourse.main/reload)
-        (cljs-devtools)
         (cljs-repl)
+        (cljs-devtools)
         (cljs :source-map true :optimizations :none)
         (css)
         (target)))

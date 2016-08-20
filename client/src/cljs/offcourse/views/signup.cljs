@@ -1,6 +1,5 @@
 (ns offcourse.views.signup
-  (:require [offcourse.models.course.index :as co]
-            [offcourse.models.label :as lb]
+  (:require [offcourse.models.label :as lb]
             [offcourse.protocols.queryable :as qa]
             [offcourse.protocols.validatable :as va]
             [plumbing.core :refer-macros [fnk]]

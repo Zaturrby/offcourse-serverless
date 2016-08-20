@@ -23,12 +23,11 @@
           (ca/compose views)
           (rr/render)
           (ma/mount "#container"))
-    (ri/respond rd {:type :rendered})))
+    (ri/respond rd [:rendered nil])))
   Responsive
   (-listen [rd] (ri/listen rd))
   (-mute [rd] (dissoc rd :listener))
-  (-respond [rd status] (ri/respond rd status nil))
-  (-respond [rd status payload] (ri/respond rd status payload)))
+  (-respond [rd event] (ri/respond rd event)))
 
 (defn new []
   (map->UI {:component-name :ui

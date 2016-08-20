@@ -11,20 +11,19 @@
 (defmethod refresh [:found :credentials] [{:keys [state] :as as} [_ payload]]
   (let [auth-token (:auth-token payload)
         proposal (cd/exec @state [:update payload])]
-    (when (and (qa/check as :proposal proposal) )
+    (when (and (qa/check as proposal) )
       (reset! state proposal)
-      (ri/respond as :not-found {:type :user-profile
-                                 :auth-token auth-token}))))
+      (ri/respond as [:not-found {:user-profile nil}]))))
 
-(defmethod refresh [:requested-update :viewmodel] [{:keys [state] :as as} [_ payload]]
+(defmethod refresh [:requested :viewmodel] [{:keys [state] :as as} [_ payload]]
   (let [proposal (cd/exec @state [:update payload])]
-    (if (qa/check as :proposal proposal)
+    (if (qa/check as proposal)
       (do
         (reset! state proposal)
         (when-let [missing-data (qa2/missing-data @state proposal)]
-          (ri/respond as :not-found missing-data))
+          (ri/respond as [:not-found missing-data]))
         (if (va/valid? @state)
-          (ri/respond as :refreshed @state)
+          (ri/respond as [:refreshed @state])
           (println "OHH SHIITTT")))
       (when (= (-> @state :viewmodel va/resolve-type) :loading)
         (rd/redirect as :home)))))
@@ -33,8 +32,8 @@
   (let [proposal (cd/exec @state [:add payload])]
     (when (va/valid? proposal)
       (reset! state proposal)
-      (ri/respond as :refreshed @state))))
+      (ri/respond as [:refreshed @state]))))
 
 (defmethod refresh [:not-found :data] [{:keys [state] :as as} [_ payload]]
-  (when-not (-> @state :user :user-name)
+  #_(when-not (-> @state :user :user-name)
     (rd/redirect as :signup)))

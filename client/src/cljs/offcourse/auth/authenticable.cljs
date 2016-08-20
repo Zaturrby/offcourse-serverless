@@ -1,7 +1,6 @@
-(ns offcourse.auth.authenticatable
+(ns offcourse.auth.authenticable
   (:require [cljs.core.async :refer [<! >! chan]]
-            [offcourse.protocols.responsive :as ri]
-            [offcourse.protocols.queryable :as qa])
+            [offcourse.protocols.responsive :as ri])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
 (defn -sign-in [provider]
@@ -12,16 +11,15 @@
                                  :token token}))))
     c))
 
-(defn -sign-out []
-  (.removeItem js/localStorage "auth-token"))
+(defn -sign-out [] (.removeItem js/localStorage "auth-token"))
 
 (defn sign-in [{:keys [config provider] :as auth}]
   (go
     (let [{:keys [token]} (<! (-sign-in provider))]
       (.setItem js/localStorage "auth-token" token)
-      (ri/respond auth :fetched-auth-token :auth-token token))))
+      (ri/respond auth [:found {:auth-token token}]))))
 
 (defn sign-out [auth]
   (go
     (-sign-out)
-    (ri/respond auth :removed-auth-token :auth-token nil)))
+    (ri/respond auth [:revoked {:auth-token nil}])))

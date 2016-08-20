@@ -1,6 +1,6 @@
 (ns offcourse.models.response.converters
-  (:require [offcourse.models.checkpoint.index :as cp]
-            [offcourse.models.course.index :as co]
+  (:require [shared.models.checkpoint.index :as cp]
+            [shared.models.course.index :as co]
             [offcourse.models.resource.index :as rs]))
 
 (defn to-checkpoint [{:keys [tags] :as raw}]

@@ -17,8 +17,7 @@
   Queryable
   (-fetch [api event] (qa-impl/fetch api event))
   Responsive
-  (-respond [api status payload] (ri/respond api status payload))
-  (-respond [api status type result] (ri/respond api status type result))
+  (-respond [api event] (ri/respond api event))
   (-mute [api] (ri/mute api))
   (-listen [api] (ri/listen api)))
 

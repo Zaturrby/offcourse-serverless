@@ -16,15 +16,19 @@
 (spec/def ::tags #{:all})
 (spec/def ::urls #{:all})
 (spec/def ::url string?)
-(spec/def ::tags-query (spec/keys :req-un [::tags]))
+(spec/def ::user-profile nil?)
 
+(spec/def ::tags-query (spec/keys :req-un [::tags]))
 (spec/def ::urls-query (spec/keys :req-un [::urls]))
 (spec/def ::url-query (spec/keys :req-un [::url]))
+
+(spec/def ::user-profile-query (spec/keys :req-un [::user-profile]))
 
 (spec/def ::query (spec/or :collection ::collection
                            :tags ::tags-query
                            :urls ::urls-query
                            :resource ::url-query
+                           :user-profile ::user-profile-query
                            :checkpoint ::checkpoint
                            :appstate ::appstate/appstate
                            :courses (spec/* ::course)
