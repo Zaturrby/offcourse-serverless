@@ -3,7 +3,7 @@
             [offcourse.appstate.react :as react-impl]
             [offcourse.protocols.responsive :as ri :refer [Responsive]]))
 
-(defrecord Appstate [component-name reactions]
+(defrecord Appstate []
   Lifecycle
   (start   [as] (ri/listen as))
   (stop    [as] (ri/mute as))
@@ -13,4 +13,5 @@
   (-react [as event] (react-impl/react as event))
   (-listen [as] (ri/listen as)))
 
-(defn create [component-name reactions] (->Appstate component-name reactions))
+(defn create [name] (-> {:component-name name}
+                        map->Appstate))

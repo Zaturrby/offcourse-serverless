@@ -6,7 +6,7 @@
 (defn connect-to-repository [{:keys [adapter] :as config}]
   (lc/start (adapter (select-keys config [:name :endpoint :resources]))))
 
-(defrecord API [component-name reactions]
+(defrecord API []
   Lifecycle
   (start [api]
     (-> api
@@ -19,4 +19,5 @@
   (-mute [api] (ri/mute api))
   (-listen [api] (ri/listen api)))
 
-(defn create [component-name reactions] (->API component-name reactions))
+(defn create [name] (-> {:component-name name}
+                        map->API))

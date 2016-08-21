@@ -1,6 +1,6 @@
 (ns shared.models.event.to-action
   (:require [cljs.spec :as spec]
-            [specs.core :as specs]
+            [shared.specs.core :as specs]
             [services.helpers :as helpers]
             [services.logger :as logger]))
 

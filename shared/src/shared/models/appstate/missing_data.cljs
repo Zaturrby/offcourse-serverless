@@ -1,10 +1,8 @@
 (ns shared.models.appstate.missing-data
   (:require [clojure.set :as set]
-            [offcourse.models.payload.index :as payload]
             [shared.models.query.index :as query]
             [shared.protocols.queryable :as qa]
-            [shared.protocols.validatable :as va]
-            [services.logger :as logger]))
+            [shared.protocols.validatable :as va]))
 
 (defmulti missing-data (fn [state {:keys [viewmodel]}] (va/resolve-type viewmodel)))
 
@@ -14,7 +12,7 @@
         missing-urls (set/difference query-urls state-urls)
         missing-resources (map (fn [url] {:url url}) missing-urls)]
     (when-not (empty? missing-resources)
-      (payload/new :resources missing-resources))))
+      #_missing-resources)))
 
 (defmethod missing-data :collection [state {:keys [viewmodel]}]
   (query/create (:collection viewmodel)))

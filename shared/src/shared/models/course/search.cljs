@@ -1,5 +1,5 @@
 (ns shared.models.course.search
-  (:require [specs.core :as specs]
+  (:require [shared.specs.core :as specs]
             [shared.protocols.queryable :refer [Queryable]]
             [clojure.set :as set]
             [shared.protocols.validatable :as va]

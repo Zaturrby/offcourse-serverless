@@ -1,9 +1,6 @@
 (ns offcourse.views.signup
-  (:require [offcourse.models.label :as lb]
-            [offcourse.protocols.queryable :as qa]
-            [offcourse.protocols.validatable :as va]
-            [plumbing.core :refer-macros [fnk]]
-            [offcourse.protocols.decoratable :as dc]))
+  (:require [offcourse.protocols.decoratable :as dc]
+            [plumbing.core :refer-macros [fnk]]))
 
 (def graph
   {:user-name  (fnk [appstate] :new)

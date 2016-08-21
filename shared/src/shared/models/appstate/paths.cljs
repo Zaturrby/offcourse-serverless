@@ -1,4 +1,4 @@
-(ns offcourse.models.appstate.paths
+(ns shared.models.appstate.paths
   (:require [offcourse.protocols.queryable :as qa]
             [com.rpl.specter :refer [ALL transform select-first]]
             [cuerdas.core :as str]))

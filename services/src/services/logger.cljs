@@ -1,6 +1,6 @@
 (ns services.logger
   (:require [cljs.spec :as spec]
-            [specs.core :as specs]))
+            [shared.specs.core :as specs]))
 
 (defn stringify [obj]
   (.stringify js/JSON (clj->js obj)))

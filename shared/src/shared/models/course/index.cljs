@@ -1,5 +1,5 @@
 (ns shared.models.course.index
-  (:require [specs.core :as specs]
+  (:require [shared.specs.core :as specs]
             [shared.protocols.queryable :refer [Queryable]]
             [shared.models.course.search :as sr]
             [shared.models.checkpoint.index :as checkpoint]))

@@ -18,7 +18,7 @@
                  collection-routes :collection-view
                  true              :home-view}])
 
-(def responses
+(def query-constructors
   {:home-view       (fn []     (viewmodel/create :home-view))
    :collection-view (fn [data] (viewmodel/create :collection-view data))
    :course-view     (fn [data] (viewmodel/create :course-view data))

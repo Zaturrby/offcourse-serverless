@@ -39,7 +39,7 @@
   (spec/tuple (into #{} valid-types) payload))
 
 (spec/def ::event (create-tuple-spec [:found :not-found :granted :revoked :requested
-                                      :rendered :refreshed] ::event-payload))
+                                      :requested-data :rendered :refreshed] ::event-payload))
 
 (spec/def ::Records ::event/Records)
 (spec/def ::meta (spec/keys :req-un [::spec]))

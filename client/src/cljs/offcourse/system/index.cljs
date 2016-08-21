@@ -17,46 +17,57 @@
     (component/system-map
      :repositories           repositories
      :api-channels           (:api channels)
-     :api                    (component/using
-                              (api/create :api [:not-found])
-                              {:channels     :api-channels
-                               :repositories :repositories})
+     :api-triggers           [:not-found]
+     :api-responses          [:found :not-found :failed]
+     :api                    (component/using (api/create :api)
+                                              {:channels     :api-channels
+                                               :triggers     :api-triggers
+                                               :responses    :api-responses
+                                               :repositories :repositories})
      :auth-channels           (:auth channels)
+     :auth-triggers           [:requested]
+     :auth-responses          [:granted :revoked]
      :auth-config             auth-config
-     :auth                    (component/using
-                               (auth/create :auth
-                                            [:requested])
-                               {:channels :auth-channels
-                                :config   :auth-config})
+     :auth                    (component/using (auth/create :auth)
+                                               {:channels  :auth-channels
+                                                :triggers  :auth-triggers
+                                                :responses :auth-responses
+                                                :config    :auth-config})
 
      :routes                 routes/table
-     :route-responses        routes/responses
+     :query-constructors     routes/query-constructors
+     :router-triggers        [:refreshed]
+     :router-responses       [:requested]
      :router-channels        (:router channels)
-     :router                 (component/using
-                              (router/create :router
-                                             [:refreshed])
-                              {:channels  :router-channels
-                               :routes    :routes
-                               :responses :route-responses})
+     :router                 (component/using (router/create :router)
+                                              {:channels           :router-channels
+                                               :triggers           :router-triggers
+                                               :responses          :router-responses
+                                               :routes             :routes
+                                               :query-constructors :query-constructors})
      :appstate-atom          appstate
+     :appstate-triggers      [:granted :requested :found :not-found]
+     :appstate-responses     [:refreshed :requested :not-found]
      :appstate-channels      (:appstate channels)
-     :appstate               (component/using
-                              (appstate/create :appstate
-                                               [:granted :found :requested :not-found])
-                              {:channels :appstate-channels
-                               :state    :appstate-atom})
+     :appstate               (component/using (appstate/create :appstate)
+                                              {:channels  :appstate-channels
+                                               :triggers  :appstate-triggers
+                                               :responses :appstate-responses
+                                               :state     :appstate-atom})
 
      :views                  views
      :view-components        ui-components
      :view-handlers          handlers
      :url-helpers            routes/url-helpers
+     :ui-triggers            [:refreshed]
+     :ui-responses           [:rendered]
      :ui-channels            (:ui channels)
-     :ui                     (component/using
-                              (ui/create :ui
-                                         [:refreshed])
-                              {:channels    :ui-channels
-                               :url-helpers :url-helpers
-                               :handlers    :view-handlers
-                               :routes      :routes
-                               :components  :view-components
-                               :views       :views}))))
+     :ui                     (component/using (ui/create :ui)
+                                              {:channels    :ui-channels
+                                               :url-helpers :url-helpers
+                                               :handlers    :view-handlers
+                                               :triggers    :ui-triggers
+                                               :responses   :ui-responses
+                                               :routes      :routes
+                                               :components  :view-components
+                                               :views       :views}))))

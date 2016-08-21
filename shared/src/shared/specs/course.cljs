@@ -1,6 +1,6 @@
 (ns shared.specs.course
   (:require [cljs.spec :as spec]
-            [specs.checkpoint :as checkpoint]))
+            [shared.specs.checkpoint :as checkpoint]))
 
 
 (defn user-name-length [str]

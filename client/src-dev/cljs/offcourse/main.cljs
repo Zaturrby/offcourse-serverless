@@ -16,11 +16,11 @@
     :name             "fakedb"
     :resources         #{:user-profile :course :collection}}
    {:adapter           embedly/new-db
-    :name              "embedly"
+    :name              :resources-repo
     :resources         #{:resources}
     :endpoint          "http://api.embed.ly/1/extract?key=5406650948f64aeb9102b9ea2cb0955c&urls="}
    {:adapter           aws/new-db
-    :name              "courses-repo"
+    :name              :courses-repo
     :resources         #{:user-profile :course :collection}
     :endpoint          "https://70zxd74j8l.execute-api.eu-central-1.amazonaws.com/yeehaa/query-endpoint"}])
 

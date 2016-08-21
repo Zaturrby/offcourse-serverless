@@ -1,8 +1,7 @@
 (ns offcourse.adapters.fakedb.index
   (:require [com.stuartsierra.component :refer [Lifecycle]]
-            [offcourse.protocols.responsive :as ri :refer [Responsive]]
-            [offcourse.protocols.queryable :refer [Queryable]]
-            [offcourse.adapters.fakedb.implementations.queryable :refer [fetch]]))
+            [offcourse.adapters.fakedb.fetch :refer [fetch]]
+            [offcourse.protocols.queryable :refer [Queryable]]))
 
 (defrecord FakeDB [name supported-types connection]
   Lifecycle

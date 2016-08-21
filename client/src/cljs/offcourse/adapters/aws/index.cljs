@@ -8,7 +8,7 @@
   (start [db] db)
   (stop  [db] db)
   Queryable
-  (-fetch   [db query] (qa-impl/fetch db query)))
+  (-fetch [db query] (qa-impl/fetch db query)))
 
 (defn new-db [config]
   (map->AWS config))

@@ -1,4 +1,4 @@
-(ns offcourse.adapters.fakedb.implementations.queryable
+(ns offcourse.adapters.fakedb.fetch
   (:require [ajax.core :refer [GET]]
             [cljs.core.async :refer [<! >! chan]]
             [clojure.string :as str]

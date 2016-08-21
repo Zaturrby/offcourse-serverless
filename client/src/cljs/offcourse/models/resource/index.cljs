@@ -1,6 +1,5 @@
 (ns offcourse.models.resource.index
-  (:require [offcourse.protocols.validatable :as va :refer [Validatable]]
-            [offcourse.protocols.queryable   :as qa :refer [Queryable]]
+  (:require [shared.protocols.validatable :as va :refer [Validatable]]
             [cljs.spec :as spec]
             [offcourse.specs.resources :as specs]))
 

@@ -1,6 +1,6 @@
 (ns shared.models.event.to-query
   (:require [cljs.spec :as spec]
-            [specs.core :as specs]
+            [shared.specs.core :as specs]
             [services.logger :as logger]))
 
 (spec/fdef to-query

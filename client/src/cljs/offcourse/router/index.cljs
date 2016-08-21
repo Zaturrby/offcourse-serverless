@@ -4,7 +4,7 @@
             [offcourse.router.react :as react-impl]
             [offcourse.router.responsive :as ri-impl]))
 
-(defrecord Router [component-name reactions]
+(defrecord Router []
   Lifecycle
   (start [rt] (ri/-listen rt))
   (stop [rt] (ri/mute rt))
@@ -14,4 +14,5 @@
   (-mute [rt] (ri-impl/mute rt))
   (-respond [rt event] nil))
 
-(defn create [component-name reactions] (->Router component-name reactions))
+(defn create [name] (-> {:component-name name}
+                        map->Router))

@@ -1,6 +1,6 @@
 (ns shared.specs.event
   (:require [cljs.spec :as spec]
-            [specs.payload :as payload]))
+            [shared.specs.payload :as payload]))
 
 (spec/def ::kinesis map?)
 (spec/def ::dynamo map?)
