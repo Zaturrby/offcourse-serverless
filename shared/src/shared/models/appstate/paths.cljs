@@ -1,7 +1,8 @@
 (ns shared.models.appstate.paths
   (:require [offcourse.protocols.queryable :as qa]
-            [com.rpl.specter :refer [ALL transform select-first]]
-            [cuerdas.core :as str]))
+            [com.rpl.specter :refer [ALL]]
+            [cuerdas.core :as str])
+  (:require-macros [com.rpl.specter.macros :refer [transform select-first]]))
 
 (defn collection
   ([{:keys [collection-type collection-name]}]

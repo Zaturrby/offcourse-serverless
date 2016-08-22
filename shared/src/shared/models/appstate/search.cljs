@@ -1,12 +1,12 @@
 (ns shared.models.appstate.search
-  (:require [com.rpl.specter :refer [ALL select-first]]
+  (:require [com.rpl.specter :refer [ALL]]
             [medley.core :as medley]
             [shared.models.appstate.paths :as paths]
             [cljs.spec :as spec]
             [shared.specs.core :as specs]
             [shared.protocols.validatable :as va]
-            [services.logger :as logger]))
-
+            [services.logger :as logger])
+  (:require-macros [com.rpl.specter.macros :refer [select-first]]))
 
 (defmulti search (fn [_ query] (va/resolve-type query)))
 

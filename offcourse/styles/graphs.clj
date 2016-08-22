@@ -34,7 +34,7 @@
    :banner-font                (fnk [base-font]         (* base-font          4))
    :banner-line-height         (fnk [base-line-height]  (* base-line-height   4))
    :large-font                 (fnk [base-font]         (* base-font          2.2))
-   :large-line-height          (fnk [base-line-height]  (* base-line-height   2.0))
+   :large-line-height          (fnk [base-line-height]  (* base-line-height   1.8))
    :title-font                 (fnk [base-font]         (* base-font          1.5))
    :title-line-height          (fnk [base-line-height]  (* base-line-height   1.5))
    :subtitle-font              (fnk [base-font]         (* base-font          1))
@@ -44,14 +44,14 @@
    :mono-font                  (fnk [atom]              (* atom 22))
    :mono-line-height           (fnk [atom]              (* atom 30))
    :label-font                 (fnk [base-font]         (* base-font          0.8))
-   :label-line-height          (fnk [base-line-height]  (* base-line-height   0.8))
+   :label-line-height          (fnk [base-line-height]  (* base-line-height   1))
    })
 
 (def templates-graph
   {:highlighted      (fnk [colors] {:background-color (:primary colors)
                                     :color            (:night colors)})
    :selected         (fnk [colors] {:background-color (:night colors)
-                                    :color            (:day colors)})
+                                    :color            (:light colors)})
    :paper            (fnk [colors] {:background-color (:day colors)
                                     :color            (:night colors)})
    :sheet            (fnk [paper borders] (merge paper
@@ -103,6 +103,11 @@
                                                 :line-height        (:base-line-height units)
                                                 :font-weight         300})
 
+   :smalltitle          (fnk [units fonts]     {:font-family        (:title fonts)
+                                                :font-size          (:label-font units)
+                                                :line-height        (:label-line-height units)
+                                                :font-weight         300})
+
    :label               (fnk [units fonts]     {:font-family        (:base fonts)
                                                 :font-size          (:label-font units)
                                                 :line-height        (:label-line-height units)
@@ -111,11 +116,10 @@
    ; old font
    :tiny-font        (fnk [units fonts label] label)
 
-
    :border-default      (fnk [units colors]    {:border-bottom      [[:solid (:sixth units) (:medium colors)]]})
+   :border-thin         (fnk [units colors]    {:border-bottom      [[:solid "1px" (:light colors)]]})
    :border-quotes       (fnk [units colors]    {:border-left        [[:solid (:sixth units) (:medium colors)]]})
    :border-highlighted  (fnk [units colors]    {:border-color       [(:primary colors)]})
-
 
    :component        (fnk [] {:display        :flex
                               :flex-direction :column
@@ -127,8 +131,8 @@
                                    :padding          [[0 (:third units)]]
                                    :border           :none})
 
-   :list-item         (fnk [row-component recycled-paper title units]
-                           (merge row-component recycled-paper title
+   :list-item         (fnk [row-component border-thin title units]
+                           (merge row-component border-thin title
                                   {:margin-bottom   (:sixth units)
                                    :align-items     :center
                                    :font-size       (:subtitle-font units)
@@ -148,7 +152,11 @@
                       :light   (:light-gray  raw-colors)
                       :very-light (:very-light-gray raw-colors)
                       :day     (:white raw-colors)
-                      :primary (base-color raw-colors)})
+                      :primary (base-color raw-colors)
+                      :yellow  (:yellow raw-colors)
+                      :blue    (:blue raw-colors)
+                      :green   (:green raw-colors)
+                      :red     (:red raw-colors)})
    :breakpoints (fnk [raw-breakpoints]
                      (map (fn [{:keys [min-width max-width percent column-count]}]
                             {:min-width (px min-width)

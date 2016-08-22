@@ -1,8 +1,9 @@
 (ns offcourse.adapters.fakedb.courses
   (:require [offcourse.adapters.fakedb.helpers :as h]
-            [com.rpl.specter :refer [ALL select select-first]]
+            [com.rpl.specter :refer [ALL]]
             [cuerdas.core :as str]
-            [offcourse.fake-data.courses :refer [raw-courses]]))
+            [offcourse.fake-data.courses :refer [raw-courses]])
+  (:require-macros [com.rpl.specter.macros :refer [select select-first]]))
 
 (defn completed-val []
   (rand-nth [((fn [] false)) ((fn [] (.now js/Date)))]))

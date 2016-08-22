@@ -1,7 +1,8 @@
 (ns offcourse.adapters.fakedb.resources
   (:require [clojure.string :as str]
-            [com.rpl.specter :refer [ALL select transform select-first]]
-            [offcourse.adapters.fakedb.helpers :as h]))
+            [com.rpl.specter :refer [ALL]]
+            [offcourse.adapters.fakedb.helpers :as h])
+  (:require-macros [com.rpl.specter.macros :refer [select transform select-first]]))
 
 (defn resource-path [url] [ALL #(= (:url %) url)])
 

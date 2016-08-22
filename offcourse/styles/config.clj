@@ -7,17 +7,18 @@
             :NittiBold        ["NittiBold" "NB"]})
 
 (def colors        {:black       "#000000"
-                    :white       "#FFFFFF"
-                    :dark-gray   "#3d3d3d"
-                    :medium-gray "#e0e4e1"
+                    :dark-gray   "#303030"
+                    :medium-gray "#C0C4C1"
                     :light-gray  "#f4f6f4"
                     :very-light-gray  "#f8f9f8"
-                    :yellow      "#E5CF39"
-                    :green       "#19A196"
+                    :white       "#FFFFFF"
+
+                    :yellow      "#E6D01E"
+                    :green       "#A4CD39"
                     :green-dark  "#3A676E"
-                    :orange      "#F96220"
+                    :orange      "#E34B25"
                     :orange-dark "#A25418"
-                    :blue        "#75C7B3"
+                    :blue        "#72C7B3"
                     :red         "#E34D2F"})
 
 (def breakpoints [{:min-width 0    :max-width 767  :percent 55  :column-count 0}
@@ -36,7 +37,7 @@
 (def config (graphs/compose {:raw-colors      colors
                              :raw-breakpoints breakpoints
                              :base-unit       30
-                             :base-color      :orange
+                             :base-color      :green
                              :raw-fonts       fonts
                              :base-font       :NittiGrotesk
                              :logo-font       :NittiBold

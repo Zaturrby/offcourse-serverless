@@ -13,6 +13,7 @@
                   [com.cemerick/piggieback     "0.2.2-SNAPSHOT" :scope "test"]
                   [weasel                      "0.7.0"          :scope "test"]
                   [org.clojure/tools.nrepl     "0.2.12"         :scope "test"]
+                  [com.rpl/specter               "0.12.0"]
                   [org.clojure/clojure         "1.9.0-alpha10"]
                   [org.clojure/core.async      "0.2.385"]
                   [org.clojure/test.check      "0.9.0"]

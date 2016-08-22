@@ -28,6 +28,7 @@
 (s/defclass card--section)
 
 (s/defclass viewer)
+(s/defclass viewer--meta)
 (s/defclass viewer--content)
 (def viewer-headers      [:h1 :h2 :h3 :h4 :h5 :h6])
 (def viewer-header-1      :h1)
@@ -40,6 +41,7 @@
 (def viewer-anchor        :a)
 (def viewer-strong        :strong)
 (def viewer-em            :em)
+(def viewer-hr            :hr)
 (def viewer-ul            :ul)
 (def viewer-ol            :ol)
 (def viewer-li            :li)
@@ -88,5 +90,5 @@
 (def hovered (s/& hover))
 (def first (s/& first-child))
 (def last (s/& last-child))
-(def second (s/& (s/nth-child 2)))
-(def third (s/& (s/nth-child 3)))
+(def second (s/& (s/nth-child "2")))
+(def third (s/& (s/nth-child "3")))

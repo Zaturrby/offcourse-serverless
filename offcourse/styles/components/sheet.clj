@@ -16,6 +16,7 @@
    [v/sheet (merge (:row-component templates)
                    (:sheet templates)
                    {:flex 1
+                    
                     :justify-content  :center
                     :align-items      :flex-start})
     [v/hovered (:highlighted borders)]
