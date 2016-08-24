@@ -3,8 +3,8 @@
 (set-env!
  :source-paths    #{"src/js" "src/cljs" "src/cljc" "src/clj" "../services/src" "../shared/src"}
  :resource-paths  #{"resources"}
- :checkouts     '[[offcourse/shared            "0.1.0-SNAPSHOT"]
-                  [offcourse/services          "0.1.0-SNAPSHOT"]]
+ :checkouts     '[[offcourse/shared             "0.1.0-SNAPSHOT"]
+                  [offcourse/services           "0.1.0-SNAPSHOT"]]
  :dependencies '[[adzerk/boot-cljs              "1.7.228-1"      :scope "test"]
                  [adzerk/boot-cljs-repl         "0.3.3"          :scope "test"]
                  [adzerk/boot-reload            "0.4.12"         :scope "test"]
@@ -18,7 +18,7 @@
                  [binaryage/devtools            "0.8.1"          :scope "test"]
                  [binaryage/dirac               "0.6.3"          :scope "test"]
                  [powerlaces/boot-cljs-devtools "0.1.1"          :scope "test"]
-                 [boot-codox                    "0.9.6"         :scope "test"]
+                 [boot-codox                    "0.9.6"          :scope "test"]
                  [org.martinklepsch/boot-garden "1.3.2-0"]
                  [metosin/ring-http-response    "0.8.0"]
                  [com.stuartsierra/component    "0.3.1"]

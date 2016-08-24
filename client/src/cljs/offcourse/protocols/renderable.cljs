@@ -1,9 +1,8 @@
 (ns offcourse.protocols.renderable)
 
 (defprotocol Renderable
-  (-render [this] [this query]))
+  (-render [this payload] [this views container-element]))
 
 (defn render
-  ([component] (-render component))
-  ([component query]
-   (-render component query)))
+  ([this payload](-render this payload))
+  ([this views container-element] (-render this views container-element)))

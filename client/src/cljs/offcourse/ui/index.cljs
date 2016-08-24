@@ -16,5 +16,6 @@
   (-mute [rd] (dissoc rd :listener))
   (-respond [rd event] (ri/respond rd event)))
 
-(defn create [name] (-> {:component-name name}
+(defn create [name] (-> {:component-name name
+                         :container "#container"}
                         map->UI))
