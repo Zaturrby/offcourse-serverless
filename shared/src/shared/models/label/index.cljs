@@ -1,8 +1,8 @@
-(ns offcourse.models.label)
+(ns shared.models.label.index)
 
 (defrecord Label [])
 
-(defn new [label-name selected]
+(defn create [label-name selected]
   (map->Label {:label-name label-name}))
 
 (defn select [selected {:keys [label-name] :as label}]
@@ -14,5 +14,5 @@
   ([collection] (collection->labels collection nil))
   ([collection selected]
    (->> collection
-        (map (comp (partial select selected) new))
+        (map (comp (partial select selected) create))
         (into #{}))))

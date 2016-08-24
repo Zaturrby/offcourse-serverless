@@ -7,11 +7,11 @@
   {:checkpoint-slug (fnk [appstate] (-> appstate :viewmodel :checkpoint :checkpoint-slug))
    :course-data     (fnk [appstate] (-> appstate :viewmodel :course))
    :course        (fnk [appstate course-data user-name]
-                       (if-let [course (qa/search appstate course-data)]
+                       (if-let [course (qa/get appstate course-data)]
                          course
                          nil))
    :checkpoint      (fnk [appstate course checkpoint-slug]
-                         (when course (-> (qa/search course {:checkpoint-slug checkpoint-slug})
+                         (when course (-> (qa/get course {:checkpoint-slug checkpoint-slug})
                                           (dc/decorate appstate))))
    :main            (fnk [checkpoint [:components viewer]]
                          (viewer checkpoint))

@@ -5,7 +5,7 @@
             [services.logger :as logger]))
 
 (defn- add-course [store course]
-  (if-not (qa/search store (query/create course))
+  (if-not (qa/get store (query/create course))
     (update-in store [:courses] #(conj % course))
     store))
 

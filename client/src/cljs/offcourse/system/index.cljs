@@ -11,12 +11,16 @@
             [offcourse.system.routes :as routes]
             [offcourse.system.ui-components :refer [ui-components]]
             [offcourse.system.views :refer [views]]
-            [offcourse.ui.index :as ui]))
+            [offcourse.ui.index :as ui]
+            [services.logger :as logger]))
+
+(defn connect-to-repository [{:keys [adapter] :as config}]
+  (component/start (adapter (select-keys config [:name :endpoint :resources]))))
 
 (defn system [appstate repositories auth-config]
   (let [channels plumbing/channels]
     (component/system-map
-     :repositories           repositories
+     :repositories           (map connect-to-repository (:query repositories))
      :api-channels           (:api channels)
      :api-triggers           [:not-found]
      :api-responses          [:found :not-found :failed]

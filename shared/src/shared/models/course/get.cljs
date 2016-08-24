@@ -1,4 +1,5 @@
-(ns shared.models.course.search
+(ns shared.models.course.get
+  (:refer-clojure :exclude [get])
   (:require [shared.specs.core :as specs]
             [shared.protocols.queryable :refer [Queryable]]
             [clojure.set :as set]
@@ -6,22 +7,22 @@
             [cuerdas.core :as str]
             [services.logger :as logger]))
 
-(defmulti search (fn [_ query] (va/resolve-type query)))
+(defmulti get (fn [_ query] (va/resolve-type query)))
 
-(defmethod search :tags [course _]
+(defmethod get :tags [course _]
   (->> course
        :checkpoints
        (map :tags)
        (apply set/union)
        (into #{})))
 
-(defmethod search :urls [course _]
+(defmethod get :urls [course _]
   (->> course
        :checkpoints
        (map :url)
        (into #{})))
 
-(defmethod search :checkpoint [course checkpoint]
+(defmethod get :checkpoint [course checkpoint]
   (if-let [checkpoint-slug (or (:checkpoint-slug checkpoint) (str/slugify (:task checkpoint)))]
     (do
       (->> (:checkpoints course)

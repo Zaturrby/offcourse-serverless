@@ -1,15 +1,17 @@
 (ns offcourse.adapters.aws.send
   (:require [ajax.core :refer [POST]]
             [cljs.core.async :refer [chan]]
+            [services.logger :as logger]
             [shared.models.event.index :as event]
-            [services.logger :as logger])
+            [shared.protocols.validatable :as va])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
 (defn handle-response [name res]
   (let [{:keys [type payload]} (js->clj (.parse js/JSON res) :keywordize-keys true)]
     (event/create [name (keyword type) payload])))
 
-(defn send [{:keys [name endpoint]} [_ query :as s]]
+
+(defn send [{:keys [name endpoint]} [_ query :as event]]
   (let [c (chan)
         auth-token ""]
     (POST endpoint

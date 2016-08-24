@@ -10,7 +10,7 @@
   (stop [rt] (ri/mute rt))
   Responsive
   (-listen [rt] (ri-impl/listen rt))
-  (-react [rt event] (react-impl/refresh rt event))
+  (-react [rt event] (react-impl/react rt event))
   (-mute [rt] (ri-impl/mute rt))
   (-respond [rt event] nil))
 

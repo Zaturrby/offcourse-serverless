@@ -14,9 +14,8 @@
   (-respond [this event]))
 
 (defn send
-  ([this event]
-   (do
-     (-send this (event/create event)))))
+  "Sends an event to a remote endpoint (async)"
+  [this event] (-send this (event/create event)))
 
 (defn respond
   "Puts an event on the output channel of a component"
