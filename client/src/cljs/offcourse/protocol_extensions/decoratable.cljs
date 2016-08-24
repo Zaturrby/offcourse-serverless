@@ -1,17 +1,10 @@
-(ns offcourse.protocols.decoratable
+(ns offcourse.protocol-extensions.decoratable
   (:require [offcourse.models.label :as lb]
             [shared.models.checkpoint.index :refer [Checkpoint]]
             [shared.models.course.index :as co :refer [Course]]
+            [shared.protocols.decoratable :refer [Decoratable]]
             [shared.protocols.queryable :as qa]
             [shared.protocols.validatable :as va]))
-
-(defprotocol Decoratable
-  (-decorate [this] [this appstate] [this user-name slug]))
-
-(defn decorate
-  ([this] (-decorate this))
-  ([this appstate] (-decorate this appstate))
-  ([this user-name slug] (-decorate this user-name slug)))
 
 (defn select-checkpoint [checkpoints selected-slug]
   (for [{:keys [checkpoint-slug] :as checkpoint} checkpoints]

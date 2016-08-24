@@ -1,6 +1,6 @@
 (ns offcourse.appstate.react
   (:require [offcourse.appstate.redirect :as rd]
-            [offcourse.protocols.responsive :as ri]
+            [shared.protocols.responsive :as ri]
             [offcourse.appstate.check :as ck]
             [shared.protocols.commandable :as cd]
             [shared.protocols.queryable :as qa]

@@ -1,7 +1,7 @@
 (ns offcourse.api.index
   (:require [com.stuartsierra.component :as lc :refer [Lifecycle]]
             [offcourse.api.react :as re]
-            [offcourse.protocols.responsive :as ri :refer [Responsive]]))
+            [shared.protocols.responsive :as ri :refer [Responsive]]))
 
 (defn connect-to-repository [{:keys [adapter] :as config}]
   (lc/start (adapter (select-keys config [:name :endpoint :resources]))))

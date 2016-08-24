@@ -1,7 +1,7 @@
 (comment "check cuerdas and specter for api updates")
 
 (set-env!
- :source-paths    #{"src/js" "src/cljs" "src/cljc" "src/clj" "../services/src" "../shared/src"}
+ :source-paths    #{"src/cljs" "src/clj" "../services/src" "../shared/src"}
  :resource-paths  #{"resources"}
  :checkouts     '[[offcourse/shared             "0.1.0-SNAPSHOT"]
                   [offcourse/services           "0.1.0-SNAPSHOT"]]

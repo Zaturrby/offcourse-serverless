@@ -1,2 +1,1 @@
-(ns shared.models.index
-  (:require [shared.models.event.index]))
+(ns shared.models.index)

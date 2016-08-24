@@ -6,7 +6,6 @@
   (-search     [this query])
   (-get     [this query])
   (-check   [this] [this query])
-  (-fetch   [this query])
   (-missing-data [this query])
   (-add     [this query])
   (-remove  [this query])
@@ -21,11 +20,6 @@
   "Given a query, this command will return the requested data synchronously
   from the queried object"
   [this query] (-get this (query/create query)))
-
-(defn fetch
-  "Given a query, this command will return the requested data asynchronously
-  on a channel"
-  ([this query] (-fetch this (query/create query))))
 
 (defn refresh
   ([this query] (-refresh this (query/create query))))

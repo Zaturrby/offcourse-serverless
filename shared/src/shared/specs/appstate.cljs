@@ -9,5 +9,5 @@
 
 (spec/def ::auth-token string?)
 
-(spec/def ::appstate (spec/keys :req-un [::site-title ::user ::viewmodel/viewmodel]
-                                :opt-un [::auth-token]))
+(spec/def ::appstate (spec/keys :req-un [::site-title ::viewmodel/viewmodel]
+                                :opt-un [::auth-token ::user]))

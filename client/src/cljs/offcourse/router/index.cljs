@@ -1,6 +1,6 @@
 (ns offcourse.router.index
   (:require [com.stuartsierra.component :refer [Lifecycle]]
-            [offcourse.protocols.responsive :as ri :refer [Responsive]]
+            [shared.protocols.responsive :as ri :refer [Responsive]]
             [offcourse.router.react :as react-impl]
             [offcourse.router.responsive :as ri-impl]))
 

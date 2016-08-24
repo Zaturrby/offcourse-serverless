@@ -5,8 +5,7 @@
 
 (def graph
   {:container     (fnk [[:components app]] app)
-   :user-name     (fnk [[:appstate user]]
-                       (:user-name user))
+   :user-name     (fnk [] nil)
    :base-actions  (fnk [] {})
    :actions       (fnk [] {})
    :menubar       (fnk [user-name

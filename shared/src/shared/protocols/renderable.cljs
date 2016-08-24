@@ -1,4 +1,4 @@
-(ns offcourse.protocols.renderable)
+(ns shared.protocols.renderable)
 
 (defprotocol Renderable
   (-render [this payload] [this views container-element]))

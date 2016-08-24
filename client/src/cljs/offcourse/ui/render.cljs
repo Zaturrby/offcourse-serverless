@@ -1,8 +1,8 @@
 (ns offcourse.ui.render
   (:require [medley.core :as medley]
-            [offcourse.models.view :as view]
-            [offcourse.protocols.renderable :as rr]
-            [offcourse.protocols.responsive :as ri]))
+            [shared.models.view.index :as view]
+            [shared.protocols.renderable :as rr]
+            [shared.protocols.responsive :as ri]))
 
 (defn render [{:keys [views container url-helpers components handlers] :as rd}
               [_ payload]]

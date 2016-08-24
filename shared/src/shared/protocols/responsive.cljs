@@ -1,4 +1,4 @@
-(ns offcourse.protocols.responsive
+(ns shared.protocols.responsive
   (:require [cljs.core.async :as async :refer [<! put! close!]]
             [services.logger :as logger]
             [shared.models.event.index :as event]
@@ -9,8 +9,14 @@
 (defprotocol Responsive
   (-listen [this])
   (-mute [this])
+  (-send [this event])
   (-react [this event])
   (-respond [this event]))
+
+(defn send
+  ([this event]
+   (do
+     (-send this (event/create event)))))
 
 (defn respond
   "Puts an event on the output channel of a component"

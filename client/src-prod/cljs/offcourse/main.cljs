@@ -8,9 +8,11 @@
 (set! cljs.core/*print-fn* identity)
 
 (defonce appstate (atom (model/new {:site-title "Offcourse_"})))
+
 (defonce app (atom nil))
+
 (defonce auth-config {:domain "yeehaa.eu.auth0.com"
-                  :clientID "Z1J0CyMzZfIbOfBSVaMWJakoIrxm4Tfs"})
+                      :clientID "Z1J0CyMzZfIbOfBSVaMWJakoIrxm4Tfs"})
 
 (def adapters
   [{:adapter           embedly/new-db

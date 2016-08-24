@@ -6,6 +6,7 @@
             [offcourse.auth.index :as auth]
             [offcourse.router.index :as router]
             [offcourse.system.handlers :refer [handlers]]
+            [offcourse.protocol-extensions.decoratable]
             [offcourse.system.plumbing :as plumbing]
             [offcourse.system.routes :as routes]
             [offcourse.system.ui-components :refer [ui-components]]

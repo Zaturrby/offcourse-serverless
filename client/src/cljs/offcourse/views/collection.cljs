@@ -1,8 +1,7 @@
 (ns offcourse.views.collection
-  (:require [offcourse.protocols.decoratable :as dc]
-            [offcourse.protocols.queryable :as qa]
-            [plumbing.core :refer-macros [fnk]]
-            [clojure.set :as set]))
+  (:require [clojure.set :as set]
+            [shared.protocols.decoratable :as dc]
+            [plumbing.core :refer-macros [fnk]]))
 
 (defn course-tags [course]
   (->> course
