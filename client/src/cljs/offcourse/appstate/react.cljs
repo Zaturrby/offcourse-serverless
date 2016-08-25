@@ -12,22 +12,19 @@
 (defmethod react [:granted :credentials] [{:keys [state] :as as} [_ payload]]
   (let [auth-token (:auth-token payload)
         proposal (ac/perform @state [:update payload])]
-    (when (and (ck/check as proposal) )
+    (when (ck/check as proposal)
       (reset! state proposal)
       (ri/respond as [:not-found {:user-profile nil}]))))
 
 (defmethod react [:requested :viewmodel] [{:keys [state] :as as} [_ payload]]
-  (let [proposal (ac/perform @state [:update payload])]
-    (if (ck/check as proposal)
-      (do
-        (reset! state proposal)
-        (when-let [missing-data (qa/missing-data @state proposal)]
-          (ri/respond as [:not-found missing-data]))
-        (if (va/valid? @state)
-          (ri/respond as [:refreshed @state])
-          (logger/log "Error" "OHH SHIITTT")))
-      (when (= (-> @state :viewmodel va/resolve-type) :loading)
-        (rd/redirect as :home)))))
+  (let [{:keys [viewmodel] :as proposal} (ac/perform @state [:update payload])]
+    (when (ck/check as proposal)
+      (reset! state proposal)
+      (when-let [missing-data (qa/missing-data @state viewmodel)]
+        (ri/respond as [:not-found missing-data]))
+      (if (va/valid? @state)
+        (ri/respond as [:refreshed @state])
+        (logger/log "Error" "OHH SHIITTT")))))
 
 (defmethod react [:found :data] [{:keys [state] :as as} [_ payload]]
   (let [proposal (ac/perform @state [:add payload])]

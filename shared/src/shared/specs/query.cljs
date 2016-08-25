@@ -1,35 +1,22 @@
 (ns shared.specs.query
   (:require [cljs.spec :as spec]
-            [shared.specs.appstate :as appstate]))
+            [shared.specs.base :as base]
+            [shared.specs.appstate :as appstate]
+            [shared.specs.viewmodel :as viewmodel]))
 
-(spec/def ::collection-name string?)
-(spec/def ::collection-type string?)
-
-(spec/def ::course-slug string?)
-(spec/def ::curator string?)
-(spec/def ::checkpoint-slug string?)
-
-(spec/def ::collection (spec/keys :req-un [::collection-type ::collection-name]))
-(spec/def ::course (spec/keys :req-un [::course-slug ::curator]))
-(spec/def ::checkpoint (spec/keys :req-un [::checkpoint-slug]))
-
-(spec/def ::tags #{:all})
-(spec/def ::urls #{:all})
-(spec/def ::url string?)
-(spec/def ::user-profile nil?)
-
-(spec/def ::tags-query (spec/keys :req-un [::tags]))
-(spec/def ::urls-query (spec/keys :req-un [::urls]))
-(spec/def ::url-query (spec/keys :req-un [::url]))
-
-(spec/def ::user-profile-query (spec/keys :req-un [::user-profile]))
+(spec/def ::collection   (spec/keys :req-un [::base/collection-type ::base/collection-name]))
+(spec/def ::course       (spec/keys :req-un [::base/course-slug ::base/curator]))
+(spec/def ::checkpoint   (spec/keys :req-un [::base/checkpoint-slug]))
+(spec/def ::tags         (spec/keys :req-un [::base/tags]))
+(spec/def ::urls         (spec/keys :req-un [::base/urls]))
+(spec/def ::url          (spec/keys :req-un [::base/url]))
+(spec/def ::user-profile (spec/keys :req-un [::base/user-profile]))
 
 (spec/def ::query (spec/or :collection ::collection
-                           :tags ::tags-query
-                           :urls ::urls-query
-                           :resource ::url-query
-                           :user-profile ::user-profile-query
+                           :tags ::tags
+                           :urls ::urls
+                           :resource ::url
+                           :user-profile ::user-profile
+                           :viewmodel ::viewmodel/viewmodel
                            :checkpoint ::checkpoint
-                           :appstate ::appstate/appstate
-                           :courses (spec/* ::course)
                            :course ::course))

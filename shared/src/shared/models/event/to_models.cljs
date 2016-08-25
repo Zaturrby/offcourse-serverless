@@ -5,7 +5,7 @@
             [services.logger :as logger]))
 
 (defmulti to-models (fn [[_ payload]]
-                      (first (spec/conform ::specs/data-payload payload))))
+                      (first (spec/conform ::specs/payload payload))))
 
 (defmethod to-models :courses [[_ payload]]
   (map co/create payload))

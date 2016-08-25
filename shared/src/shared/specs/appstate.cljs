@@ -1,13 +1,8 @@
 (ns shared.specs.appstate
   (:require [cljs.spec :as spec]
-            [shared.specs.viewmodel :as viewmodel]))
+            [shared.specs.viewmodel :as viewmodel]
+            [shared.specs.base :as base]))
 
-(spec/def ::site-title string?)
 
-(spec/def ::user-name string?)
-(spec/def ::user (spec/nilable (spec/keys :req-un [::user-name])))
-
-(spec/def ::auth-token string?)
-
-(spec/def ::appstate (spec/keys :req-un [::site-title ::viewmodel/viewmodel]
-                                :opt-un [::auth-token ::user]))
+(spec/def ::appstate (spec/keys :req-un [::base/site-title ::viewmodel/viewmodel]
+                                :opt-un [::base/auth-token ::base/user]))

@@ -3,6 +3,7 @@
             [shared.protocols.responsive :as ri])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
+
 (defn -sign-in [provider]
   (let [c (chan)]
     (.show provider (fn [error response token]
