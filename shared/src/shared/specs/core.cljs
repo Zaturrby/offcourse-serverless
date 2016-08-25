@@ -15,7 +15,6 @@
 
 (spec/def ::valid-payload ::payload/valid-payload)
 (spec/def ::payload ::payload/payload)
-(spec/def ::action (spec/keys :req-un [::payload ::type]))
 (spec/def ::spec spec/spec?)
 
 (spec/def ::query ::query/query)
@@ -47,12 +46,12 @@
 (spec/def ::single-or-multiple? (spec/or :single map?
                                          :multiple (spec/* map?)))
 
-(spec/def ::command-payload (spec/or :viewmodel ::viewmodel/viewmodel
+(spec/def ::action-payload (spec/or :viewmodel ::viewmodel/viewmodel
                                      :credentials ::credentials
                                      :courses (spec/* ::course/course)
                                      :course ::course/course))
 
-(spec/def ::command (create-tuple-spec [:update :add] ::command-payload))
+(spec/def ::action (create-tuple-spec [:update :add] ::action-payload))
 
 (spec/def ::map-type (spec/or :keywordized (spec/map-of keyword? any?)
                               :raw (spec/map-of string? any?)))

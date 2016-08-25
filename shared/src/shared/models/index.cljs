@@ -1,1 +1,0 @@
-(ns shared.models.index)

@@ -1,4 +1,4 @@
-(ns shared.models.appstate.exec
+(ns shared.models.appstate.perform
   (:require [shared.protocols.validatable :as va]
             [shared.protocols.queryable :as qa]
             [shared.models.query.index :as query]
@@ -14,18 +14,18 @@
     (update-in store [:resources] #(conj % resource))
     store))
 
-(defmulti exec (fn [as [command-type :as command]] (va/resolve-type command)))
+(defmulti perform (fn [as action] (va/resolve-type action)))
 
-(defmethod exec [:update :viewmodel] [state [_ viewmodel]]
+(defmethod perform [:update :viewmodel] [state [_ viewmodel]]
   (-> state (assoc :viewmodel viewmodel)))
 
-(defmethod exec [:update :credentials] [state [_ {:keys [auth-token]}]]
+(defmethod perform [:update :credentials] [state [_ {:keys [auth-token]}]]
   (-> state
       (assoc :auth-token auth-token)
       (assoc :user nil)))
 
-(defmethod exec [:add :courses] [store [_ courses]]
+(defmethod perform [:add :courses] [store [_ courses]]
   (reduce add-course store courses))
 
-(defmethod exec [:add :course] [store [_ course]]
+(defmethod perform [:add :course] [store [_ course]]
   (add-course store course))

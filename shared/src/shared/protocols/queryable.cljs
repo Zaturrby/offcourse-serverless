@@ -16,6 +16,7 @@
   "Given a query, this check if the requested data is present in the queried
   object"
   ([this query] (-check this query)))
+
 (defn missing-data
   "If given one argument, this function explains what data needs to be provided
   in order for it to comply with its specification. With two arguments, it

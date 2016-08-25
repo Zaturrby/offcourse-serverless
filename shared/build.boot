@@ -42,8 +42,10 @@
         (jar)
         (install)
         (codox :language :clojurescript
-               :name "offcourse-shared")
+               :name "offcourse-shared"
+               :version version)
         (target)))
+
 
 (deftask dev []
   (comp (watch)

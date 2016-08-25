@@ -1,15 +1,15 @@
-(ns shared.protocols.commandable
+(ns shared.protocols.actionable
   (:require [shared.specs.core :as specs]
             [cljs.spec :as spec]
-            [shared.models.command.index :as command]
+            [shared.models.action.index :as action]
             [services.logger :as logger]))
 
-(defprotocol Commandable
-  (-exec [this command]))
+(defprotocol Actionable
+  (-perform [this action]))
 
-(spec/fdef do
+(spec/fdef perform
            :args (spec/cat :datastore any?
                            :action ::specs/action))
-(defn exec
+(defn perform
   "performs an action with (possible) side-effects on a datastore"
-  [this command] (-exec this (command/create command)))
+  [this action] (-perform this (action/create action)))

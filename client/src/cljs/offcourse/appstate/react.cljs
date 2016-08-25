@@ -2,7 +2,7 @@
   (:require [offcourse.appstate.redirect :as rd]
             [shared.protocols.responsive :as ri]
             [offcourse.appstate.check :as ck]
-            [shared.protocols.commandable :as cd]
+            [shared.protocols.actionable :as ac]
             [shared.protocols.queryable :as qa]
             [shared.protocols.validatable :as va]
             [services.logger :as logger]))
@@ -11,13 +11,13 @@
 
 (defmethod react [:granted :credentials] [{:keys [state] :as as} [_ payload]]
   (let [auth-token (:auth-token payload)
-        proposal (cd/exec @state [:update payload])]
+        proposal (ac/perform @state [:update payload])]
     (when (and (ck/check as proposal) )
       (reset! state proposal)
       (ri/respond as [:not-found {:user-profile nil}]))))
 
 (defmethod react [:requested :viewmodel] [{:keys [state] :as as} [_ payload]]
-  (let [proposal (cd/exec @state [:update payload])]
+  (let [proposal (ac/perform @state [:update payload])]
     (if (ck/check as proposal)
       (do
         (reset! state proposal)
@@ -30,7 +30,7 @@
         (rd/redirect as :home)))))
 
 (defmethod react [:found :data] [{:keys [state] :as as} [_ payload]]
-  (let [proposal (cd/exec @state [:add payload])]
+  (let [proposal (ac/perform @state [:add payload])]
     (when (va/valid? proposal)
       (reset! state proposal)
       (ri/respond as [:refreshed @state]))))

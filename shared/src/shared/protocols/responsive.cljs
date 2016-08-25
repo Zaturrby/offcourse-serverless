@@ -1,10 +1,9 @@
 (ns shared.protocols.responsive
-  (:require [cljs.core.async :as async :refer [<! put! close!]]
+  (:require [cljs.core.async :as async :refer [<! close!]]
             [services.logger :as logger]
             [shared.models.event.index :as event]
-            [shared.protocols.validatable :as va]
-            [clojure.string :as str])
-  (:require-macros [cljs.core.async.macros :refer [go go-loop]]))
+            [shared.protocols.validatable :as va])
+  (:require-macros [cljs.core.async.macros :refer [go-loop]]))
 
 (defprotocol Responsive
   (-listen [this])

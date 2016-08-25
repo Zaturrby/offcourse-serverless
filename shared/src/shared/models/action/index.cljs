@@ -1,4 +1,4 @@
-(ns shared.models.command.index
+(ns shared.models.action.index
   (:require [shared.protocols.validatable :as va :refer [Validatable]]
             [shared.specs.core :as specs]
             [cljs.spec :as spec]
@@ -6,22 +6,22 @@
             [services.logger :as logger]))
 
 (spec/fdef create
-           :args (spec/cat :action ::specs/command)
-           :ret ::specs/command
+           :args (spec/cat :action ::specs/action)
+           :ret ::specs/action
            :fn #(spec/valid? ::specs/meta (-> %1 :ret :meta)))
 
-(defn- override [command]
-  (specify command
+(defn- override [action]
+  (specify action
     Validatable
     (-resolve-type [[data-type :as this]]
       (let [payload-type (-> (spec/conform (:spec (meta this)) this) second first)]
         [data-type payload-type]))))
 
 (defn create
-  "creates a new command"
-  [command]
-  (-> command
-      (with-meta {:spec ::specs/command})
+  "creates a new action"
+  [action]
+  (-> action
+      (with-meta {:spec ::specs/action})
       override))
 
 (stest/instrument `create)
