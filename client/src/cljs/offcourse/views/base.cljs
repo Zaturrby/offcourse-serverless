@@ -1,23 +1,27 @@
 (ns offcourse.views.base
-  (:require [rum.core :as rum]
-            [plumbing.core :refer-macros [fnk]]))
-
+  (:require [plumbing.core :refer-macros [fnk]]))
 
 (def graph
   {:container     (fnk [[:components app]] app)
+   :viewmodel     (fnk [[:appstate viewmodel]] viewmodel)
    :user-name     (fnk [] nil)
-   :base-actions  (fnk [] {})
-   :actions       (fnk [] {})
-   :menubar       (fnk [user-name
-                        base-actions
+   :base-actions  (fnk [handlers] (select-keys handlers [:sign-in :sign-out]))
+   :actions       (fnk [base-actions] base-actions)
+   :logo          (fnk [[:appstate site-title]
                         actions
-                        [:appstate site-title]
-                        [:url-helpers home-url profile-url]
-                        [:handlers sign-in sign-out]
-                        [:components actions-panel logo menubar]]
-                       (menubar {:logo          (logo site-title home-url)
-                                 :action-panel  (actions-panel (merge base-actions actions)
-                                                               user-name
-                                                               sign-in
-                                                               sign-out
-                                                               profile-url)}))})
+                        url-helpers
+                        [:components logo]]
+                       (logo {:site-title site-title}
+                             (select-keys actions [])
+                             (select-keys url-helpers [:home-url])))
+   :actions-panel  (fnk [user-name
+                         actions
+                         url-helpers
+                         [:components actions-panel]]
+                        (actions-panel {:user-name user-name}
+                                       (select-keys actions [:sign-in :sign-out])
+                                       (select-keys url-helpers [:profile-url])))
+   :menubar       (fnk [logo
+                        actions-panel
+                        [:components menubar]]
+                       (menubar logo actions-panel))})

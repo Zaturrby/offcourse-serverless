@@ -68,10 +68,10 @@
      :ui-channels            (:ui channels)
      :ui                     (component/using (ui/create :ui)
                                               {:channels    :ui-channels
-                                               :url-helpers :url-helpers
-                                               :handlers    :view-handlers
                                                :triggers    :ui-triggers
                                                :responses   :ui-responses
+                                               :url-helpers :url-helpers
+                                               :handlers    :view-handlers
                                                :routes      :routes
                                                :components  :view-components
                                                :views       :views}))))

@@ -1,5 +1,6 @@
 (ns offcourse.system.handlers
-  (:require [bidi.bidi :refer [path-for]]))
+  (:require [bidi.bidi :refer [path-for]]
+            [services.logger :as logger]))
 
 (def handlers
   {:sign-in (fn [responder] (partial responder :requested-sign-in))

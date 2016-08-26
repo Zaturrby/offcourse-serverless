@@ -22,12 +22,10 @@
        (map :url)
        (into #{})))
 
-(defmethod get :checkpoint [course checkpoint]
-  (if-let [checkpoint-slug (or (:checkpoint-slug checkpoint) (str/slugify (:task checkpoint)))]
-    (do
-      (->> (:checkpoints course)
-           (some #(if (= (:checkpoint-slug %) checkpoint-slug) %))))
-    (->> (:checkpoints course)
-         (some #(if (= (:checkpoint-id %) (:checkpoint-id checkpoint)) %)))))
+(defmethod get :checkpoint [{:keys [checkpoints]} {:keys [checkpoint-slug task checkpoint-id] :as q}]
+  (if checkpoint-slug
+    (->> checkpoints (some #(if (= (:checkpoint-slug %) checkpoint-slug) %)))
+    (first checkpoints)))
+
 
 

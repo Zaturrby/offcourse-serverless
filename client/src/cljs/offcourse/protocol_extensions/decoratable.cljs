@@ -4,7 +4,8 @@
             [shared.models.course.index :as co :refer [Course]]
             [shared.protocols.decoratable :refer [Decoratable]]
             [shared.protocols.queryable :as qa]
-            [shared.protocols.validatable :as va]))
+            [shared.protocols.validatable :as va]
+            [services.logger :as logger]))
 
 (defn select-checkpoint [checkpoints selected-slug]
   (for [{:keys [checkpoint-slug] :as checkpoint} checkpoints]
@@ -30,9 +31,8 @@
                               :valid? valid?
                               :saved? saved?}))))
     ([{:keys [checkpoints curator] :as course} user-name selected]
-     (let [tags (-> (qa/get course {:tags :all})
-                    (lb/collection->labels selected))]
+     (let [tags (-> (qa/get course {:tags :all}))]
        (some-> course
-               (assoc :checkpoints (select-checkpoint checkpoints selected))
+               (assoc :checkpoints (select-checkpoint checkpoints (:checkpoint-slug selected)))
                (with-meta {:tags tags
                            :trackable? (= user-name curator)}))))))

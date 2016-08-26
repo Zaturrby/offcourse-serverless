@@ -6,8 +6,7 @@
 (spec/def :vm/course     (spec/keys :req-un [::base/course-slug ::base/curator]))
 (spec/def :vm/checkpoint (spec/keys :req-un [::base/checkpoint-slug]))
 (spec/def ::collection   (spec/keys :req-un [:vm/collection]))
-(spec/def ::course       (spec/keys :req-un [:vm/course]))
-(spec/def ::checkpoint   (spec/keys :req-un [:vm/course :vm/checkpoint]))
+(spec/def ::checkpoint   (spec/keys :req-un [:vm/course]
+                                    :opt-un [:vm/checkpoint]))
 (spec/def ::viewmodel    (spec/or :collection ::collection
-                                  :checkpoint ::checkpoint
-                                  :course ::course))
+                                  :checkpoint ::checkpoint))

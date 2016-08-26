@@ -2,7 +2,7 @@
   (:require [markdown.core :refer [md->html]]
             [rum.core :as rum]))
 
-(rum/defc viewer [{:keys [resource]}]
+(rum/defc viewer [{:keys [resource]} _ _]
   (let [{:keys [title content]} resource]
     [:.viewer
      (if content
@@ -10,4 +10,4 @@
         [:h1.title {:key :title} title]
         [:article {:key :content
                    :dangerouslySetInnerHTML {:__html (md->html content)}}]]
-       [:.loading "Waiting"])]))
+       [:.loading "This resource couldn't be found... yet..."])]))

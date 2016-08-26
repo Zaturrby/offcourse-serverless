@@ -1,21 +1,35 @@
 (ns offcourse.views.checkpoint
-  (:require [shared.protocols.decoratable :as dc]
-            [plumbing.core :refer-macros [fnk]]
+  (:require [plumbing.core :refer-macros [fnk]]
+            [shared.protocols.decoratable :as dc]
             [shared.protocols.queryable :as qa]))
 
 (def graph
-  {:checkpoint-slug (fnk [appstate] (-> appstate :viewmodel :checkpoint :checkpoint-slug))
-   :course-data     (fnk [appstate] (-> appstate :viewmodel :course))
-   :course        (fnk [appstate course-data user-name]
-                       (if-let [course (qa/get appstate course-data)]
-                         course
-                         nil))
-   :checkpoint      (fnk [appstate course checkpoint-slug]
-                         (when course (-> (qa/get course {:checkpoint-slug checkpoint-slug})
-                                          (dc/decorate appstate))))
-   :main            (fnk [checkpoint [:components viewer]]
-                         (viewer checkpoint))
-   :dashboard       (fnk [url-helpers user-name course checkpoint-slug handlers [:components card dashboard]]
+  {:checkpoint-data (fnk [viewmodel] (or (-> viewmodel :checkpoint) {:checkpoint-slug nil}))
+   :course-data     (fnk [viewmodel] (-> viewmodel :course))
+   :course          (fnk [appstate
+                          course-data
+                          checkpoint-data
+                          user-name]
+                         (some-> appstate
+                                 (qa/get course-data)
+                                 (dc/decorate user-name checkpoint-data)))
+   :checkpoint      (fnk [appstate
+                          course
+                          checkpoint-data]
+                         (some-> course
+                                 (qa/get checkpoint-data)
+                                 (dc/decorate appstate)))
+   :actions    (fnk [base-actions handlers]
+                    (->> handlers
+                         (select-keys [:toggle-checkpoint])
+                         (merge base-actions)))
+   :main            (fnk [checkpoint
+                          [:components viewer]]
+                         (viewer checkpoint nil nil))
+   :dashboard       (fnk [url-helpers
+                          user-name
+                          course
+                          actions
+                          [:components card dashboard]]
                          (when course
-                           (let [course (dc/decorate course user-name checkpoint-slug)]
-                             (dashboard {:main (card course url-helpers handlers)}))))})
+                           (dashboard {:main (card course actions url-helpers)})))})
