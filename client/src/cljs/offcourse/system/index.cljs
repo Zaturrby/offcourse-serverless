@@ -64,7 +64,7 @@
      :view-handlers          handlers
      :url-helpers            routes/url-helpers
      :ui-triggers            [:refreshed]
-     :ui-responses           [:rendered]
+     :ui-responses           [:rendered :requested]
      :ui-channels            (:ui channels)
      :ui                     (component/using (ui/create :ui)
                                               {:channels    :ui-channels

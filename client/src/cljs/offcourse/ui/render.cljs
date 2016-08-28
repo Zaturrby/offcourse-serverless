@@ -6,8 +6,9 @@
 
 (defn render [{:keys [views container url-helpers components handlers] :as rd}
               [_ payload]]
-  (let [responder (partial ri/respond rd)
-        handlers (medley/map-vals #(% responder) handlers)
-        view     (view/new payload components url-helpers handlers)]
+  (let [view      (view/create {:appstate    payload
+                                :responder   (partial ri/respond rd)
+                                :components  components
+                                :url-helpers url-helpers})]
     (rr/render view views container)
     (ri/respond rd [:rendered nil])))

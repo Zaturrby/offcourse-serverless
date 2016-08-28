@@ -2,7 +2,8 @@
   (:require [plumbing.graph :as graph]
             [rum.core :as rum]
             [shared.protocols.renderable :as rr :refer [Renderable]]
-            [shared.protocols.validatable :as va]))
+            [shared.protocols.validatable :as va]
+            [services.logger :as logger]))
 
 (defrecord View []
   Renderable
@@ -14,8 +15,5 @@
       (rum/mount rendered-view
                  (. js/document (querySelector element))))))
 
-(defn new [appstate components url-helpers handlers]
-  (map->View {:appstate    appstate
-              :components  components
-              :handlers    handlers
-              :url-helpers url-helpers}))
+(defn create [view-data]
+  (map->View view-data))

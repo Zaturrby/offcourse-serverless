@@ -1,7 +1,8 @@
 (ns offcourse.views.collection
   (:require [clojure.set :as set]
             [plumbing.core :refer-macros [fnk]]
-            [shared.protocols.decoratable :as dc]))
+            [shared.protocols.decoratable :as dc]
+            [services.logger :as logger]))
 
 (defn filter-courses [{:keys [collection-name collection-type]} courses]
   (case collection-type
@@ -18,10 +19,9 @@
                     (->> (:courses appstate)
                          (map #(dc/decorate %1 user-name nil))
                          (filter-courses collection)))
-   :actions    (fnk [base-actions handlers]
-                    (->> handlers
-                         (select-keys [:toggle-checkpoint])
-                         (merge base-actions)))
+   :actions    (fnk [base-actions]
+                    (->> base-actions
+                         (into #{})))
    :main       (fnk [courses
                      actions
                      url-helpers

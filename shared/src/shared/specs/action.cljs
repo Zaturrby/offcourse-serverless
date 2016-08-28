@@ -10,4 +10,4 @@
                                     :courses (spec/* ::course/course)
                                     :course ::course/course))
 
-(spec/def ::action (helpers/tuple-spec [:update :add] ::action-payload))
+(spec/def ::action (helpers/tuple-spec [:update :sign-in :add] ::action-payload))

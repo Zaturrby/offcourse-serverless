@@ -14,16 +14,16 @@
     :data-button-type "textbar"}
    [:a {:href url} (button-title action-name)]])
 
-(defn handler-button [action-name handler]
+(defn handler-button [action-name respond]
   [:li.button {:data-button-type "textbar"
                :key [action-name]
-               :on-click #(handler)} (button-title action-name)])
+               :on-click #(respond [action-name nil])} (button-title action-name)])
 
 (rum/defc actions-panel [{:keys [user-name]        :as data}
-                         {:keys [sign-in sign-out] :as actions}
+                         respond
                          {:keys [profile-url]      :as url-helpers}]
   [:ul.actions-panel
    (when user-name (url-button user-name (profile-url user-name)))
    (if user-name
-     (handler-button :sign-out sign-out)
-     (handler-button :sign-in sign-in))])
+     (handler-button :sign-out respond)
+     (handler-button :sign-in respond))])

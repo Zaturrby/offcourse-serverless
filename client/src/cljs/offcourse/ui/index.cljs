@@ -17,5 +17,5 @@
   (-respond [rd event] (ri/respond rd event)))
 
 (defn create [name] (-> {:component-name name
-                         :container "#container"}
+                         :container      "#container"}
                         map->UI))

@@ -26,6 +26,9 @@
         (ri/respond as [:refreshed @state])
         (logger/log "Error" "OHH SHIITTT")))))
 
+(defmethod react [:requested :action] [{:keys [state] :as as} [_ payload]]
+  (logger/log :PL payload))
+
 (defmethod react [:found :data] [{:keys [state] :as as} [_ payload]]
   (let [proposal (ac/perform @state [:add payload])]
     (when (va/valid? proposal)

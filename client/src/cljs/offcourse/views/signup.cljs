@@ -9,7 +9,10 @@
                              (get-in [:viewmodel :new-user])
                              dc/decorate))
    :main        (fnk [] nil)
-   :actions     (fnk [] nil)
-   :dashboard   (fnk [profile [:components dashboard user-form] handlers]
-                     (dashboard {:main (user-form profile handlers)}))})
-
+   :actions    (fnk [base-actions]
+                    (->> base-actions
+                         (into #{})))
+   :dashboard   (fnk [profile
+                      [:components dashboard user-form]
+                      respond]
+                     (dashboard {:main (user-form profile respond)}))})

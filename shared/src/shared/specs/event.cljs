@@ -4,7 +4,8 @@
             [shared.specs.credentials :as credentials]
             [shared.specs.payload :as payload]
             [shared.specs.query :as query]
-            [shared.specs.helpers :as helpers]))
+            [shared.specs.helpers :as helpers]
+            [shared.specs.action :as action]))
 
 (spec/def ::kinesis map?)
 (spec/def ::dynamo map?)
@@ -31,6 +32,7 @@
 
 (spec/def ::event-payload (spec/or :viewmodel   ::viewmodel/viewmodel
                                    :credentials ::credentials/credentials
+                                   :action      ::action/action
                                    :data        ::payload/payload
                                    :query       ::query/query))
 

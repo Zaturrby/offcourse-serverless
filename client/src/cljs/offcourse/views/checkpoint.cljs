@@ -19,10 +19,9 @@
                          (some-> course
                                  (qa/get checkpoint-data)
                                  (dc/decorate appstate)))
-   :actions    (fnk [base-actions handlers]
-                    (->> handlers
-                         (select-keys [:toggle-checkpoint])
-                         (merge base-actions)))
+   :actions    (fnk [base-actions]
+                    (->> base-actions
+                         (into #{})))
    :main            (fnk [checkpoint
                           [:components viewer]]
                          (viewer checkpoint nil nil))
