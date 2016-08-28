@@ -1,16 +1,17 @@
 (ns shared.models.appstate.index
+  (:refer-clojure :exclude [get -reset remove])
   (:require [shared.specs.core :as specs]
-            [shared.protocols.commandable :refer [Commandable]]
+            [shared.protocols.actionable :refer [Actionable]]
             [shared.protocols.queryable :refer [Queryable]]
             [shared.models.appstate.missing-data :as md]
-            [shared.models.appstate.search :as search]
-            [shared.models.appstate.exec :as ex]))
+            [shared.models.appstate.get :as get]
+            [shared.models.appstate.perform :as perform]))
 
 (defrecord Appstate []
-  Commandable
-  (-exec [as command] (ex/exec as command))
+  Actionable
+  (-perform [as action] (perform/perform as action))
   Queryable
-  (-search [as query] (search/search as query))
+  (-get [as query] (get/get as query))
   (-missing-data [as query] (md/missing-data as query)))
 
 (defn create [appstate]

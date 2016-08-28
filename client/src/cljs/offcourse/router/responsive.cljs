@@ -1,6 +1,6 @@
 (ns offcourse.router.responsive
   (:require [bidi.bidi :as bidi]
-            [offcourse.protocols.responsive :as ri]
+            [shared.protocols.responsive :as ri]
             [pushy.core :as pushy]))
 
 (defn handle-request [{:keys [query-constructors history] :as rt} {:keys [handler route-params]}]

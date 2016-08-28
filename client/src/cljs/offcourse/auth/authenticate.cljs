@@ -1,14 +1,15 @@
 (ns offcourse.auth.authenticate
-  (:require [cljs.core.async :refer [<! >! chan]]
-            [offcourse.protocols.responsive :as ri])
+  (:require [cljs.core.async :as async :refer [<! >! chan]]
+            [shared.protocols.responsive :as ri])
   (:require-macros [cljs.core.async.macros :refer [go]]))
+
 
 (defn -sign-in [provider]
   (let [c (chan)]
     (.show provider (fn [error response token]
-                      (go (>! c {:error error
-                                 :response response
-                                 :token token}))))
+                      (async/put! c {:error error
+                                     :response response
+                                     :token token})))
     c))
 
 (defn -sign-out [] (.removeItem js/localStorage "auth-token"))

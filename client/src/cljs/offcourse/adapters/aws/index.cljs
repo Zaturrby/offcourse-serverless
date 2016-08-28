@@ -1,14 +1,16 @@
 (ns offcourse.adapters.aws.index
   (:require [com.stuartsierra.component :refer [Lifecycle]]
-            [offcourse.adapters.aws.queryable :as qa-impl]
-            [offcourse.protocols.queryable :refer [Queryable]]))
+            [offcourse.adapters.aws.send :as send-impl]
+            [shared.protocols.responsive :as ri :refer [Responsive]]
+            [shared.protocols.queryable :refer [Queryable]]
+            [services.logger :as logger]))
 
 (defrecord AWS [name supported-types connection]
   Lifecycle
   (start [db] db)
   (stop  [db] db)
-  Queryable
-  (-fetch [db query] (qa-impl/fetch db query)))
+  Responsive
+  (-send [db event] (send-impl/send db event)))
 
 (defn new-db [config]
   (map->AWS config))

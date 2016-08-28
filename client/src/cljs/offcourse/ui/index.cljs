@@ -1,7 +1,7 @@
 (ns offcourse.ui.index
   (:require [com.stuartsierra.component :refer [Lifecycle]]
-            [offcourse.protocols.renderable :as rr :refer [Renderable]]
-            [offcourse.protocols.responsive :as ri :refer [Responsive]]
+            [shared.protocols.renderable :as rr :refer [Renderable]]
+            [shared.protocols.responsive :as ri :refer [Responsive]]
             [offcourse.ui.render :as render-impl]))
 
 (defrecord UI []
@@ -16,5 +16,6 @@
   (-mute [rd] (dissoc rd :listener))
   (-respond [rd event] (ri/respond rd event)))
 
-(defn create [name] (-> {:component-name name}
+(defn create [name] (-> {:component-name name
+                         :container "#container"}
                         map->UI))

@@ -1,21 +1,25 @@
 (ns offcourse.system.index
   (:require [com.stuartsierra.component :as component]
-            [shared.models.index]
             [offcourse.api.index :as api]
             [offcourse.appstate.index :as appstate]
             [offcourse.auth.index :as auth]
             [offcourse.router.index :as router]
             [offcourse.system.handlers :refer [handlers]]
+            [offcourse.protocol-extensions.decoratable]
             [offcourse.system.plumbing :as plumbing]
             [offcourse.system.routes :as routes]
             [offcourse.system.ui-components :refer [ui-components]]
             [offcourse.system.views :refer [views]]
-            [offcourse.ui.index :as ui]))
+            [offcourse.ui.index :as ui]
+            [services.logger :as logger]))
+
+(defn connect-to-repository [{:keys [adapter] :as config}]
+  (component/start (adapter (select-keys config [:name :endpoint :resources]))))
 
 (defn system [appstate repositories auth-config]
   (let [channels plumbing/channels]
     (component/system-map
-     :repositories           repositories
+     :repositories           (map connect-to-repository (:query repositories))
      :api-channels           (:api channels)
      :api-triggers           [:not-found]
      :api-responses          [:found :not-found :failed]
@@ -64,10 +68,10 @@
      :ui-channels            (:ui channels)
      :ui                     (component/using (ui/create :ui)
                                               {:channels    :ui-channels
-                                               :url-helpers :url-helpers
-                                               :handlers    :view-handlers
                                                :triggers    :ui-triggers
                                                :responses   :ui-responses
+                                               :url-helpers :url-helpers
+                                               :handlers    :view-handlers
                                                :routes      :routes
                                                :components  :view-components
                                                :views       :views}))))

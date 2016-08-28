@@ -1,5 +1,5 @@
 (ns offcourse.views.signup
-  (:require [offcourse.protocols.decoratable :as dc]
+  (:require [shared.protocols.decoratable :as dc]
             [plumbing.core :refer-macros [fnk]]))
 
 (def graph

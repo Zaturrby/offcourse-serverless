@@ -14,7 +14,7 @@
 
 (defmethod create :checkpoint-view [type result]
   (-create {:course     (select-keys result [:curator :course-slug])
-         :checkpoint (select-keys result [:checkpoint-slug :checkpoint-id])}))
+            :checkpoint (select-keys result [:checkpoint-slug :checkpoint-id])}))
 
 (defmethod create :collection-view [type collection]
   (-create {:collection collection}))
@@ -27,5 +27,5 @@
 
 (defmethod create :home-view []
   (-create {:collection {:collection-type "flags"
-                      :collection-name "featured"}}))
+                         :collection-name "featured"}}))
 

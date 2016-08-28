@@ -1,6 +1,6 @@
 (ns offcourse.router.index
   (:require [com.stuartsierra.component :refer [Lifecycle]]
-            [offcourse.protocols.responsive :as ri :refer [Responsive]]
+            [shared.protocols.responsive :as ri :refer [Responsive]]
             [offcourse.router.react :as react-impl]
             [offcourse.router.responsive :as ri-impl]))
 
@@ -10,7 +10,7 @@
   (stop [rt] (ri/mute rt))
   Responsive
   (-listen [rt] (ri-impl/listen rt))
-  (-react [rt event] (react-impl/refresh rt event))
+  (-react [rt event] (react-impl/react rt event))
   (-mute [rt] (ri-impl/mute rt))
   (-respond [rt event] nil))
 

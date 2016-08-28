@@ -1,5 +1,5 @@
 (ns offcourse.appstate.redirect
-  (:require [offcourse.protocols.responsive :as qa]
+  (:require [shared.protocols.responsive :as qa]
             [shared.models.event.index :as event]
             [shared.models.viewmodel.index :as viewmodel]))
 

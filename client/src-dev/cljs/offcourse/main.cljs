@@ -1,28 +1,20 @@
 (ns offcourse.main
   (:require [com.stuartsierra.component :as component]
             [offcourse.adapters.aws.index :as aws]
-            [offcourse.adapters.embedly.index :as embedly]
-            [offcourse.adapters.fakedb.index :as fakedb]
-            [shared.models.appstate.index :as model]
-            [offcourse.core :as core]))
+            [offcourse.core :as core]
+            [shared.models.appstate.index :as model]))
 
 (defonce app (atom nil))
-(defonce appstate (atom (model/create {:site-title "Offcourse_"
-                                       :user nil})))
+
+(defonce appstate (atom (model/create {:site-title "Offcourse_"})))
+
 (defonce auth-config {:domain "yeehaa.eu.auth0.com"
                   :clientID "Z1J0CyMzZfIbOfBSVaMWJakoIrxm4Tfs"})
 (def adapters
-  [#_{:adapter           fakedb/new-db
-    :name             "fakedb"
-    :resources         #{:user-profile :course :collection}}
-   {:adapter           embedly/new-db
-    :name              :resources-repo
-    :resources         #{:resources}
-    :endpoint          "http://api.embed.ly/1/extract?key=5406650948f64aeb9102b9ea2cb0955c&urls="}
-   {:adapter           aws/new-db
-    :name              :courses-repo
-    :resources         #{:user-profile :course :collection}
-    :endpoint          "https://70zxd74j8l.execute-api.eu-central-1.amazonaws.com/yeehaa/query-endpoint"}])
+  {:query [{:adapter           aws/new-db
+            :name              :aws
+            :resources         #{:user-profile :course :collection}
+            :endpoint          "https://70zxd74j8l.execute-api.eu-central-1.amazonaws.com/yeehaa/query-endpoint"}]})
 
 (defn init []
   (do

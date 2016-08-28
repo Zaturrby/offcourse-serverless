@@ -1,13 +1,14 @@
 (ns shared.models.course.index
+  (:refer-clojure :exclude [get -reset remove])
   (:require [shared.specs.core :as specs]
             [shared.protocols.queryable :refer [Queryable]]
-            [shared.models.course.search :as sr]
+            [shared.models.course.get :as get]
             [shared.models.checkpoint.index :as checkpoint]))
+
 
 (defrecord Course []
   Queryable
-  (-search [this query]
-    (sr/search this query)))
+  (-get [this query] (get/get this query)))
 
 (defn add-checkpoints [{:keys [checkpoints] :as course}]
   (let [checkpoints (map checkpoint/create checkpoints)]
