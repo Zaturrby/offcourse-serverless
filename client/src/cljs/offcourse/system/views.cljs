@@ -5,7 +5,6 @@
             [offcourse.views.collection :as clv]))
 
 (def views
-  {:loading    bv/graph
-   :signup     (merge bv/graph su/graph)
-   :collection (merge bv/graph clv/graph)
-   :checkpoint (merge bv/graph cpv/graph)})
+  {:signup-view     (merge bv/graph su/graph)
+   :collection-view (merge bv/graph clv/graph)
+   :checkpoint-view (merge bv/graph cpv/graph)})

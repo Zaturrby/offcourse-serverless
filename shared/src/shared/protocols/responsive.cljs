@@ -22,7 +22,7 @@
   (if (contains? (into #{} responses) status)
     (let [response (event/create [component-name status payload])]
       (if (va/valid? response)
-        (async/put! (:output channels) response)
+        (async/put! (:output channels) (logger/pipe component-name response))
         (logger/log "ERRORS" (va/errors response))))
     (logger/log (str "Invalid Response Type") status "."
                 component-name "Is only allowed to respond with the following Event Types: "

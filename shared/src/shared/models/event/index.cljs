@@ -1,20 +1,16 @@
 (ns shared.models.event.index
-  (:require [shared.models.event.to-action :refer [to-action]]
-            [shared.models.event.to-query :refer [to-query]]
+  (:require [cljs.spec :as spec]
+            [shared.models.event.to-action :refer [to-action]]
             [shared.models.event.to-models :refer [to-models]]
+            [shared.models.event.to-query :refer [to-query]]
             [shared.protocols.convertible :as cv :refer [Convertible]]
             [shared.protocols.validatable :as va :refer [Validatable]]
-            [cljs.spec :as spec]
-            [shared.specs.core :as specs]
-            [services.helpers :as helpers]
-            [services.logger :as logger]
-            [cljs.spec.test :as stest]))
+            [shared.specs.core :as specs]))
 
 (spec/fdef create
            :args (spec/cat :event-type ::specs/event)
            :ret ::specs/event
            :fn #(spec/valid? ::specs/meta (-> %1 :ret :meta)))
-
 
 (defn override [event]
   (specify event
@@ -28,11 +24,10 @@
         [data-type payload-type]))))
 
 (defn create [[source type payload]]
-  (let [event (-> [(keyword type) payload]
-                  (with-meta {:spec ::specs/event
-                              :source source
-                              :timestamp (.now js/Date)})
-                  override)]
-    (logger/pipe "Event" event)))
+  (-> [(keyword type) payload]
+      (with-meta {:spec ::specs/event
+                  :source source
+                  :timestamp (.now js/Date)})
+      override))
 
 #_(stest/instrument `create)

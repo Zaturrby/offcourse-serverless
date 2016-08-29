@@ -24,10 +24,13 @@
         (ri/respond as [:not-found missing-data]))
       (if (va/valid? @state)
         (ri/respond as [:refreshed @state])
-        (logger/log "Error" "OHH SHIITTT")))))
+        (logger/log "Invalid Appstate" @state)))))
+
+(defmethod react [:rendered :view-actions] [{:keys [state] :as as} [_ payload]]
+  (ac/perform @state [:add payload]))
 
 (defmethod react [:requested :action] [{:keys [state] :as as} [_ payload]]
-  (logger/log :PL payload))
+  (ri/respond as [:requested payload]))
 
 (defmethod react [:found :data] [{:keys [state] :as as} [_ payload]]
   (let [proposal (ac/perform @state [:add payload])]

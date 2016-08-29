@@ -50,7 +50,7 @@
                                                :routes             :routes
                                                :query-constructors :query-constructors})
      :appstate-atom          appstate
-     :appstate-triggers      [:granted :requested :found :not-found]
+     :appstate-triggers      [:granted :rendered :requested :found :not-found]
      :appstate-responses     [:refreshed :requested :not-found]
      :appstate-channels      (:appstate channels)
      :appstate               (component/using (appstate/create :appstate)

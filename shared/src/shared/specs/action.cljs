@@ -5,9 +5,10 @@
             [shared.specs.course :as course]
             [shared.specs.helpers :as helpers]))
 
-(spec/def ::action-payload (spec/or :viewmodel ::viewmodel/viewmodel
-                                    :credentials ::credentials/credentials
-                                    :courses (spec/* ::course/course)
-                                    :course ::course/course))
+(spec/def ::action-payload (spec/or :viewmodel    ::viewmodel/viewmodel
+                                    :credentials  ::credentials/credentials
+                                    :view-actions (spec/tuple keyword? set?)
+                                    :courses      (spec/* ::course/course)
+                                    :course       ::course/course))
 
 (spec/def ::action (helpers/tuple-spec [:update :sign-in :add] ::action-payload))

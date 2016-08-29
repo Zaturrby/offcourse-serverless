@@ -7,13 +7,9 @@
 
 (defrecord View []
   Renderable
-  (-render [view views element]
-    (let [view-type (-> view :appstate :viewmodel va/resolve-type)
-          view-graph (graph/compile (view-type views))
-          {:keys [container] :as composition} (view-graph view)
-          rendered-view (container composition)]
-      (rum/mount rendered-view
-                 (. js/document (querySelector element))))))
+  (-render [view views]
+    (let [view-type (-> view :appstate :viewmodel va/resolve-type)]
+      ((graph/compile (view-type views)) view))))
 
 (defn create [view-data]
   (map->View view-data))

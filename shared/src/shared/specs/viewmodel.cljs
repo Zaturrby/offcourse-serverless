@@ -8,5 +8,6 @@
 (spec/def ::collection   (spec/keys :req-un [:vm/collection]))
 (spec/def ::checkpoint   (spec/keys :req-un [:vm/course]
                                     :opt-un [:vm/checkpoint]))
-(spec/def ::viewmodel    (spec/or :collection ::collection
-                                  :checkpoint ::checkpoint))
+
+(spec/def ::viewmodel    (spec/or :collection-view ::collection
+                                  :checkpoint-view ::checkpoint))
