@@ -27,15 +27,23 @@
                                     #(= (first (:Records %)) :dynamodb)))
 
 #_(spec/def ::event (spec/or :kinesis ::kinesis-event
-                           :dynamodb ::dynamo-event
-                           :offcourse ::api-event))
+                             :dynamodb ::dynamo-event
+                             :offcourse ::event
+                             :api      ::api-event))
 
-(spec/def ::event-payload (spec/or :viewmodel   ::viewmodel/viewmodel
-                                   :credentials ::credentials/credentials
-                                   :action      ::action/action
-                                   :data        ::payload/payload
-                                   :query       ::query/query))
+(spec/def ::event-payload (spec/or :viewmodel           ::viewmodel/viewmodel
+                                   :credentials         ::credentials/credentials
+                                   :sign-in             (spec/tuple #{:sign-in})
+                                   :actions             (spec/tuple #{:update} set?)
+                                   :data                ::payload/payload
+                                   :query               ::query/query))
 
 
-(spec/def ::event (helpers/tuple-spec [:found-data :found :not-found :granted :revoked :requested
-                                       :requested-data :rendered :refreshed] ::event-payload))
+(spec/def ::event (helpers/tuple-spec [:updated :found :not-found :granted :revoked
+                                       :requested :requested-data :rendered :refreshed] ::event-payload))
+
+
+#_(spec/def ::event (spec/or :kinesis ::kinesis-event
+                             :dynamodb ::dynamo-event
+                             :offcourse ::event
+                             :api      ::api-event))

@@ -19,8 +19,8 @@
 (defmethod perform [:update :viewmodel] [state [_ viewmodel]]
   (-> state (assoc :viewmodel viewmodel)))
 
-(defmethod perform [:add :view-actions] [{:keys [viewmodel] :as state} [_ view-actions]]
-  (-> state (assoc :viewmodel (assoc viewmodel :actions (second view-actions)))))
+(defmethod perform [:update :view-actions] [state [_ actions]]
+  (-> state (assoc :actions actions)))
 
 (defmethod perform [:update :credentials] [state [_ {:keys [auth-token]}]]
   (-> state

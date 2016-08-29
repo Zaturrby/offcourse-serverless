@@ -13,9 +13,10 @@
 (defn- override [action]
   (specify action
     Validatable
-    (-resolve-type [[data-type :as this]]
-      (let [payload-type (-> (spec/conform (:spec (meta this)) this) second first)]
-        [data-type payload-type]))))
+    (-resolve-type [[data-type payload :as this]]
+      (if-let [payload-type (-> (spec/conform (:spec (meta this)) this) second first)]
+        [data-type payload-type]
+        [data-type payload]))))
 
 (defn create
   "creates a new action"

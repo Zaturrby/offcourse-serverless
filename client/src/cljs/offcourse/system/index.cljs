@@ -4,17 +4,16 @@
             [offcourse.appstate.index :as appstate]
             [offcourse.auth.index :as auth]
             [offcourse.router.index :as router]
-            [offcourse.system.handlers :refer [handlers]]
             [offcourse.protocol-extensions.decoratable]
             [offcourse.system.plumbing :as plumbing]
             [offcourse.system.routes :as routes]
-            [offcourse.system.ui-components :refer [ui-components]]
             [offcourse.system.views :refer [views]]
             [offcourse.ui.index :as ui]
             [services.logger :as logger]))
 
 (defn connect-to-repository [{:keys [adapter] :as config}]
   (component/start (adapter (select-keys config [:name :endpoint :resources]))))
+
 
 (defn system [appstate repositories auth-config]
   (let [channels plumbing/channels]
@@ -50,8 +49,8 @@
                                                :routes             :routes
                                                :query-constructors :query-constructors})
      :appstate-atom          appstate
-     :appstate-triggers      [:granted :rendered :requested :found :not-found]
-     :appstate-responses     [:refreshed :requested :not-found]
+     :appstate-triggers      [:granted  :requested :found :not-found]
+     :appstate-responses     [:refreshed :updated :requested :not-found]
      :appstate-channels      (:appstate channels)
      :appstate               (component/using (appstate/create :appstate)
                                               {:channels  :appstate-channels
@@ -60,8 +59,6 @@
                                                :state     :appstate-atom})
 
      :views                  views
-     :view-components        ui-components
-     :view-handlers          handlers
      :url-helpers            routes/url-helpers
      :ui-triggers            [:refreshed]
      :ui-responses           [:rendered :requested]
@@ -71,7 +68,5 @@
                                                :triggers    :ui-triggers
                                                :responses   :ui-responses
                                                :url-helpers :url-helpers
-                                               :handlers    :view-handlers
                                                :routes      :routes
-                                               :components  :view-components
                                                :views       :views}))))

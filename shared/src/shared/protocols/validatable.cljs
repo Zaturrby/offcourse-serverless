@@ -1,6 +1,7 @@
 (ns shared.protocols.validatable
   (:require [cljs.spec.test :as stest]
-            [cljs.spec :as spec]))
+            [cljs.spec :as spec]
+            [services.logger :as logger]))
 
 (stest/instrument)
 

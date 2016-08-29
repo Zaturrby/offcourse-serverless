@@ -1,10 +1,14 @@
 (ns offcourse.views.base
   (:require [plumbing.core :refer-macros [fnk]]
             [services.logger :as logger]
+            [offcourse.views.containers.app :refer [app]]
+            [offcourse.views.components.logo :refer [logo]]
+            [offcourse.views.components.actions-panel :refer [actions-panel]]
+            [offcourse.views.containers.menubar :refer [menubar]]
             [shared.protocols.validatable :as va]))
 
 (def graph
-  {:container      (fnk [[:components app]] app)
+  {:container      (fnk [] app)
    :viewmodel      (fnk [[:appstate viewmodel]] viewmodel)
    :viewmodel-name (fnk [viewmodel] (va/resolve-type viewmodel))
    :user-name      (fnk [] nil)
@@ -17,21 +21,18 @@
                             (logger/log :invalid-action action-type))))
    :logo           (fnk [[:appstate site-title]
                          actions
-                         url-helpers
-                         [:components logo]]
+                         url-helpers]
                         (logo {:site-title site-title}
                               (select-keys actions [])
                               (select-keys url-helpers [:home-url])))
    :actions-panel  (fnk [user-name
                          respond
-                         url-helpers
-                         [:components actions-panel]]
+                         url-helpers]
                         (actions-panel {:user-name user-name}
                                        respond
                                        (select-keys url-helpers [:profile-url])))
    :menubar        (fnk [logo
                          actions-panel
                          actions
-                         viewmodel-name
-                         [:components menubar]]
+                         viewmodel-name]
                         (menubar logo actions-panel))})

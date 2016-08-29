@@ -2,7 +2,9 @@
   (:require [clojure.set :as set]
             [plumbing.core :refer-macros [fnk]]
             [shared.protocols.decoratable :as dc]
+            [offcourse.views.components.card :refer [cards]]
             [services.logger :as logger]))
+
 
 (defn filter-courses [{:keys [collection-name collection-type]} courses]
   (case collection-type
@@ -25,6 +27,5 @@
                          (set/union #{:toggle})))
    :main       (fnk [courses
                      actions
-                     url-helpers
-                     [:components cards]]
+                     url-helpers]
                     (cards {:courses courses} actions url-helpers))})

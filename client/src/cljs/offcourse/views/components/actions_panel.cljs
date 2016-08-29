@@ -17,7 +17,7 @@
 (defn handler-button [action-name respond]
   [:li.button {:data-button-type "textbar"
                :key [action-name]
-               :on-click #(respond [action-name nil])} (button-title action-name)])
+               :on-click #(respond [action-name])} (button-title action-name)])
 
 (rum/defc actions-panel [{:keys [user-name]        :as data}
                          respond

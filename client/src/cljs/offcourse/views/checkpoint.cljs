@@ -1,6 +1,9 @@
 (ns offcourse.views.checkpoint
   (:require [plumbing.core :refer-macros [fnk]]
             [shared.protocols.decoratable :as dc]
+            [offcourse.views.containers.dashboard :refer [dashboard]]
+            [offcourse.views.components.viewer :refer [viewer]]
+            [offcourse.views.components.card :refer [card]]
             [shared.protocols.queryable :as qa]))
 
 (def graph
@@ -22,13 +25,11 @@
    :actions    (fnk [base-actions]
                     (->> base-actions
                          (into #{})))
-   :main            (fnk [checkpoint
-                          [:components viewer]]
+   :main            (fnk [checkpoint]
                          (viewer checkpoint nil nil))
    :dashboard       (fnk [url-helpers
                           user-name
                           course
-                          actions
-                          [:components card dashboard]]
+                          actions]
                          (when course
                            (dashboard {:main (card course actions url-helpers)})))})

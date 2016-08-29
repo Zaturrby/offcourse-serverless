@@ -7,7 +7,8 @@
             [shared.protocols.validatable :as va]
             [services.logger :as logger]))
 
-(defmulti react (fn [_ event] (va/resolve-type event)))
+(defmulti react (fn [_ event]
+                  (va/resolve-type event)))
 
 (defmethod react [:granted :credentials] [{:keys [state] :as as} [_ payload]]
   (let [auth-token (:auth-token payload)
@@ -26,13 +27,14 @@
         (ri/respond as [:refreshed @state])
         (logger/log "Invalid Appstate" @state)))))
 
-(defmethod react [:rendered :viewmodel] [{:keys [state] :as as} [_ viewmodel]]
-  (do
-    (reset! state (ac/perform @state [:update viewmodel]))
-    (ri/respond as [:refreshed (:viewmodel @state)])))
+(defmethod react [:requested :sign-in] [{:keys [state] :as as} [_ action]]
+  (ri/respond as [:requested action]))
 
-(defmethod react [:requested :action] [{:keys [state] :as as} [_ payload]]
-  (ri/respond as [:requested payload]))
+(defmethod react [:requested :actions] [{:keys [state] :as as} [_ action]]
+  (let [proposal (ac/perform @state action)]
+    (when (va/valid? proposal)
+      (reset! state proposal)
+      (ri/respond as [:updated @state]))))
 
 (defmethod react [:found :data] [{:keys [state] :as as} [_ payload]]
   (let [proposal (ac/perform @state [:add payload])]
