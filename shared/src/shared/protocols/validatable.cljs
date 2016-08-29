@@ -7,6 +7,7 @@
 (defprotocol Validatable
   (-missing-data [this] [this query])
   (-resolve-type [this])
+  (-resolve-payload [this])
   (-errors [this])
   (-valid? [this]))
 
@@ -40,6 +41,11 @@
   "Resolves the type of this given object based on its specification"
   [this]
   (-resolve-type this))
+
+(defn resolve-payload
+  "Resolves the type of this given object based on its specification"
+  [this]
+  (-resolve-payload this))
 
 (defn errors
   "Tells why a given object does not comply with its specification"

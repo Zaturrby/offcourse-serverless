@@ -4,7 +4,8 @@
             [offcourse.auth.authenticate :as ac]
             [offcourse.auth.get :as get]
             [shared.protocols.responsive :as ri :refer [Responsive]]
-            [services.logger :as logger]))
+            [services.logger :as logger]
+            [shared.protocols.validatable :as va]))
 
 (defn init [{:keys [config] :as auth}]
   (assoc auth :provider (js/Auth0Lock. (:clientID config) (:domain config))))
@@ -22,9 +23,7 @@
   (stop [auth] (ri/mute auth))
   Responsive
   (-respond [auth event] (ri/respond auth event))
-  (-react [auth event]
-    (logger/log :AUTH event)
-    auth)
+  (-react [auth event] (ac/react auth event))
   (-mute [auth] (ri/mute auth))
   (-listen [auth] (ri/listen auth)))
 

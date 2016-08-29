@@ -5,7 +5,8 @@
             [shared.models.event.to-query :refer [to-query]]
             [shared.protocols.convertible :as cv :refer [Convertible]]
             [shared.protocols.validatable :as va :refer [Validatable]]
-            [shared.specs.core :as specs]))
+            [shared.specs.core :as specs]
+            [services.logger :as logger]))
 
 (spec/fdef create
            :args (spec/cat :event-type ::specs/event)
@@ -19,6 +20,8 @@
     (-to-query [this] (to-query this))
     (-to-models [this] (to-models this))
     Validatable
+    (-resolve-payload [[data-type payload]]
+      [data-type (first payload)])
     (-resolve-type [[data-type :as this]]
       (let [payload-type (-> (spec/conform (:spec (meta this)) this) second first)]
         [data-type payload-type]))))

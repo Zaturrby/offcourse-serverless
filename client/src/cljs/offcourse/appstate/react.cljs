@@ -26,8 +26,10 @@
         (ri/respond as [:refreshed @state])
         (logger/log "Invalid Appstate" @state)))))
 
-(defmethod react [:rendered :view-actions] [{:keys [state] :as as} [_ payload]]
-  (ac/perform @state [:add payload]))
+(defmethod react [:rendered :viewmodel] [{:keys [state] :as as} [_ viewmodel]]
+  (do
+    (reset! state (ac/perform @state [:update viewmodel]))
+    (ri/respond as [:refreshed (:viewmodel @state)])))
 
 (defmethod react [:requested :action] [{:keys [state] :as as} [_ payload]]
   (ri/respond as [:requested payload]))

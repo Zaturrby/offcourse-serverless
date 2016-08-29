@@ -7,7 +7,6 @@
 
 (spec/def ::action-payload (spec/or :viewmodel    ::viewmodel/viewmodel
                                     :credentials  ::credentials/credentials
-                                    :view-actions (spec/tuple keyword? set?)
                                     :courses      (spec/* ::course/course)
                                     :course       ::course/course))
 

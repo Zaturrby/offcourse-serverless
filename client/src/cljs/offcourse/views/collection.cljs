@@ -21,7 +21,8 @@
                          (filter-courses collection)))
    :actions    (fnk [base-actions]
                     (->> base-actions
-                         (into #{})))
+                         (into #{})
+                         (set/union #{:toggle})))
    :main       (fnk [courses
                      actions
                      url-helpers

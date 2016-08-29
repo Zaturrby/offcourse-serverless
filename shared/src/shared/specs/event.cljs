@@ -32,7 +32,6 @@
 
 (spec/def ::event-payload (spec/or :viewmodel   ::viewmodel/viewmodel
                                    :credentials ::credentials/credentials
-                                   :view-actions     (spec/tuple keyword? set?)
                                    :action      ::action/action
                                    :data        ::payload/payload
                                    :query       ::query/query))
