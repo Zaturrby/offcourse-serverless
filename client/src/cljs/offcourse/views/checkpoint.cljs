@@ -4,7 +4,8 @@
             [offcourse.views.containers.dashboard :refer [dashboard]]
             [offcourse.views.components.viewer :refer [viewer]]
             [offcourse.views.components.card :refer [card]]
-            [shared.protocols.queryable :as qa]))
+            [shared.protocols.queryable :as qa]
+            [services.logger :as logger]))
 
 (def graph
   {:checkpoint-data (fnk [viewmodel] (or (-> viewmodel :checkpoint) {:checkpoint-slug nil}))
@@ -21,13 +22,17 @@
                           course
                           checkpoint-data]
                          (some-> course
-                                 (qa/get checkpoint-data)
-                                 (dc/decorate appstate)))
-   :actions    (fnk [base-actions]
-                    (->> base-actions
-                         (into #{})))
-   :main            (fnk [checkpoint]
-                         (viewer checkpoint nil nil))
+                                 (qa/get checkpoint-data)))
+   :resource        (fnk [appstate
+                          checkpoint]
+                         (when checkpoint
+                           (qa/get appstate {:url (:url checkpoint)})))
+   :actions         (fnk [base-actions]
+                         (->> base-actions
+                              (into #{})))
+   :main            (fnk [checkpoint
+                          resource]
+                         (viewer {:resource resource} nil nil))
    :dashboard       (fnk [url-helpers
                           user-name
                           course

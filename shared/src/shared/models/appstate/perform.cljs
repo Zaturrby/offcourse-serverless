@@ -2,9 +2,10 @@
   (:require [shared.protocols.validatable :as va]
             [shared.protocols.queryable :as qa]
             [shared.models.query.index :as query]
-            [services.logger :as logger]))
+            [services.logger :as logger]
+            [cuerdas.core :as str]))
 
-(defn- add-course [store course]
+(defn- add-course [store {:keys [goal] :as course}]
   (if-not (qa/get store (query/create course))
     (update-in store [:courses] #(conj % course))
     store))

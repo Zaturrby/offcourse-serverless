@@ -12,7 +12,6 @@
 
 (spec/def ::course (spec/keys :req-un [::course-id
                                        ::base-id
-                                       ::base/course-slug
                                        ::base/curator
                                        ::base/flags
                                        ::goal
@@ -21,4 +20,5 @@
                                        ::forks
                                        ::forked-from
                                        ::checkpoint/checkpoints]))
+
 (spec/def ::courses (spec/* ::course))

@@ -11,4 +11,4 @@
   (map co/create payload))
 
 (defmethod to-models :course [[_ payload]]
-  (co/create payload))
+  (co/create (dissoc payload :course-slug)))

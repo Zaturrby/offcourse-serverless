@@ -8,7 +8,7 @@
   (-to-payload [this])
   (-to-models [this])
   (-to-data-payload [this])
-  (-to-url [this routes]))
+  (-to-url [this routes] [this course routes]))
 
 (defn to-event
   "Convert an object to an event, if the object meets the event specification"
@@ -40,6 +40,8 @@
   [this]
   (-to-models this))
 
+
 (defn to-url
   "Converts an object and (optionally) a set of routes to a url, when the object implements this particular protocol"
-  ([this routes] (-to-url this routes)))
+  ([this routes] (-to-url this routes))
+  ([this course routes] (-to-url this course routes)))

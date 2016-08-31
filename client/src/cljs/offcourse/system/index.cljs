@@ -4,8 +4,8 @@
             [offcourse.appstate.index :as appstate]
             [offcourse.auth.index :as auth]
             [offcourse.router.index :as router]
-            [offcourse.protocol-extensions.convertible]
             [offcourse.protocol-extensions.decoratable]
+            [offcourse.protocol-extensions.convertible]
             [offcourse.system.plumbing :as plumbing]
             [offcourse.system.routes :as routes]
             [offcourse.system.views :refer [views]]
@@ -58,6 +58,7 @@
                                                :triggers  :appstate-triggers
                                                :responses :appstate-responses
                                                :state     :appstate-atom})
+
 
      :views                  views
      :url-helpers            routes/url-helpers

@@ -6,11 +6,6 @@
 
 (defmulti get (fn [_ query] (va/resolve-type query)))
 
-(defmethod get :collection [{:keys [collections] :as ds} {:keys [collection]}]
-  (when collections
-    (let [{:keys [collection-type collection-name]} collection]
-      (select-first (paths/collection collection-type collection-name) ds))))
-
 (defmethod get :courses [{:keys [courses] :as ds} query]
   (when courses
     (let [course-ids (map :course-id (:courses query))]
