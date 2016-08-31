@@ -17,9 +17,9 @@
 
 (def graph
   {:collection (fnk [viewmodel] (get-in viewmodel [:collection]))
-   :courses    (fnk [appstate user-name collection]
+   :courses    (fnk [appstate user-name collection routes]
                     (->> (:courses appstate)
-                         (map #(dc/decorate %1 user-name nil))
+                         (map #(dc/decorate %1 user-name nil routes))
                          (filter-courses collection)))
    :actions    (fnk [base-actions]
                     (->> base-actions

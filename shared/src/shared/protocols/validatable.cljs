@@ -3,8 +3,6 @@
             [cljs.spec :as spec]
             [services.logger :as logger]))
 
-(stest/instrument)
-
 (defprotocol Validatable
   (-missing-data [this] [this query])
   (-resolve-type [this])

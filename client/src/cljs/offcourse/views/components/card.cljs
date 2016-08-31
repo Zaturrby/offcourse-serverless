@@ -11,7 +11,7 @@
    [:.card
     [:.card--frontside
      [:.card--section
-      [:a.card--title {:href (course-url curator course-slug)} goal]
+      [:a.card--title {:href (-> course meta :course-url)} goal]
       [:.card--earmark ]]
      [:.card--section
       [:.card--rating
@@ -31,7 +31,7 @@
       [:.card--info-corner "i"]]]
     [:.card--backside
      [:.card--section
-      [:a.card--title {:href (course-url curator course-slug)} goal]
+      [:a.card--title {:href (-> course meta :course-url)} goal]
       [:.card--earmark ]]
      [:.card--section
       [:img.card--img {:src "http://placehold.it/150x150"}]

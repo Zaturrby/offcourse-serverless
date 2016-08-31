@@ -17,11 +17,11 @@
 
 (defmulti render (fn [_ [_ payload]] (first (spec/conform ::specs/payload payload))))
 
-
-(defmethod render :appstate [{:keys [views container url-helpers] :as rd}
+(defmethod render :appstate [{:keys [views container routes url-helpers] :as rd}
                              [_ payload]]
   (let [view       (view/create {:appstate    payload
                                  :responder   (partial ri/respond rd)
+                                 :routes      routes
                                  :url-helpers url-helpers})
         view-graph (rr/render view views)
         viewmodel  (:viewmodel view-graph)

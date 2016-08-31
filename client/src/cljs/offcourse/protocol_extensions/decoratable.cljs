@@ -1,11 +1,10 @@
 (ns offcourse.protocol-extensions.decoratable
-  (:require [shared.models.label.index :as lb]
-            [shared.models.checkpoint.index :refer [Checkpoint]]
+  (:require [shared.models.checkpoint.index :refer [Checkpoint]]
             [shared.models.course.index :as co :refer [Course]]
             [shared.protocols.decoratable :refer [Decoratable]]
             [shared.protocols.queryable :as qa]
-            [shared.protocols.validatable :as va]
-            [services.logger :as logger]))
+            [shared.protocols.convertible :as cv]))
+
 
 (defn select-checkpoint [checkpoints selected-slug]
   (for [{:keys [checkpoint-slug] :as checkpoint} checkpoints]
@@ -21,18 +20,11 @@
           (assoc :resource resource)
           (with-meta {:selected true}))))
   Course
-  (-decorate
-    ([{:keys [checkpoints] :as course}]
-     (let [tags (-> (qa/get course {:tags :all})
-                    (lb/collection->labels 0))
-           valid? (va/valid? (co/complete course))
-           saved? (:saved? (meta course))]
-       (-> course (with-meta {:tags tags
-                              :valid? valid?
-                              :saved? saved?}))))
-    ([{:keys [checkpoints curator] :as course} user-name selected]
-     (let [tags (-> (qa/get course {:tags :all}))]
-       (some-> course
-               (assoc :checkpoints (select-checkpoint checkpoints (:checkpoint-slug selected)))
-               (with-meta {:tags tags
-                           :trackable? (= user-name curator)}))))))
+  (-decorate [{:keys [checkpoints curator] :as course} user-name selected routes]
+    (let [tags (-> (qa/get course {:tags :all}))
+          course-url (cv/to-url course routes)]
+      (some-> course
+              (assoc :checkpoints (select-checkpoint checkpoints (:checkpoint-slug selected)))
+              (with-meta {:tags       tags
+                          :course-url course-url
+                          :trackable? (= user-name curator)})))))

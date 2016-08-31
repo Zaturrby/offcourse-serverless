@@ -41,6 +41,5 @@
   (-to-models this))
 
 (defn to-url
-  "Converts an object and a set of routes to a url, when the object implements this particular protocol"
-  [this routes]
-  (-to-url this routes))
+  "Converts an object and (optionally) a set of routes to a url, when the object implements this particular protocol"
+  ([this routes] (-to-url this routes)))
