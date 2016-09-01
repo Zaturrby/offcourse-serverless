@@ -38,6 +38,7 @@
                  [bidi                          "2.0.9"]
                  [kibu/pushy                    "0.3.6"]
                  [cljsjs/auth0                  "6.3.0-0"]
+                 [cljsjs/js-yaml                "3.3.1-0"]
                  [cljsjs/auth0-lock             "9.2.1-0"]
                  [cljsjs/react                  "15.3.1-0"]
                  [cljsjs/react-dom              "15.3.1-0"]

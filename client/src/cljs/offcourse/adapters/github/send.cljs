@@ -61,8 +61,7 @@
             raw-content (<! (async/into [] query-chans))
             content (map handle-content raw-content)
             complete (map #(assoc %1
-                                  :curator (:organization repository)
-                                  :organization "github") content)]
-        (logger/log content)
+                                  :curator (or (:curator %1) (:organization repository))
+                                  :organization (or (:organization %1) "github")) content)]
         (async/put! c (respond adapter complete))))
     c))

@@ -1,6 +1,7 @@
 (ns offcourse.main
   (:require [com.stuartsierra.component :as component]
             [offcourse.adapters.aws.index :as aws]
+            [offcourse.adapters.github.index :as github]
             [offcourse.core :as core]
             [shared.models.appstate.index :as model]))
 
@@ -12,7 +13,14 @@
                   :clientID "Z1J0CyMzZfIbOfBSVaMWJakoIrxm4Tfs"})
 
 (def adapters
-  {:query [{:adapter           aws/new-db
+  {:query [{:adapter           github/new-db
+            :name              "bootstrap"
+            :repository        {:name "clojurescript-course"
+                                :organization      "offcourse"
+                                :sha               "dc83a7153fdc50478095728a17d8b76a4097a01f"}
+            :resources         #{:course :collection}
+            :endpoint          "https://api.github.com"}
+           #_{:adapter           aws/new-db
             :name              :aws
             :resources         #{:user-profile :course :collection}
             :endpoint          "https://70zxd74j8l.execute-api.eu-central-1.amazonaws.com/yeehaa/query-endpoint"}]})

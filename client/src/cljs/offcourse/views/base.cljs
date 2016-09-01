@@ -20,17 +20,13 @@
                             (responder [:requested action])
                             (logger/log :invalid-action action-type))))
    :logo           (fnk [[:appstate site-title]
-                         actions
-                         url-helpers]
+                         actions]
                         (logo {:site-title site-title}
-                              (select-keys actions [])
-                              (select-keys url-helpers [:home-url])))
+                              (select-keys actions [])))
    :actions-panel  (fnk [user-name
-                         respond
-                         url-helpers]
+                         respond]
                         (actions-panel {:user-name user-name}
-                                       respond
-                                       (select-keys url-helpers [:profile-url])))
+                                       respond))
    :menubar        (fnk [logo
                          actions-panel
                          actions

@@ -9,13 +9,13 @@
 
 (defmulti send (fn [_ event] (second (va/resolve-type event))))
 
+
 (defmethod send :query [{:keys [component-name repositories] :as api} [_ query :as event]]
   (doseq [{:keys [resources] :as repository} repositories]
     (when (contains? resources (va/resolve-type query))
       (go
-        (let [response (<! (ri/send repository (into [component-name] event)))
-              data-payload (-> response cv/to-models)]
+        (let [response (<! (ri/send repository (into [component-name] event)))]
           (match response
-                 [:found-data _] (ri/respond api [:found data-payload])
+                 [:fetched _]    (ri/respond api [:found (-> response cv/to-models)])
                  [:error _] (ri/respond api [:not-found query])
                  _ (ri/respond api [:failed query])))))))

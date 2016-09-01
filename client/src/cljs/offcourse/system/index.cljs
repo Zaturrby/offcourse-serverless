@@ -13,7 +13,7 @@
             [services.logger :as logger]))
 
 (defn connect-to-repository [{:keys [adapter] :as config}]
-  (component/start (adapter (select-keys config [:name :endpoint :resources]))))
+  (component/start (adapter config)))
 
 
 (defn system [appstate repositories auth-config]
@@ -61,7 +61,6 @@
 
 
      :views                  views
-     :url-helpers            routes/url-helpers
      :ui-triggers            [:refreshed]
      :ui-responses           [:rendered :requested]
      :ui-channels            (:ui channels)
@@ -69,6 +68,5 @@
                                               {:channels    :ui-channels
                                                :triggers    :ui-triggers
                                                :responses   :ui-responses
-                                               :url-helpers :url-helpers
                                                :routes      :routes
                                                :views       :views}))))

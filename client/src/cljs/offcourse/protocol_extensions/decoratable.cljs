@@ -4,12 +4,14 @@
             [shared.protocols.decoratable :as dc :refer [Decoratable]]
             [shared.protocols.queryable :as qa]
             [shared.protocols.convertible :as cv]
-            [services.logger :as logger]))
+            [services.logger :as logger]
+            [cuerdas.core :as str]))
 
 (extend-protocol Decoratable
   Checkpoint
-  (-decorate [{:keys [checkpoint-slug] :as checkpoint} selected-slug course routes]
-    (let [checkpoint-url (cv/to-url checkpoint course routes)]
+  (-decorate [{:keys [task] :as checkpoint} selected-slug course routes]
+    (let [checkpoint-url (cv/to-url checkpoint course routes)
+          checkpoint-slug (str/slugify task)]
       (if (= selected-slug checkpoint-slug)
         (with-meta checkpoint {:selected true
                                :checkpoint-url checkpoint-url})

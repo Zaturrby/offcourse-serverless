@@ -26,16 +26,15 @@
    :resource        (fnk [appstate
                           checkpoint]
                          (when checkpoint
-                           (qa/get appstate {:url (:url checkpoint)})))
+                           #_(qa/get appstate {:url (:url checkpoint)})))
    :actions         (fnk [base-actions]
                          (->> base-actions
                               (into #{})))
    :main            (fnk [checkpoint
                           resource]
                          (viewer {:resource resource} nil nil))
-   :dashboard       (fnk [url-helpers
-                          user-name
+   :dashboard       (fnk [user-name
                           course
                           actions]
                          (when course
-                           (dashboard {:main (card course actions url-helpers)})))})
+                           (dashboard {:main (card course)})))})

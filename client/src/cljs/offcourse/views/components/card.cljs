@@ -4,9 +4,7 @@
             [rum.core :as rum]
             [services.logger :as logger]))
 
-(rum/defc card [{:keys [course-id goal course-slug checkpoints curator] :as course}
-                {:keys [toggle-checkpoint] :as handlers}
-                {:keys [course-url checkpoint-url] :as url-helpers}]
+(rum/defc card [{:keys [course-id goal course-slug checkpoints curator] :as course}]
   [:.container
    [:.card
     [:.card--frontside
@@ -22,10 +20,7 @@
        [:.card--rating-dot ]]
       [:.card--following "Following"]
       [:img.card--picked {:src "http://imageshack.com/a/img923/1755/lDeG76.png"}]]
-     [:.card--section (item-list :todo checkpoints
-                                 {:checkpoint-url (partial checkpoint-url curator course-slug)}
-                                 {:toggle-checkpoint (partial toggle-checkpoint course-id)}
-                                 (:trackable? (meta course)))]
+     [:.card--section (item-list :todo checkpoints)]
      [:.card--section
       [:.card--button      "Start"]
       [:.card--info-corner "i"]]]
@@ -49,7 +44,7 @@
         ]]]
      [:.card--section
       [:p.card--text "Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate."]]
-     [:.card--section (labels (:tags (-> course meta :tags)) url-helpers)]]]])
+     #_[:.card--section (labels (:tags (-> course meta :tags)) #_url-helpers)]]]])
 
-(rum/defc cards [{:keys [courses] :as data} actions url-helpers]
-  [:.cards (map #(rum/with-key (card % actions url-helpers) (:course-id %)) courses)])
+(rum/defc cards [{:keys [courses]}]
+  [:.cards (map #(rum/with-key (card %) (:course-id %)) courses)])

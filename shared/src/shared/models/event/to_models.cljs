@@ -10,5 +10,11 @@
 (defmethod to-models :courses [[_ payload]]
   (map co/create payload))
 
+(defmethod to-models :new-courses [[_ payload]]
+  (map co/initialize payload))
+
+(defmethod to-models :new-course [[_ payload]]
+  (co/initialize payload))
+
 (defmethod to-models :course [[_ payload]]
   (co/create (dissoc payload :course-slug)))

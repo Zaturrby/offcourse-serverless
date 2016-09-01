@@ -23,25 +23,3 @@
    :collection-view (fn [data] (viewmodel/create :collection-view data))
    :course-view     (fn [data] (viewmodel/create :course-view data))
    :checkpoint-view (fn [data] (viewmodel/create :checkpoint-view data))})
-
-(def url-helpers
-  (let [create-url     (partial path-for table)
-        collection-url (fn [collection-type collection-name]
-                         (create-url :collection-view
-                                     :collection-type collection-type
-                                     :collection-name collection-name))
-        course-url     (fn [curator course-slug] (create-url :course-view
-                                                             :curator curator
-                                                             :course-slug course-slug))
-        checkpoint-url (fn [curator course-slug checkpoint-slug checkpoint-id]
-                         (create-url :checkpoint-view
-                                     :curator curator
-                                     :course-slug course-slug
-                                     :checkpoint-slug checkpoint-slug))
-        profile-url    (fn [curator] (collection-url :curators curator))
-        home-url       (collection-url :flags :featured)]
-    {:home-url       home-url
-     :profile-url    profile-url
-     :course-url     course-url
-     :collection-url collection-url
-     :checkpoint-url checkpoint-url}))

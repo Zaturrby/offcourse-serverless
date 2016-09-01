@@ -8,8 +8,8 @@
 
 (extend-protocol Convertible
   Checkpoint
-  (-to-url [{:keys [checkpoint-slug]} {:keys [goal curator] :as course} routes]
-    (let [viewmodel (viewmodel/create :checkpoint-view {:checkpoint-slug checkpoint-slug
+  (-to-url [{:keys [task] :as cp} {:keys [goal curator] :as course} routes]
+    (let [viewmodel (viewmodel/create :checkpoint-view {:checkpoint-slug (str/slugify task)
                                                         :course-slug (str/slugify goal)
                                                         :curator curator})]
       (cv/to-url viewmodel routes)))

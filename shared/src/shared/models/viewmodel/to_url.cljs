@@ -4,7 +4,8 @@
             [shared.specs.core :as specs]
             [services.logger :as logger]))
 
-(defmulti to-url (fn [vm] (first (spec/conform ::specs/viewmodel vm))))
+(defmulti to-url (fn [vm]
+                   (first (spec/conform ::specs/viewmodel vm))))
 
 (defmethod to-url :signup-view [{:keys [type dependencies] :as vm} routes]
   (bidi/path-for routes :new-user-view))
