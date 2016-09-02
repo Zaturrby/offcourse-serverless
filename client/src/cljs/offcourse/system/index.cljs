@@ -39,7 +39,6 @@
                                                 :config    :auth-config})
 
      :routes                 routes/table
-     :query-constructors     routes/query-constructors
      :router-triggers        [:refreshed]
      :router-responses       [:requested]
      :router-channels        (:router channels)
@@ -47,8 +46,7 @@
                                               {:channels           :router-channels
                                                :triggers           :router-triggers
                                                :responses          :router-responses
-                                               :routes             :routes
-                                               :query-constructors :query-constructors})
+                                               :routes             :routes})
      :appstate-atom          appstate
      :appstate-triggers      [:granted  :requested :found :not-found]
      :appstate-responses     [:refreshed :updated :requested :not-found]

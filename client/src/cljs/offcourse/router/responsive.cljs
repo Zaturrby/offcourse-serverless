@@ -1,10 +1,14 @@
 (ns offcourse.router.responsive
   (:require [bidi.bidi :as bidi]
             [shared.protocols.responsive :as ri]
-            [pushy.core :as pushy]))
+            [pushy.core :as pushy]
+            [shared.models.viewmodel.index :as viewmodel]
+            [services.logger :as logger]))
 
-(defn handle-request [{:keys [query-constructors history] :as rt} {:keys [handler route-params]}]
-  (ri/respond rt [:requested ((handler query-constructors) route-params)]))
+(defn handle-request [rt {:keys [handler route-params]}]
+  (logger/log handler)
+  (logger/log route-params)
+  (ri/respond rt [:requested (viewmodel/create handler route-params)]))
 
 (defn restart [{:keys [history] :as rt}]
   (pushy/replace-token! history "/"))
