@@ -17,7 +17,7 @@
             :name              "bootstrap"
             :repository        {:name "clojurescript-course"
                                 :organization      "offcourse"
-                                :sha               "dc83a7153fdc50478095728a17d8b76a4097a01f"}
+                                :sha               "31510c353ec5d24a79b0b8d1a68d4d373d1f2d3f"}
             :resources         #{:course :collection}
             :endpoint          "https://api.github.com"}
            #_{:adapter           aws/new-db

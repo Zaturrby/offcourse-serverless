@@ -21,4 +21,5 @@
                  new-user-route        :new-user-view
                  collection-routes     :collection-view
                  course-routes         :course-view
-                 home-route            :home-view}])
+                 home-route            :home-view
+                 true                  :home-view}])

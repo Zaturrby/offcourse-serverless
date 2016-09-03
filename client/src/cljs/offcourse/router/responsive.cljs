@@ -6,8 +6,6 @@
             [services.logger :as logger]))
 
 (defn handle-request [rt {:keys [handler route-params]}]
-  (logger/log handler)
-  (logger/log route-params)
   (ri/respond rt [:requested (viewmodel/create handler route-params)]))
 
 (defn restart [{:keys [history] :as rt}]

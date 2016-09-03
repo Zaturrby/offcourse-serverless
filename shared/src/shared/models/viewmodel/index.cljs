@@ -18,6 +18,7 @@
   (-create {:course     (select-keys result [:curator :organization :course-slug])
             :checkpoint (select-keys result [:checkpoint-slug :checkpoint-id])}))
 
+
 (defmethod create :checkpoint-view [type result]
   (-create {:course     (select-keys result [:curator :organization :course-slug])
             :checkpoint (select-keys result [:checkpoint-slug :checkpoint-id])}))
