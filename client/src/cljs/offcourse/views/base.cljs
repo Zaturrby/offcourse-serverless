@@ -20,15 +20,13 @@
                             (responder [:requested action])
                             (log/error action-type (str "invalid action")))))
    :logo           (fnk [[:appstate site-title]
-                         actions]
-                        (logo {:site-title site-title}
-                              (select-keys actions [])))
+                         respond]
+                        (logo {:site-title site-title} respond))
    :actions-panel  (fnk [user-name
                          respond]
                         (actions-panel {:user-name user-name}
                                        respond))
    :menubar        (fnk [logo
                          actions-panel
-                         actions
                          viewmodel-name]
                         (menubar logo actions-panel))})
