@@ -5,12 +5,12 @@
             [offcourse.auth.index :as auth]
             [offcourse.router.index :as router]
             [offcourse.protocol-extensions.decoratable]
+            [offcourse.protocol-extensions.loggable]
             [offcourse.protocol-extensions.convertible]
             [offcourse.system.plumbing :as plumbing]
             [offcourse.system.routes :as routes]
             [offcourse.system.views :refer [views]]
-            [offcourse.ui.index :as ui]
-            [services.logger :as logger]))
+            [offcourse.ui.index :as ui]))
 
 (defn connect-to-repository [{:keys [adapter] :as config}]
   (component/start (adapter config)))

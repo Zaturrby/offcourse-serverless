@@ -1,11 +1,10 @@
 (ns offcourse.appstate.react
-  (:require [offcourse.appstate.redirect :as rd]
-            [shared.protocols.responsive :as ri]
-            [offcourse.appstate.check :as ck]
+  (:require [offcourse.appstate.check :as ck]
             [shared.protocols.actionable :as ac]
+            [shared.protocols.loggable :as log]
             [shared.protocols.queryable :as qa]
-            [shared.protocols.validatable :as va]
-            [services.logger :as logger]))
+            [shared.protocols.responsive :as ri]
+            [shared.protocols.validatable :as va]))
 
 (defmulti react (fn [_ event]
                   (va/resolve-type event)))
@@ -25,7 +24,7 @@
         (ri/respond as [:not-found missing-data]))
       (if (va/valid? @state)
         (ri/respond as [:refreshed @state])
-        (logger/log "Invalid Appstate" @state)))))
+        (log/error @state (va/errors @state))))))
 
 (defmethod react [:requested :sign-in] [{:keys [state] :as as} [_ action]]
   (ri/respond as [:requested action]))
@@ -43,6 +42,6 @@
       (ri/respond as [:refreshed @state]))))
 
 (defmethod react [:not-found :data] [{:keys [state] :as as} [_ payload]]
-  (logger/log "DATA NOT FOUND" payload)
+  (log/error payload "missing-data")
   #_(when-not (-> @state :user :user-name)
       (rd/redirect as :signup)))

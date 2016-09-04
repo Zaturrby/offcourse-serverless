@@ -4,8 +4,8 @@
             [offcourse.auth.authenticate :as ac]
             [offcourse.auth.get :as get]
             [shared.protocols.responsive :as ri :refer [Responsive]]
-            [services.logger :as logger]
             [shared.protocols.validatable :as va]))
+
 
 (defn init [{:keys [config] :as auth}]
   (assoc auth :provider (js/Auth0Lock. (:clientID config) (:domain config))))

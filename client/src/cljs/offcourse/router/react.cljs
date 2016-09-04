@@ -1,7 +1,6 @@
 (ns offcourse.router.react
   (:require [shared.protocols.convertible :as cv]
             [pushy.core :as pushy]
-            [services.logger :as logger]
             [shared.specs.core :as specs]
             [cljs.spec :as spec]))
 

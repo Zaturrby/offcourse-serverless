@@ -1,10 +1,8 @@
 (ns offcourse.views.collection
   (:require [clojure.set :as set]
-            [plumbing.core :refer-macros [fnk]]
-            [shared.protocols.decoratable :as dc]
             [offcourse.views.components.card :refer [cards]]
-            [services.logger :as logger]))
-
+            [plumbing.core :refer-macros [fnk]]
+            [shared.protocols.decoratable :as dc]))
 
 (defn filter-courses [{:keys [collection-name collection-type]} courses]
   (case collection-type

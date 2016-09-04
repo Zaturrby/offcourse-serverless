@@ -1,8 +1,7 @@
 (ns shared.models.viewmodel.index
   (:require [shared.protocols.convertible :refer [Convertible]]
             [shared.models.viewmodel.to-url :refer [to-url]]
-            [shared.specs.core :as specs]
-            [services.logger :as logger]))
+            [shared.specs.core :as specs]))
 
 (defrecord Viewmodel []
   Convertible

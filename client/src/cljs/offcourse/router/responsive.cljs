@@ -1,9 +1,8 @@
 (ns offcourse.router.responsive
   (:require [bidi.bidi :as bidi]
-            [shared.protocols.responsive :as ri]
             [pushy.core :as pushy]
             [shared.models.viewmodel.index :as viewmodel]
-            [services.logger :as logger]))
+            [shared.protocols.responsive :as ri]))
 
 (defn handle-request [rt {:keys [handler route-params]}]
   (ri/respond rt [:requested (viewmodel/create handler route-params)]))

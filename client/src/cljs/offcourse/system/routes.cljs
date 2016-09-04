@@ -1,9 +1,4 @@
-(ns offcourse.system.routes
-  (:require [bidi.bidi :refer [path-for]]
-            [shared.models.viewmodel.index :as viewmodel]
-            [shared.models.checkpoint.index :as cp]
-            [shared.models.course.index :as co]
-            [services.logger :as logger]))
+(ns offcourse.system.routes)
 
 (def home-route        [:collection-name])
 (def curator-routes    ["users/" :curator])

@@ -1,9 +1,7 @@
 (ns offcourse.adapters.aws.index
   (:require [com.stuartsierra.component :refer [Lifecycle]]
             [offcourse.adapters.aws.send :as send-impl]
-            [shared.protocols.responsive :as ri :refer [Responsive]]
-            [shared.protocols.queryable :refer [Queryable]]
-            [services.logger :as logger]))
+            [shared.protocols.responsive :as ri :refer [Responsive]]))
 
 (defrecord AWS [name supported-types connection]
   Lifecycle

@@ -1,11 +1,9 @@
 (ns offcourse.adapters.github.send
-  (:require [ajax.core :refer [POST GET]]
+  (:require [ajax.core :refer [GET]]
             [cljs.core.async :as async :refer [<! chan]]
-            [services.logger :as logger]
-            [shared.models.event.index :as event]
-            [cljsjs.js-yaml]
-            [shared.protocols.validatable :as va]
-            [clojure.walk :as walk])
+            cljsjs.js-yaml
+            [clojure.walk :as walk]
+            [shared.models.event.index :as event])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
 (defn respond [{:keys [name]} res]
@@ -61,7 +59,7 @@
             raw-content (<! (async/into [] query-chans))
             content (map handle-content raw-content)
             complete (map #(assoc %1
-                                  :curator (or (:curator %1) "bla")
+                                  :curator (or (:curator %1) (:curator repository))
                                   :organization (or (:organization %1) (:organization repository))) content)]
         (async/put! c (respond adapter complete))))
     c))

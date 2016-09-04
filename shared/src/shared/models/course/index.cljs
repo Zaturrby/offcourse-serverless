@@ -4,7 +4,6 @@
             [shared.protocols.queryable :refer [Queryable]]
             [shared.models.course.get :as get]
             [shared.models.checkpoint.index :as checkpoint]
-            [services.logger :as logger]
             [cljs.spec :as spec]))
 
 

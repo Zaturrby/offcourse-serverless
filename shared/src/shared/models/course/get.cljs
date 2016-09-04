@@ -4,8 +4,7 @@
             [shared.protocols.queryable :refer [Queryable]]
             [clojure.set :as set]
             [shared.protocols.validatable :as va]
-            [cuerdas.core :as str]
-            [services.logger :as logger]))
+            [cuerdas.core :as str]))
 
 (defmulti get (fn [_ query] (va/resolve-type query)))
 

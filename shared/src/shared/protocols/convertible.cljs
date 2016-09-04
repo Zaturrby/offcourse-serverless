@@ -1,5 +1,4 @@
-(ns shared.protocols.convertible
-  (:require [services.helpers :as helpers]))
+(ns shared.protocols.convertible)
 
 (defprotocol Convertible
   (-to-event [this])

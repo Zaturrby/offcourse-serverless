@@ -1,8 +1,7 @@
 (ns shared.models.event.to-models
   (:require [shared.models.course.index :as co]
             [cljs.spec :as spec]
-            [shared.specs.core :as specs]
-            [services.logger :as logger]))
+            [shared.specs.core :as specs]))
 
 (defmulti to-models (fn [[_ payload]]
                       (first (spec/conform ::specs/payload payload))))

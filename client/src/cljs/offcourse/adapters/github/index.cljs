@@ -1,9 +1,7 @@
 (ns offcourse.adapters.github.index
   (:require [com.stuartsierra.component :refer [Lifecycle]]
             [offcourse.adapters.github.send :as send-impl]
-            [shared.protocols.responsive :as ri :refer [Responsive]]
-            [shared.protocols.queryable :refer [Queryable]]
-            [services.logger :as logger]))
+            [shared.protocols.responsive :as ri :refer [Responsive]]))
 
 (defrecord Github []
   Lifecycle

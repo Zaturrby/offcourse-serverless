@@ -2,8 +2,7 @@
   (:require [shared.protocols.validatable :as va :refer [Validatable]]
             [shared.specs.core :as specs]
             [cljs.spec :as spec]
-            [cljs.spec.test :as stest]
-            [services.logger :as logger]))
+            [cljs.spec.test :as stest]))
 
 (spec/fdef create
            :args (spec/cat :action ::specs/action)

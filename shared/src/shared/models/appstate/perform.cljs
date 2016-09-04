@@ -1,9 +1,7 @@
 (ns shared.models.appstate.perform
-  (:require [shared.protocols.validatable :as va]
+  (:require [shared.models.query.index :as query]
             [shared.protocols.queryable :as qa]
-            [shared.models.query.index :as query]
-            [services.logger :as logger]
-            [cuerdas.core :as str]))
+            [shared.protocols.validatable :as va]))
 
 (defn- add-course [store {:keys [goal] :as course}]
   (if-not (qa/get store (query/create course))

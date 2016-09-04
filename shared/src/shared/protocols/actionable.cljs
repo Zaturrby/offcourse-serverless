@@ -1,8 +1,7 @@
 (ns shared.protocols.actionable
   (:require [shared.specs.core :as specs]
             [cljs.spec :as spec]
-            [shared.models.action.index :as action]
-            [services.logger :as logger]))
+            [shared.models.action.index :as action]))
 
 (defprotocol Actionable
   (-perform [this action]))

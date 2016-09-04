@@ -1,15 +1,13 @@
 (ns shared.models.viewmodel.to-url
   (:require [bidi.bidi :as bidi]
             [cljs.spec :as spec]
-            [shared.specs.core :as specs]
-            [services.logger :as logger]))
+            [shared.specs.core :as specs]))
 
 (defmulti to-url (fn [vm]
                    (first (spec/conform ::specs/viewmodel vm))))
 
 (defmethod to-url :signup-view [{:keys [type dependencies] :as vm} routes]
   (bidi/path-for routes :new-user-view))
-
 
 (defmethod to-url :course-view [{:keys [type course checkpoint] :as vm} routes]
   (let [{:keys [course-slug organization curator]} course
@@ -24,7 +22,6 @@
                      :course-view
                      :curator curator
                      :course-slug course-slug))))
-
 
 (defmethod to-url :checkpoint-view [{:keys [type course checkpoint] :as vm} routes]
   (let [{:keys [course-slug organization curator]} course

@@ -1,8 +1,6 @@
 (ns offcourse.views.components.card
-  (:require [offcourse.views.components.label :refer [labels]]
-            [offcourse.views.components.item-list :refer [item-list]]
-            [rum.core :as rum]
-            [services.logger :as logger]))
+  (:require [offcourse.views.components.item-list :refer [item-list]]
+            [rum.core :as rum]))
 
 (rum/defc card [{:keys [course-id goal course-slug checkpoints curator] :as course}]
   [:.container

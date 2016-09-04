@@ -1,12 +1,9 @@
 (ns shared.models.event.index
   (:require [cljs.spec :as spec]
-            [shared.models.event.to-action :refer [to-action]]
             [shared.models.event.to-models :refer [to-models]]
-            [shared.models.event.to-query :refer [to-query]]
             [shared.protocols.convertible :as cv :refer [Convertible]]
             [shared.protocols.validatable :as va :refer [Validatable]]
-            [shared.specs.core :as specs]
-            [services.logger :as logger]))
+            [shared.specs.core :as specs]))
 
 (spec/fdef create
            :args (spec/cat :event-type ::specs/event)
@@ -16,8 +13,6 @@
 (defn override [event]
   (specify event
     Convertible
-    (-to-action [this] (to-action this))
-    (-to-query [this] (to-query this))
     (-to-models [this] (to-models this))
     Validatable
     (-resolve-payload [[data-type payload]]

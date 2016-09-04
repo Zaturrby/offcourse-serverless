@@ -1,11 +1,10 @@
 (ns offcourse.views.checkpoint
-  (:require [plumbing.core :refer-macros [fnk]]
-            [shared.protocols.decoratable :as dc]
-            [offcourse.views.containers.dashboard :refer [dashboard]]
+  (:require [offcourse.views.components.card :refer [card]]
             [offcourse.views.components.viewer :refer [viewer]]
-            [offcourse.views.components.card :refer [card]]
-            [shared.protocols.queryable :as qa]
-            [services.logger :as logger]))
+            [offcourse.views.containers.dashboard :refer [dashboard]]
+            [plumbing.core :refer-macros [fnk]]
+            [shared.protocols.decoratable :as dc]
+            [shared.protocols.queryable :as qa]))
 
 (def graph
   {:checkpoint-data (fnk [viewmodel] (or (-> viewmodel :checkpoint) {:checkpoint-slug nil}))

@@ -4,7 +4,6 @@
             [shared.models.query.index :as query]
             [shared.protocols.queryable :as qa]
             [shared.protocols.validatable :as va]
-            [services.logger :as logger]
             [cljs.spec :as spec]
             [shared.specs.core :as specs]))
 

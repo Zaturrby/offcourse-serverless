@@ -4,7 +4,6 @@
             [cljs.spec :as spec]
             [cljs.spec.test :as stest]
             [shared.protocols.validatable :as va]
-            [services.logger :as logger]
             [cuerdas.core :as str]))
 
 (defrecord Query [])

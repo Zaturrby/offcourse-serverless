@@ -1,6 +1,5 @@
 (ns offcourse.views.components.item-list
-  (:require [rum.core :as rum]
-            [services.logger :as logger]))
+  (:require [rum.core :as rum]))
 
 
 (rum/defc todo-list-item [{:keys [task completed? checkpoint-slug order] :as checkpoint}]
@@ -10,7 +9,7 @@
                      :data-item-type :todo}
      (when trackable? [:button.button {:key :checkbox
                        :data-button-type :checkbox
-                       :on-click logger/log #_(toggle-checkpoint checkpoint %1)
+                       :on-click nil #_(toggle-checkpoint checkpoint %1)
                        :disabled (not trackable?)
                        :data-selected (boolean completed?)} nil])
      [:a {:key :title
@@ -21,7 +20,7 @@
    [:span {:key :title} task]
    [:button.button {:key :add-button
                     :data-button-type (name :icon)
-                    :on-click logger/log #_(remove-checkpoint checkpoint)} "X"]])
+                    :on-click nil #_(remove-checkpoint checkpoint)} "X"]])
 
 (rum/defc item-list [list-type checkpoints]
   [:ul.list {:data-list-type (name list-type)}

@@ -1,7 +1,7 @@
 (ns shared.protocols.responsive
   (:require [cljs.core.async :as async :refer [<! close!]]
-            [services.logger :as logger]
             [shared.models.event.index :as event]
+            [shared.protocols.loggable :as log]
             [shared.protocols.validatable :as va])
   (:require-macros [cljs.core.async.macros :refer [go-loop]]))
 
@@ -22,11 +22,11 @@
   (if (contains? (into #{} responses) status)
     (let [response (event/create [component-name status payload])]
       (if (va/valid? response)
-        (async/put! (:output channels) (logger/pipe component-name response))
-        (logger/log "ERRORS" (va/errors response))))
-    (logger/log (str "Invalid Response Type") status "."
-                component-name "Is only allowed to respond with the following Event Types: "
-                responses)))
+        (async/put! (:output channels) (log/pipe response))
+        (log/error response (va/errors response))))
+    (log/error status
+               (str component-name " is only allowed to respond with the following Event Types: "
+                                  responses))))
 
 (defn react
   "Has a component react to an event based on the event's specification type"

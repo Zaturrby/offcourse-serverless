@@ -3,8 +3,7 @@
             [cljs.core.match :refer-macros [match]]
             [shared.protocols.convertible :as cv]
             [shared.protocols.responsive :as ri]
-            [shared.protocols.validatable :as va]
-            [services.logger :as logger])
+            [shared.protocols.validatable :as va])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
 (defmulti send (fn [_ event] (second (va/resolve-type event))))

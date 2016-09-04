@@ -2,8 +2,7 @@
   (:require [cljs.spec :as spec]
             [cljs.spec.test :as stest]
             [shared.protocols.responsive :as ri]
-            [shared.specs.core :as specs]
-            [services.logger :as logger]))
+            [shared.specs.core :as specs]))
 
 (spec/fdef react :args (spec/cat :component any? :event ::specs/event))
 

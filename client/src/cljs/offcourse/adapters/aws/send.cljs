@@ -1,10 +1,7 @@
 (ns offcourse.adapters.aws.send
-  (:require [ajax.core :refer [POST GET]]
+  (:require [ajax.core :refer [POST]]
             [cljs.core.async :refer [chan]]
-            [services.logger :as logger]
-            [shared.models.event.index :as event]
-            [shared.protocols.validatable :as va]
-            [clojure.walk :as walk])
+            [shared.models.event.index :as event])
   (:require-macros [cljs.core.async.macros :refer [go]]))
 
 (defn handle-response [name res]

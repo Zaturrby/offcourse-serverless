@@ -1,11 +1,10 @@
 (ns offcourse.protocol-extensions.decoratable
-  (:require [shared.models.checkpoint.index :refer [Checkpoint]]
+  (:require [cuerdas.core :as str]
+            [shared.models.checkpoint.index :refer [Checkpoint]]
             [shared.models.course.index :as co :refer [Course]]
-            [shared.protocols.decoratable :as dc :refer [Decoratable]]
-            [shared.protocols.queryable :as qa]
             [shared.protocols.convertible :as cv]
-            [services.logger :as logger]
-            [cuerdas.core :as str]))
+            [shared.protocols.decoratable :as dc :refer [Decoratable]]
+            [shared.protocols.queryable :as qa]))
 
 (extend-protocol Decoratable
   Checkpoint

@@ -1,8 +1,5 @@
 (ns offcourse.appstate.check
-  (:require [cljs.spec :as spec]
-            [shared.specs.core :as specs]
-            [services.logger :as logger]
-            [shared.protocols.validatable :as va]))
+  (:require [shared.protocols.validatable :as va]))
 
 (defn viewmodel-type [{:keys [viewmodel] :as state}]
   (when viewmodel (va/resolve-type viewmodel)))

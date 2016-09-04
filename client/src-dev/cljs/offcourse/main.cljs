@@ -17,6 +17,7 @@
             :name              "bootstrap"
             :repository        {:name "clojurescript-course"
                                 :organization      "offcourse"
+                                :curator           "charlotte"
                                 :sha               "31510c353ec5d24a79b0b8d1a68d4d373d1f2d3f"}
             :resources         #{:course :collection}
             :endpoint          "https://api.github.com"}

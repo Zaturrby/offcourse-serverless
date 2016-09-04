@@ -3,7 +3,6 @@
             [shared.models.view.index :as view]
             [shared.protocols.renderable :as rr]
             [shared.protocols.responsive :as ri]
-            [services.logger :as logger]
             [rum.core :as rum]
             [shared.protocols.validatable :as va]
             [cljs.spec :as spec]

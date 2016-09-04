@@ -1,11 +1,11 @@
 (ns offcourse.views.base
   (:require [plumbing.core :refer-macros [fnk]]
-            [services.logger :as logger]
             [offcourse.views.containers.app :refer [app]]
             [offcourse.views.components.logo :refer [logo]]
             [offcourse.views.components.actions-panel :refer [actions-panel]]
             [offcourse.views.containers.menubar :refer [menubar]]
-            [shared.protocols.validatable :as va]))
+            [shared.protocols.validatable :as va]
+            [shared.protocols.loggable :as log]))
 
 (def graph
   {:container      (fnk [] app)
@@ -18,7 +18,7 @@
                         (fn [[action-type :as action]]
                           (if (contains? actions action-type)
                             (responder [:requested action])
-                            (logger/log :invalid-action action-type))))
+                            (log/error action-type (str "invalid action")))))
    :logo           (fnk [[:appstate site-title]
                          actions]
                         (logo {:site-title site-title}
